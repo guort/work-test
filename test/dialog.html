@@ -1,0 +1,210 @@
+<!doctype html><html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+<meta content="email=no" name="format-detection" />
+<meta name="apple-touch-fullscreen" content="YES">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link href="" rel="stylesheet" type="text/css">
+<style type="text/css">
+	html,body{width:100%;height:100%;margin:0;}
+
+	#explain-dialog{width:100%;padding:0.2em 0 0.4em 0;background-color:rgba(0,0,0,.6);position:absolute;top:50%;-webkit-transform:translateY(-50%);}
+	#explain-dialog img{display:block;height:4.2em;margin:0 auto;}
+
+
+
+@media screen and (min-width:320px) and (max-width:359px){
+	body{font-size:42.667px;}
+}
+@media screen and (min-width:360px) and (max-width:374px){
+	body{font-size:48px;}
+}
+@media screen and (min-width:375px) and (max-width:413px){
+	body{font-size:50px;}
+}
+@media screen and (min-width:414px){
+	body{font-size:55.2px;}
+}
+
+</style>
+<title>弹出框</title>
+</head><body>
+
+
+
+
+
+<script src="jc/xdTools.js"></script>
+<script src=""></script>
+<script type="text/javascript">
+var DO=document,DB=DO.body,winW=window.innerWidth,winH=window.innerHeight
+,mainVar={}
+,search=getSearch()
+,ST_user=localStorage.getItem("userInfo")
+,userInfo=toObject(ST_user)||{}
+;
+
+ mainVar.dialog=new dialogFun();
+ mainVar.dialog.init();
+ 
+ mainVar.dialog.explain({type:'building'})
+
+
+
+
+eventEntrust({ele:DB,event:'click',fun:function(){
+		var $acton=arguments[0];
+		switch($acton){
+			case"getHouse":
+				mainVar.dialog.info(arguments[1]);
+			break
+			}
+		}})
+
+
+
+
+
+
+function dialogFun(){
+	var CSS='\
+@media screen and (min-width:320px) and (max-width:359px){\
+	.dialogTopContainer{font-size:42.667px;}\
+	#info-dialog .see{width: 2.05em;margin: 0 0.16em 0 0.16em;float: left;}\
+}\
+@media screen and (min-width:360px) and (max-width:374px){\
+	.dialogTopContainer{font-size:48px;}\
+	#info-dialog .see{width:2.05em;margin:0 0.36em 0 0.16em;float:left;}\
+}\
+@media screen and (min-width:375px) and (max-width:413px){\
+	.dialogTopContainer{font-size:50px;}\
+	#info-dialog .see{width:2.05em;margin:0 0.36em 0 0.16em;float:left;}\
+}\
+@media screen and (min-width:414px){\
+	.dialogTopContainer{font-size:55.2px;}\
+	#info-dialog .see{width:2.05em;margin:0 0.36em 0 0.16em;float:left;}\
+}\
+.dialogTopContainer b{font-size:0.24em;vertical-align:top;display:inline-block;height:100%;font-weight:normal;}\
+.dialogTopContainer{display:none;height:100%;width:100%;position:absolute;top:0;left:0;background:rgba(0,0,0,.65);z-index:1;display:none;}\
+.dialog-in-1{-webkit-animation:dialog-in-1 400ms ease-out forwards;}\
+@-webkit-keyframes dialog-in-1{\
+      0% {-webkit-transform:scale(0,0);opacity:0;}\
+    60% {-webkit-transform:scale(1.2,1.2);}\
+   100% {-webkit-transform:scale(1,1);opacity:1;}\
+}\
+.dialog-out-1{-webkit-animation:dialog-out-1 300ms ease-in forwards;}\
+@-webkit-keyframes dialog-out-1{\
+	   0% {-webkit-transform:scale(1,1);opacity:1;}\
+	  40% {-webkit-transform:scale(1.2,1.2);}\
+	 100% {-webkit-transform:scale(0,0);opacity:0;}\
+}\
+.dialogTopContainer .close{background-image:url(img/close.png);background-size:100% 100%;position:absolute;    width:0.85em;height:0.85em;}\
+.gradual{position:relative;}\
+.gradual .text_t{-webkit-text-stroke:2px #743a07;text-shadow:1px 1px 2px rgba(0,0,0,0.3);}\
+.gradual .text_b{background:linear-gradient(0deg,#ebba5a 0%,#f2eeb4 100%);-webkit-background-clip:text;-webkit-text-fill-color: transparent;}\
+.gradual .text_t,.gradual .text_b{position:absolute;top:0;left:0;}\
+#info-dialog{background:#4685e2;box-shadow:0 0 0.08em rgba(2,18,51,.82),0 0 0.03em #2c5084 inset;border-radius: 0.3em;position:absolute;top:50%;left:50%;}\
+',_this=this,dialogCon={},temporary={"css":{}},user=mainVar.userInfo,daojuData={
+		"1":{"name":"炮台","class":"gun",img:"1_1.png",bulletImg:"c02.png"},
+		"2":{"name":"护盾","class":"shield",img:"1_2.png",bulletImg:"c03.png"},
+		"3":{"name":"经理","class":"manager",img:"1_0.png"},
+		"4":{"name":"火箭","class":"rocket",img:"1_4.png",bulletImg:"bullet04.png"},
+		"5":{"name":"修理厂","class":"repairShop",img:"1_5.png"},
+	};
+	setStyle(CSS);
+	this.explain=function($opt){
+		var opt=$opt||{},type=opt.type,h=opt.h||'4.2em',imgsrc=''
+		var CSS="\
+#explain-dialog{width:100%;padding:0.2em 0 0.4em 0;background-color:rgba(0,0,0,.6);position:absolute;top:30%;}\
+#explain-dialog img{display:block;height:"+h+";margin:0 auto;}";
+		if(!temporary.css.explain){
+			setStyle(CSS);
+			temporary.css.explain=true;
+		};
+		switch(type){
+			case 'c01'://抢夺卡
+				imgsrc='img/explain/c01.png'
+			break;
+			case 'c02'://炮弹
+				imgsrc='img/explain/c02.png'
+			break;
+			case 'c03'://盾牌
+				imgsrc='img/explain/c03.png'
+			break;
+			case 'c04'://火箭弹
+				imgsrc='img/explain/c04.png'
+			break;
+			case 'building'://大楼说明
+				imgsrc='img/explain/building.png'
+			break;
+		}
+		var html='\
+			<div id="explain-dialog">\
+				<img src="'+imgsrc+'">\
+			</div>';
+		_this.open({
+			"name":"explain",
+			"html":html,
+			"opacityVal":'0',
+			"VH_centr":false,
+			"callBack":function(){
+			}
+		});
+	}
+	
+
+	this.init=function(){
+		dialogCon.topContainer=createNode(DB,'div',{className:'dialogTopContainer'});
+		eventEntrust({ele:dialogCon.topContainer,event:'click',fun:function(){
+			var $acton=arguments[0]
+			switch($acton){
+				case "screen_close":
+					mainVar.dialog.close({"name":arguments[1]});
+				break;
+				case "close-facility-dialog":
+					mainVar.dialog.close({"name":"facility"});
+				break;
+			}
+		}});
+		return dialogCon.topContainer;
+	};
+	/*--------弹层生成--------*/
+	this.open=function(options){
+		var opacityVal=options.opacityVal||"0.65",elem=null,VH_centr=options.VH_centr===false?false:true;
+		dialogCon.topContainer.style.cssText='display:block;z-index:'+(options.zIndex||10)+';';
+		dialogCon[options.name]=createNode(dialogCon.topContainer,"div",{"action":"screen_close.,"+options.name,"style":"position:absolute;top:0;left:0;height:100%;width:100%;"+options.style,"html":options.html});
+		elem=dialogCon[options.name].children[0];
+		elem.className+=' dialog-in-1';
+		if(VH_centr){
+			elem.style.cssText="margin:-"+(elem.offsetHeight/2)+"px 0px 0px -"+(elem.offsetWidth/2)+"px;";
+		};
+		options.callBack&&options.callBack();
+		dialogCon.topContainer.style.backgroundColor="rgba(0,0,0,"+opacityVal+")";
+		return dialogCon[options.name];
+	};
+	/*--------弹层关闭--------*/
+	this.close=function(options){
+		var moveElem=dialogCon[options.name],animationEle=null,topContainer=dialogCon.topContainer;
+		if(options.close=="child"){
+			animationEle=moveElem=moveElem.children[0];
+		}else{
+			animationEle=moveElem.children[0];
+		}
+		animationEle.className+=' dialog-out-1';
+		animationEle.addEventListener('webkitAnimationEnd',function(){
+			removeNode(dialogCon[options.name]);
+			if(!topContainer.children.length){
+				dialogCon.topContainer.style.cssText='display:none;';
+			};
+			dialogCon[options.name]=null;
+			isFun(options.fun);
+		},false);
+	};
+};
+
+
+
+</script>
+</body></html>

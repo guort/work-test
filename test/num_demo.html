@@ -1,0 +1,198 @@
+<!doctype html><html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+<meta content="email=no" name="format-detection" />
+<meta name="apple-touch-fullscreen" content="YES">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link href="" rel="stylesheet" type="text/css">
+<style type="text/css">
+	
+#demo{width: 100px;height: 20px;background-color: pink;}
+
+#ipt{border:2px solid #000;}
+#plus{width: 50px;height:50px;text-align: center;line-height: 50px;background-color:yellow;}
+
+
+
+
+
+
+
+</style>
+<title>数字翻滚效果</title>
+</head><body>
+<div id="demo"></div>
+
+
+<input type="text" name="t" id="ipt">
+
+<div id="plus">相加</div>
+
+<script src="jc/xdTools.js"></script>
+<script src=""></script>
+<script type="text/javascript">
+var DO=document,DB=DO.body,winW=window.innerWidth,winH=window.innerHeight
+,mainVar={}
+,search=getSearch()
+,ST_user=localStorage.getItem("userInfo")
+,userInfo=toObject(ST_user)||{}
+;
+
+var dom=document.querySelector('#demo')
+
+mainVar.rNum=new numRoll(dom)
+
+mainVar.rNum.init(10)
+
+
+// setTimeout(function(){
+// 	mainVar.rNum.roll(12345)
+
+// },1000)
+plus.onclick=function(){
+
+	mainVar.rNum.roll(ipt.value)
+}
+
+
+
+
+function numRoll($dom){
+	var dom=$dom,domW,domH,b_num,c_number,h_number,numArr=[]
+	if(!dom){
+		tishi('请选择父节点')
+		return
+	}
+	domW=dom.offsetWidth,domH=dom.offsetHeight
+	var CSS='\
+	#roll_box{width:100%;height:100%;overflow:hidden;position:relative;}\
+	#roll_box .roll_num ul{width: 100%;margin:0;padding:0;}\
+	#roll_box .roll_num li{list-style: none;width: 100%}\
+	#roll_box .roll_num{float:right;overflow: auto;}\
+	#roll_box .roll_num .roll_ul{}\
+	#roll_box .roll_num .roll_ul li{line-height:'+domH+'px;text-align: center;height:'+domH+'px;}\
+	#roll_box .roll_num .roll_ul li b{font-size: 0.32em;color:#fff;vertical-align: top;}\
+	@media screen and (min-width:320px) and (max-width:359px){\
+		#roll_box{font-size:42.667px;}\
+	}\
+	@media screen and (min-width:360px) and (max-width:374px){\
+		#roll_box{font-size:48px;}\
+	}\
+	@media screen and (min-width:375px) and (max-width:413px){\
+		#roll_box{font-size:50px;}\
+	}\
+	@media screen and (min-width:414px){\
+		#roll_box{font-size:55.2px;}\
+	}\
+	';
+	setStyle(CSS)
+	var box=createNode(dom,'div',{id:'roll_box'},'p3')
+	this.init=function($num){
+		c_number=$num||0
+		numArr=this.formateNumber(c_number)
+		var len=numArr.length
+		,i=0
+		,html=''
+		,d
+		;
+		for(i=0;i<len;i++){
+			d=numArr[i]
+			html+='\
+			<div class="roll_num">\
+				<ul class="roll_ul ul_'+i+'"><li><b>'+d+'</b></li></ul>\
+			</div>'
+		}
+		box.innerHTML=html
+	}
+	this.roll=function($n){
+		if(!$n)return
+		var n=parseInt($n)||0
+			,before_number=c_number
+			,result_number=before_number+n
+			,arr=this.formateNumber(result_number)
+			,length=arr.length
+			,i
+			,a//结果
+			,b//之前
+			,newDom
+			,newHtml=''
+			,temp
+			;//undefined
+			numArr=this.formateNumber(before_number)
+			c_number=result_number
+		for(i=0;i<length;i++){
+			a=arr[i];b=numArr[i];
+			console.log(a+'-----'+b)
+			if(b==undefined){
+				newHtml='<li><b></b></li><li><b>'+a+'</b></li>'
+				newDom=box.querySelector('.ul_'+i)
+				if(!newDom){
+					temp=createNode(box,'div',{className:'roll_num',html:'<ul class="roll_ul ul_'+i+'"><li><b></b></li>'+newHtml+'</ul>'},'p3')
+					newDom=temp.querySelector('.ul_'+i)
+				}else{
+					newDom.innerHTML+=newHtml
+				}
+				newDom.timer=function(){
+					var _this=this
+					newDom.style.transition='all 1s'
+					newDom.style.webkitTransform='translateY(-'+(newDom.offsetHeight-domH)+'px)'
+					_this.addEventListener('transitionend',function(){
+						var last=_this.lastChild.textContent
+						_this.style.transition=''
+						_this.style.webkitTransform=''
+						_this.innerHTML='<li><b>'+last+'</b></li>'
+					})
+				}
+				newDom.timer()
+			}else if(a!=b){
+				newHtml=this.addLi(a,b)
+				newDom=box.querySelector('.ul_'+i)
+				if(!newDom){
+					temp=createNode(box,'div',{className:'roll_num',html:'<ul class="roll_ul ul_'+i+'"><li><b></b></li>'+newHtml+'</ul>'},'p3')
+					newDom=temp.querySelector('.ul_'+i)
+				}else{
+					newDom.innerHTML+=newHtml
+				}
+				newDom.timer=function(){
+					var _this=this
+					newDom.style.transition='all 1s'
+					newDom.style.webkitTransform='translateY(-'+(newDom.offsetHeight-domH)+'px)'
+					_this.addEventListener('transitionend',function(){
+						var last=_this.lastChild.textContent
+						_this.style.transition=''
+						_this.style.webkitTransform=''
+						_this.innerHTML='<li><b>'+last+'</b></li>'
+					})
+				}
+				newDom.timer()
+			}
+		}
+	}
+	this.formateNumber=function($num){
+		return (String(parseInt($num)).split('')).reverse()
+	}
+	this.addLi=function(a,b){
+		var arr=[],n=Math.abs(a-b)+1,i=1,html=''
+		if(a>b){
+			for(;i<n;i++){
+				arr[i-1]=parseInt(b)+i
+			}
+		}else{
+			for(;i<n;i++){
+				arr[i-1]=b-i
+			}
+		}
+		for(var j=0;j<arr.length;j++){
+			html+='<li><b>'+arr[j]+'</b></li>'
+		}
+		return html
+	}
+}
+
+
+
+
+</script>
+</body></html>

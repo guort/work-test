@@ -1,0 +1,114 @@
+<!doctype html><html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+<meta content="email=no" name="format-detection" />
+<meta name="apple-touch-fullscreen" content="YES">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>精简提示</title>
+</head><body>
+<script src="jc/xdTools.js"></script>
+<script type="text/javascript">
+var DO=document,DB=DO.body,winW=window.innerWidth,winH=window.innerHeight
+,mainVar={}
+,search=getSearch()
+,ST_user=localStorage.getItem("userInfo")
+,userInfo=toObject(ST_user)||{}
+;
+
+
+// function mAlert($c,$opt){
+// 	var t=this
+// 	if(!window.ts){
+// 		setStyle('.mAlert_bg{display:none;position:fixed;top:0;left:0;width:100%;height:100%;z-index:1001;-webkit-transition:background 400ms ease;}\
+// 		.mAlert_bg.display{display:block}\
+// 		.mAlert_box{position:absolute;display:table;text-align:center;color:#fff;font-size:16px;background:rgba(0,0,0,.5);top:50%;left:50%;max-width:90%;-webkit-transform:translate3D(-50%,-50%,0);border-radius:6px;padding:10px;opacity:0;margin:-60px 0 0 0;box-sizing:border-box;-webkit-transition:margin 400ms ease,opacity 500ms ease;}\
+// 		.mAlert_box.show{opacity:1;margin:0 0 0 0;}\
+// 		.mAlert_box.MoveHide{-webkit-animation:iHidd 350ms forwards;}\
+// 		@-webkit-keyframes iShow{0%{opacity:0;margin:-60px 0 0 0}100%{opacity:1;margin:0 0 0 0}}\
+// 		@-webkit-keyframes iHidd{0%{opacity:1;margin:0 0 0 0;}100%{opacity:0;margin:-60px 0 0 0;}}')
+// 		window.ts={};
+// 	}
+// 	if(t===window){
+// 		t=window.ts
+// 	}
+// 	if(!t.bg){
+// 		t.bg=createNode(document.body,"div",{className:"mAlert_bg"},"p3");
+// 		t.box=createNode(t.bg,"div",{className:"mAlert_box"},"p2")
+// 		t.flag=true;//true 执行提示  false:不执行提示
+// 	}
+// 	action();
+// 	function action(){
+// 		var content=$c||'',opt=$opt||{},color=opt.color,bg=opt.bg||false,showTime=opt.showTime||1000,boxSty=t.box.style,bgSty=t.bg.style,boxCss=opt.boxCss,fun=opt.fun
+// 		t.box.innerHTML=content;
+// 		if(!t.flag)return
+// 		t.flag=false	
+// 		if(boxCss)boxSty.cssText=boxCss;
+// 		if(color)boxSty.cssText='color:'+color+';';
+// 		if(bg)bgSty.cssText='background-color:rgba(0,0,0,.7);';
+// 		t.bg.classList.add("display");
+// 		setTimeout(function(){
+// 			t.box.classList.add("show")
+// 		},100)
+// 		t.time=setTimeout(function(){
+// 			t.box.classList.remove("show");
+// 			setTimeout(function(){
+// 				t.bg.classList.remove("display");
+// 				isFun(fun)
+// 				t.flag=true;
+// 			},400)
+// 		},showTime);
+// 	}
+// }
+
+function mAlert(){
+	var t={}
+	setStyle('.mAlert_bg{display:none;position:fixed;top:0;left:0;width:100%;height:100%;z-index:1001;-webkit-transition:background 400ms ease;}\
+		.mAlert_bg.display{display:block}\
+		.mAlert_box{position:absolute;display:table;text-align:center;color:#fff;font-size:16px;background:rgba(0,0,0,.5);top:50%;left:50%;max-width:90%;-webkit-transform:translate3D(-50%,-50%,0);border-radius:6px;padding:10px;opacity:0;margin:-10px 0 0 0;box-sizing:border-box;-webkit-transition:margin 400ms ease,opacity 500ms ease;}\
+		.mAlert_box.show{opacity:1;margin:0 0 0 0;}\
+		.mAlert_box.MoveHide{-webkit-animation:iHidd 350ms forwards;}\
+		@-webkit-keyframes iShow{0%{opacity:0;margin:60px 0 0 0}100%{opacity:1;margin:0 0 0 0}}\
+		@-webkit-keyframes iHidd{0%{opacity:1;margin:0 0 0 0;}100%{opacity:0;margin:-10px 0 0 0;}}')
+	t.bg=createNode(document.body,"div",{className:"mAlert_bg"},"p3");
+	t.box=createNode(t.bg,"b",{className:"mAlert_box"},"p2")
+	t.flag=true;//true 执行提示  false:不执行提示
+	return function($c,$opt){
+		var content=$c||'',opt=$opt||{},color=opt.color,bg=opt.bg||false,showTime=opt.showTime||1000,boxSty=t.box.style,bgSty=t.bg.style,boxCss=opt.boxCss,fun=opt.fun
+		t.box.innerHTML=content;
+		if(!t.flag)return
+		t.flag=false	
+		if(boxCss)boxSty.cssText=boxCss;
+		if(color)boxSty.cssText='color:'+color+';';
+		if(bg)bgSty.cssText='background-color:rgba(0,0,0,.7);';
+		t.bg.classList.add("display");
+		setTimeout(function(){
+			t.type="show";
+			t.box.classList.add("show")
+		},100)
+		t.time=setTimeout(function(){
+			// t.box.classList.remove("show");
+			setTimeout(function(){
+				// t.bg.classList.remove("display");
+				isFun(fun)
+				t.flag=true;
+			},400)
+		},showTime);
+	}
+}
+
+
+
+var tishi2=mAlert();
+
+// tishi2('123456765432',{color:（文字颜色，可选，默认白色,showTime:（提示出现时长，可选，默认1000ms）,fun:（回调函数，可选）})
+
+// mAlert('1234')
+tishi('123456',{showTime:2000})
+// setInterval(function(){
+// 	mAlert('6789')
+// },1000)
+
+</script>
+</body></html>

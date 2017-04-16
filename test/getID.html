@@ -1,0 +1,122 @@
+<!doctype html><html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+<meta content="email=no" name="format-detection" />
+<meta name="apple-touch-fullscreen" content="YES">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>火箭军bid</title>
+<style type="text/css">
+	*{margin:0;padding:0;}
+	html,body{width:100%;height:100%;overflow: auto;}
+		#ipt{display: block;width:200px;height:50px;font-size: 18px;color:red;border:1px solid #000;margin-top: 50px;}
+		#ipt2{display: block;width:200px;height:50px;font-size: 18px;color:red;border:1px solid #000;margin-top: 50px;}
+	#btn{width: 100px;height: 40px;display: inline-block;background-color: red;color:#000;font-size: 15px;font-weight: 700;}
+	#btn2{width: 100px;height: 40px;display: block;background-color: red;color:#000;font-size: 15px;font-weight: 700;}
+	#btn3{width:30px;height:30px;margin-left: 20px;background-color:pink;}
+	#stop11{width: 100px;height: 40px;display: inline-block;margin-top: 50px;background-color: yellow;color:#000;font-size: 15px;font-weight: 700;}
+	#stop22{width: 50px;height: 40px;display: inline-block;margin-top: 50px;margin-left:20px;background-color: red;color:#000;font-size: 15px;font-weight: 700;}
+
+	#cont{
+		width: 60%;
+		height: 100%;
+		position: absolute;
+		top:0;
+		right: 0;
+	}
+</style>
+</head><body>
+<input type="test" name="bid" id='ipt' placeholder="被收者tvmid">
+<button id="btn">收 花（全）</button><button id="btn3">清除</button>
+<input type="test" name="bid" id='ipt2' placeholder="被收者bid">
+<button id="btn2">收 花（单）</button>
+<button id="stop11"> 随机收花 </button><button id="stop22">停止</button>
+<div id="cont"></div>
+<script src="jc/xdTools.js"></script>
+<script type="text/javascript">
+var DO=document,DB=DO.body,winW=window.innerWidth,winH=window.innerHeight
+,mainVar={}
+,search=getSearch()
+,ST_user=localStorage.getItem("userInfo")
+,userInfo=toObject(ST_user)||{}
+,flag=true
+,people=[]
+;
+mainVar.arr={}
+
+btn.onclick=function(){
+	
+}
+btn2.onclick=function(){
+	
+}
+btn3.onclick=function(){
+	
+}
+
+
+stop11.onclick=function(){
+	
+}
+stop22.onclick=function(){
+	//http://nearby.yaotv.cn/g/a_reserve?id=44755&reserve=1000&tvmid=wxh5848bcc2af119c3522ed1fbb&token=e03e22b08f864938a5a4584f5ea7908d
+}
+			//t800,妞子，水到渠成，老查，君威,公子赢得，平常心，十级护盾，DF-FC,嫣然转粉，买地盖楼，jo金
+			//找寻，东风-41，飞飞飞，口口
+var hjjArr=['wxh58986ec7150daa7b55a7aae7','wxh588c9b491fac5c46fc197d72','wxh5857c1a803df3e7a77801ed0','wxh588c93413fee255091457a9d','wxh588ca348e2d17d589c1616d1','wxh5889f32c23d030485267771f','wxh586f77f96a8ae96fb411e204','wxh588c84f465dba347b64df6a0','wxh585e0f0ae607bc6b78b1ccb6','wxh58ac50f8ad9be82274864baa','wxh5857d545e860367f300aa2e9','wxh5857ae482e456c7f28d467d0','wxh58732d17d1249c3b89cc4b35','wxh5891a19adbdd326d05511d1a','wxh5889e781a936d347b741a735','wxh589a50562bb3eb034f1a0e5c']
+
+getids()
+function getids(){
+	var i=0,len=hjjArr.length,ajaxs={}
+
+	for(;i<len;i++){
+		people[i]={}
+		people[i].tvmid=hjjArr[i]
+		getToken(people[i].tvmid,i)
+	}
+	function getToken($tvmid,i){
+		var a=setAjax("GET","//nearby.yaotv.cn/g/set_user_info?userInfo="+encodeURIComponent(JSON.stringify({tvmid:$tvmid})));
+		a.index=i
+        a.callBack=function($data){
+            var data=toObject($data);
+            people[a.index].token=data.token
+            getID(a.index)
+        }
+        a.send()
+        a.err=function(){
+            tishi('获取 '+a.index+' 的token失败')
+        }
+	}
+	function getID($i){
+		var a=setAjax("GET","http://nearby.yaotv.cn/g/q_user_buildings?tvmid="+people[$i].tvmid+"&token="+people[$i].token)
+        a.callBack=function($data){
+            var data=toObject($data),dd
+            if(data.code>0){
+            	console.log('获取id失败')
+            	tishi('获取id失败')
+            }else{
+            	for(var j=0;j<data.blist.length;j++){
+            		dd=data.blist[j].id||0
+            		mainVar.arr[data.blist[j].id]=1
+            	}
+            }
+        }
+        a.send()
+        a.err=function(){
+        	console.log('获取id失败')
+            tishi('获取id失败')
+        }
+	}
+	
+	function timeNow(){
+		var rq=(new Date()),tttt='&nbsp;&nbsp;'+B(rq.getHours())+' : '+B(rq.getMinutes())+'&nbsp;&nbsp;'
+		return tttt
+	}
+}
+
+
+
+
+</script>
+</body></html>

@@ -1,0 +1,150 @@
+<!doctype html><html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+<meta content="email=no" name="format-detection" />
+<meta name="apple-touch-fullscreen" content="YES">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link href="" rel="stylesheet" type="text/css">
+<style type="text/css">
+	/*html,body{width:100%;height:100%;margin:0;}
+	.protectBG{width:100%;height:100%;background-color:rgba(0,0,0,.2);position:relative;}
+	.protectBG .timeBox{width:5.1em;height:1.5em;text-align:center;position: absolute;top:50%;left:50%;-webkit-transform:translate(-50%,-50%);}
+	.protectBG .timeBox>b{font-size:0.24em;color:#fff;margin-bottom: 0.18em;vertical-align:top;}
+	.protectBG .tt{width:100%;height:0.94em;background-color:rgba(0,0,0,.5);line-height: 0.94em;border-radius:0.47em;position:absolute;bottom:0;color:#ffe600;}
+	.protectBG .tt span{font-size:0.42em;vertical-align:top;margin:0 10px;text-shadow:0px 0px 3px #8f1417;}
+	.protectBG .tt b{font-size:0.42em;vertical-align:top;text-shadow:0px 0px 3px #8f1417;}
+	.protectBG .desc{width:70%;line-height:0.3em;position: absolute;top:60%;left:50%;-webkit-transform:translateX(-50%);}
+	.protectBG .desc b{font-size:0.3em;color:#fff;}*/
+
+	html,body{width:100%;height:100%;margin:0;}
+.protectBG{width:100%;height:100%;background-color:rgba(0,0,0,.5);position:relative;top:0;left:0;z-index:9;}
+.protectBG .timeBox{width:100%;text-align:center;position: absolute;top:67%;left:50%;-webkit-transform:translate(-50%,-50%);}
+.protectBG .timeBox .top{line-height: 0.33em;margin-bottom: 0.4em;}
+.protectBG .timeBox .top b {font-size: 0.33em;color:#fff;vertical-align: top;}
+.protectBG .timeBox .tittle{line-height:0.48em;color:#ffe700;margin-bottom:0.40em;}
+.protectBG .timeBox .tittle b{font-size: 0.48em;vertical-align:top;}
+.protectBG .tt{width:100%;height:0.94em;line-height: 0.94em;border-radius:0.47em;color:#ffe600;}
+.protectBG .tt span{font-size:0.42em;vertical-align:top;margin:0 10px;text-shadow:0px 0px 3px #8f1417;}
+.protectBG .tt b{font-size:0.42em;vertical-align:top;text-shadow:0px 0px 3px #8f1417;}
+.protectBG .desc{line-height:0.3em;}
+.protectBG .desc b{vertical-align: top;color:#fff;font-size: 0.35em;line-height: 0.35em;}
+.protectBG .desc div{margin-bottom: 0.26em}
+.protectBG .desc .t1{margin-top: 0.6em;}
+.protectBG .desc .t2 {line-height: 0.44em;}
+.protectBG .desc .t2 b{font-size: 0.44em;color:#2cc4fc;text-shadow: 0 0 1px #000;}
+.protectBG .h1,.protectBG .h2{display: block;position: absolute;width:0.68em;height:0.73em;}
+.protectBG .h1{top:0.1em;left:3.9em;}
+.protectBG .h2{top:3.62em;left:2.4em;}
+
+
+
+@media screen and (min-width:320px) and (max-width:359px){
+	.protectBG{font-size:42.667px;}
+}
+@media screen and (min-width:360px) and (max-width:374px){
+	.protectBG{font-size:48px;}
+}
+@media screen and (min-width:375px) and (max-width:413px){
+	.protectBG{font-size:50px;}
+}
+@media screen and (min-width:414px){
+	.protectBG{font-size:55.2px;}
+}
+
+</style>
+<title>倒计时</title>
+</head><body>
+<script src="jc/xdTools.js"></script>
+<script src=""></script>
+<script type="text/javascript">
+var DO=document,DB=DO.body,winW=window.innerWidth,winH=window.innerHeight
+,mainVar={}
+,search=getSearch()
+,ST_user=localStorage.getItem("userInfo")
+,userInfo=toObject(ST_user)||{}
+;
+protectTime(1000)
+
+//系统保护时间方法   参数单位是 秒
+// function protectTime($time){
+// 	if(!$time||$time<0)return
+// 	var box=createNode(DB,'div',{className:'protectBG'},'p3')
+// 		,timeBox=createNode(box,'div',{className:'timeBox',html:'<b>系统保护时间剩余</b>'},'p3')
+// 		,tt=createNode(timeBox,'div',{className:'tt'},'p3')
+// 		,desc=createNode(box,'div',{className:'desc',html:'<b>大楼被夷为平地并失去所有功能 , 保护期内楼主有机会修复大楼 , 超过保护期该大楼将彻底消失 。</b>'},'p3')
+// 		,overtime=$time
+// 		,p_timer=null
+// 		,xl=document.querySelector('ownerRepair')
+// 		,reserve=document.querySelector('owner_reserve')
+// 		;
+// 	if(xl)xl.style.zIndex='11';
+// 	if(reserve)reserve.style.zIndex='11';
+// 	s();
+// 	p_timer=setInterval(function(){
+// 		if(overtime>0){
+// 			overtime-=1
+// 			s()
+// 		}else{
+// 			removeNode(box)
+// 			clearInterval(p_timer)
+// 		}
+// 	},1000)
+// 	function s(){
+// 		var h
+// 		h=n2t(overtime,[{v:3600,u:"<span>:</span>"},{v:60,u:"<span>:</span>"},{v:1,u:""}])
+// 		tt.innerHTML=h.replace(/(\d)/g,"<b>$1</b>")
+// 	}
+// }
+
+
+function protectTime($time){
+	if(!$time||$time<0)return
+	var box=createNode(DB,'div',{className:'protectBG'},'p3')
+		,timeBox=createNode(box,'div',{className:'timeBox',html:'<div class="top"><b>大楼被夷为平地并失去了所有功能</b></div><div class="tittle"><b>待修复时间</b></div>'},'p3')
+		,tt=createNode(timeBox,'div',{className:'tt'},'p3')
+		,desc=createNode(timeBox,'div',{className:'desc',html:'<div class="t1"><b>通过使用修理卡或追加储备金</b></div><div class="t2"><b>将储备金恢复到5000以上</b></div><div class="t3"><b>就可以修复您的大楼</b></div><div class="t4"><b>超过保护期该大楼将彻底消失</b></div>'},'p3')
+		,h1=createNode(box,'img',{className:'h1',src:'img/hand.png'},'p3')
+		,h2=createNode(box,'img',{className:'h2',src:'img/hand.png'},'p3')
+		,overtime=$time
+		,p_timer=null
+		;
+	s();
+	p_timer=setInterval(function(){
+		if(overtime>0){
+			overtime-=1
+			s()
+		}else{
+			removeNode(box)
+			clearInterval(p_timer)
+		}
+	},1000)
+	function s(){
+		var h
+		h=n2t(overtime,[{v:3600,u:"<span>:</span>"},{v:60,u:"<span>:</span>"},{v:1,u:""}])
+		tt.innerHTML=h.replace(/(\d)/g,"<b>$1</b>")
+	}
+}
+
+var str='uname=alice&mobileIpt=110&birthday=1983-05-12'
+
+var o=formate(str)
+console.log(o)
+
+function formate($str){
+	var s=$str||'',i=0,arr=[],opt={},a,b
+	arr=s.split('&');
+	//arr=[uname=alice,mobileIpt=110,birthday=1983-05-12]
+	for(;i<arr.length;i++){
+		a=arr[i];
+		b=a.split('=');
+		opt[b[0]]=b[1]||''
+	}
+	return opt
+}
+
+
+
+</script>
+</body></html>

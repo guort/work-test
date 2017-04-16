@@ -1,0 +1,51 @@
+html,body{margin:0;padding:0;width:100%;height:100%;}
+body{font:14px weiruanyahei,FZYQJW,"微软雅黑",Tahoma,"\534E\6587\5B8B\4F53",arial;}
+ul,li,ol,dl,dt{list-style: none;}
+ul,ul li,ol,ol li,dl,dl dd,p{margin:0;padding:0;}
+h1,h2,h3,h4,h5,h6,strong{margin:0;padding:0;font-style:normal;}
+.mainbox{width: 100%;height: 100%;background-size: 100% 100%;position:relative;top:0;left:0;overflow: hidden;}
+.mainbox b{font-weight: 500;vertical-align: top;}
+.yeBox{width:5.8em;height: 3.0em;margin: 0 auto;background-size: 100% 100%;margin-top: 2.56em;overflow: hidden;}
+.yeBox .num{height:1.05em;line-height:1.05em;margin-top:1.4em;color:#fa495d;text-align: center;}
+#get_num{font-size: 1.05em;}
+.yeBox .dw{font-size:0.6em;vertical-align:bottom;line-height: 2.2em;}
+
+.lqBox{width:5.8em;height:4.3em;margin: 0 auto;}
+.lqBox .lq1,.lqBox .lq2{width:100%;height:100%;overflow: hidden;}
+#tel{display: block;width:100%;height:42px;margin-top: 42px;margin-bottom: 24px;font-size: 20px;line-height: 42px;text-align: center;border-radius: 5px;border:none;-webkit-appearance: none;outline:none;}
+.lqBox .lq1 button{display: block;width:100%;height: 42px;background:-webkit-linear-gradient(top,#ffa229,#fe7e11);border:none;border-radius: 5px;-webkit-appearance: none;outline:none;font-size:20px;font-weight: 700;color:#fff;text-shadow: 1px 1px 2px #e05504;box-shadow: 1px 1px 1px #db3b31;}
+.lqBox .lq2{}
+.lqBox .lq2 .c1{height:0.9em;text-align: center;line-height: 0.9em;color:#fff;margin-top: 0.38em;}
+.lqBox .lq2 .c1 img{display: inline-block;width: 0.9em;height: 0.9em;margin-right: 0.2em;}
+.lqBox .lq2 .c1 b{font-size: 0.45em;}
+.lqBox .lq2 .c2{margin-top: 0.3em;line-height: 0.24em;color:#fff600;text-align: center;}
+.lqBox .lq2 .c2 b{font-size: 0.24em;}
+.lqBox .lq2 .c3{margin-top: 0.3em;line-height: 0.24em;color:#fff;text-align: center;}
+.lqBox .lq2 .c3 b{font-size: 0.24em;}
+.lqBox .lq2 .c4{height:0.94em;margin-top:0.54em;}
+.lqBox .lq2 .c4 img{display: block;width:100%;height:100%;}
+
+
+.tips{}
+.tips .tit{width:1.6em;height:0.46em;line-height: 0.46em;color:#f2303c;text-align: center;margin: 0 auto;background-color:#fdb7b2;border-radius:0.25em;margin-bottom: 0.36em;}
+.tips .tit b{font-size:0.24em;}
+.tips ul{width: 100%;padding-left: 0.9em;color:#fff;}
+.tips ul li{font-size:0.24em;list-style: initial;line-height: 1em;margin-bottom:0.5em;}
+.tips ul li b{font-weight:400;}
+
+
+
+
+
+@media screen and (min-width:320px) and (max-width:359px){
+	.mainbox{font-size:42.667px;}
+}
+@media screen and (min-width:360px) and (max-width:374px){
+	.mainbox{font-size:48px;}
+}
+@media screen and (min-width:375px) and (max-width:413px){
+	.mainbox{font-size:50px;}
+}
+@media screen and (min-width:414px){
+	.mainbox{font-size:55.2px;}
+}

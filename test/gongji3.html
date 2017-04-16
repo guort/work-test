@@ -1,0 +1,203 @@
+<!doctype html><html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+<meta content="email=no" name="format-detection" />
+<meta name="apple-touch-fullscreen" content="YES">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>随机攻击</title>
+<style type="text/css">
+	*{margin:0;padding:0;}
+	html,body{width:100%;height:100%;overflow: auto;}
+	#ipt{display:block;width:200px;height:50px;font-size: 18px;color:red;border:1px solid #000;}
+	#btn{width: 100px;height: 40px;display: inline-block;margin-top: 50px;background-color: red;color:#000;font-size: 15px;font-weight: 700;}
+	#btn3{width: 80px;height: 40px;display: inline-block;margin-top: 50px;margin-left:20px;background-color: pink;color:#000;font-size: 15px;font-weight: 700;}
+	#stop11{width: 100px;height: 40px;display: block;margin-top: 50px;background-color: yellow;color:#000;font-size: 15px;font-weight: 700;}
+	#cont{
+		width: 60%;
+		height: 100%;
+		position: absolute;
+		top:0;
+		right: 0;
+	}
+
+</style>
+</head><body>
+<input type="test" name="bid" id='ipt' placeholder="对方tvmid">
+<button id="btn">攻 击</button><button id="btn3"> 清除</button>
+<button id="stop11"> 停止攻击 </button>
+<div id="cont"></div>
+<script src="jc/xdTools.js"></script>
+<script type="text/javascript">
+var DO=document,DB=DO.body,winW=window.innerWidth,winH=window.innerHeight
+,mainVar={}
+,search=getSearch()
+,ST_user=localStorage.getItem("userInfo")
+,userInfo=toObject(ST_user)||{}
+,user={}
+,people={}
+,pppeople=[]
+,bFlag=true
+,flag=true
+;
+mainVar.num=0
+mainVar.arr=[]
+mainVar.i=0
+// wxh5848bcc2af119c3522ed1fbb
+// 4fcf774618d348c681a7066f5e855bf8
+
+
+			//t800,妞子，水到渠成，老查，君威,公子赢荡，平常心，十级护盾，DF-FC,嫣然转粉，买地盖楼，jo金
+			//找寻，东风-41，飞飞飞，口口,夜,rjn,荒地生花,明,角度，平常心，军营中成长，天亮说晚安，高李平
+			//徐小伤 公子小白
+
+var hjjArr=[]
+
+
+btn.onclick=function(){
+	if(!bFlag)return
+		var v=ipt.value
+	if(!v){
+		tishi('请输入tvmid')
+		return
+	}
+	cont.innerHTML=''
+	hjjArr=v.split('.,')
+	getids()
+	// GRT({tvmid:'wxh5848bcc2af119c3522ed1fbb',num:v});
+}
+stop11.onclick=function(){
+	clearInterval(mainVar.timer)
+	createNode(cont,'p',{html:'停止攻击',style:'color:red;'},'p3')
+	bFlag=true
+}
+btn3.onclick=function(){
+	ipt.value=''
+	cont.innerHTML=''
+}
+
+
+
+
+// GRT({tvmid:'wxh5848bcc2af119c3522ed1fbb',bid:'15360'});
+// getids()
+
+
+
+function GRT($opt){if(!$opt)return
+	var opt=$opt||{},arr=[],ajax={},len=arr.length,i=0,timer=null,maxNum=opt.num,tNum=0,tcoin=0
+	
+	user.tvmid=opt.tvmid||'wxh5848bcc2af119c3522ed1fbb'
+	getToken()
+	function getToken(){
+		var a=setAjax("GET","//nearby.yaotv.cn/g/set_user_info?userInfo="+encodeURIComponent(JSON.stringify({tvmid:user.tvmid})));
+        a.callBack=function($data){
+            var data=toObject($data);
+            user.token=data.token;
+            time()
+        }
+        a.send()
+        a.err=function(){
+            hideLoading();
+            tishi('获取token失败')
+        }
+	}
+
+
+	function time(){
+		mainVar.timer=setInterval(function(){
+			if(flag){
+				b=mainVar.arr[mainVar.i]
+				flag=false;
+				hit(b)
+			}
+		},50)
+	}
+	function hit(bid){
+		var a=setAjax('get','//nearby.yaotv.cn/g/use_card_daodan?tvmid='+user.tvmid+'&token='+user.token+'&id='+bid+'&atoken=41bb336f1c7898327235d7ac48a5d24b&msg=')
+		a.callBack=function($data){
+			var data=toObject($data),c
+			if(data.code){
+				// console.log(data.msg)
+			}else{
+				c=data.money.coin||0
+				tcoin+=c
+				mainVar.num++
+				cont.innerHTML='用了'+mainVar.num+"导弹~~~~~加"+tcoin+'金币'
+				// if(mainVar.num>maxNum){
+				// 	mainVar.num=0
+				// 	createNode(cont,'p',{html:'用'+maxNum+'发炮弹~~得到'+tcoin})
+				// 	createNode(cont,'p',{html:'赚了'+(tcoin-maxNum*200)+'金币'})
+				// 	clearInterval(mainVar.timer)
+				// }
+			}
+			flag=true;
+			mainVar.i=mainVar.i+1
+			if(mainVar.i>=mainVar.arr.length)mainVar.i=0
+		}
+		a.send()
+	}
+	function timeNow(){
+		var rq=(new Date()),tttt='&nbsp;&nbsp;'+B(rq.getHours())+' : '+B(rq.getMinutes())+'&nbsp;&nbsp;'
+		return tttt
+	}
+}
+// getids()
+function getids(){
+	var i=0,len=hjjArr.length,ajaxs={}
+
+	for(;i<len;i++){
+		pppeople[i]={}
+		pppeople[i].tvmid=hjjArr[i]
+		getToken(pppeople[i].tvmid,i)
+	}
+	function getToken($tvmid,i){
+		var a=setAjax("GET","//nearby.yaotv.cn/g/set_user_info?userInfo="+encodeURIComponent(JSON.stringify({tvmid:$tvmid})));
+		a.index=i
+        a.callBack=function($data){
+            var data=toObject($data);
+            pppeople[a.index].token=data.token
+            getID(a.index)
+        }
+        a.send()
+        a.err=function(){
+            tishi('获取 '+a.index+' 的token失败')
+        }
+	}
+	function getID($i){
+		var a=setAjax("GET","http://nearby.yaotv.cn/g/q_user_buildings?tvmid="+pppeople[$i].tvmid+"&token="+pppeople[$i].token)
+        a.callBack=function($data){
+            var data=toObject($data),dd
+            if(data.code>0){
+            	console.log('获取id失败')
+            	tishi('获取id失败')
+            }else{
+            	for(var j=0;j<data.blist.length;j++){
+            		dd=data.blist[j].id||0
+            		mainVar.arr.push(dd)
+            	}
+
+            	//攻击
+            	GRT({tvmid:'wxh5848bcc2af119c3522ed1fbb'});
+            }
+        }
+        a.send()
+        a.err=function(){
+        	console.log('获取id失败')
+            tishi('获取id失败')
+        }
+	}
+	
+	function timeNow(){
+		var rq=(new Date()),tttt='&nbsp;&nbsp;'+B(rq.getHours())+' : '+B(rq.getMinutes())+'&nbsp;&nbsp;'
+		return tttt
+	}
+}
+
+
+
+
+
+</script>
+</body></html>

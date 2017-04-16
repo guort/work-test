@@ -1,0 +1,161 @@
+<!doctype html><html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+<meta content="email=no" name="format-detection" />
+<meta name="apple-touch-fullscreen" content="YES">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>攻 击</title>
+<style type="text/css">
+	*{margin:0;padding:0;}
+	html,body{width:100%;height:100%;overflow: auto;}
+	#ipt{display:block;width:200px;height:50px;font-size: 18px;color:red;border:1px solid #000;}
+	#btn{width: 100px;height: 40px;display: inline-block;margin-top: 50px;background-color: red;color:#000;font-size: 15px;font-weight: 700;}
+	#btn3{width: 80px;height: 40px;display: inline-block;margin-top: 50px;margin-left:20px;background-color: pink;color:#000;font-size: 15px;font-weight: 700;}
+	#stop11{width: 100px;height: 40px;display: block;margin-top: 50px;background-color: yellow;color:#000;font-size: 15px;font-weight: 700;}
+	#cont{
+		width: 60%;
+		height: 100%;
+		position: absolute;
+		top:0;
+		right: 0;
+	}
+
+</style>
+</head><body>
+<input type="test" name="bid" id='ipt' placeholder="被攻击者的bid">
+<button id="btn">攻 击</button><button id="btn3"> 清除</button>
+<button id="stop11"> 停止攻击 </button>
+<div id="cont"></div>
+<script src="jc/xdTools.js"></script>
+<script type="text/javascript">
+var DO=document,DB=DO.body,winW=window.innerWidth,winH=window.innerHeight
+,mainVar={}
+,search=getSearch()
+,ST_user=localStorage.getItem("userInfo")
+,userInfo=toObject(ST_user)||{}
+,user={}
+,people={}
+,bFlag=true
+;
+
+// wxh5848bcc2af119c3522ed1fbb
+// 4fcf774618d348c681a7066f5e855bf8
+
+//wxh5895cbaa62837247af5c917c  这家伙干死
+
+//wxh5857fb4de5641e7a7fa9db2a  徐小伤  女
+
+
+//wxh58c5345a631fc8397d1c0868   目标
+//wxh58a70afa2994045e875236c5
+
+btn.onclick=function(){
+	if(!bFlag)return
+	var v= ipt.value;
+	if(!v){
+		tishi('请输入bid')
+		return
+	}
+	cont.innerHTML=''
+	GRT({tvmid:'wxh5848bcc2af119c3522ed1fbb',bid:v});
+}
+stop11.onclick=function(){
+	clearInterval(mainVar.timer)
+	createNode(cont,'p',{html:'停止攻击',style:'color:red;'},'p3')
+	bFlag=true
+}
+btn3.onclick=function(){
+	ipt.value=''
+	cont.innerHTML=''
+}
+
+
+
+
+// GRT({tvmid:'wxh5848bcc2af119c3522ed1fbb',bid:'15360'});
+
+
+
+function GRT($opt){if(!$opt)return
+	var opt=$opt||{},arr=[],ajax={},len=arr.length,i=0,timer=null,maxNum=opt.num,bid=opt.bid,tNum=0,tcoin=0,flag=false
+	bFlag=false;
+	user.tvmid=opt.tvmid||'wxh5848bcc2af119c3522ed1fbb'
+	// getToken()
+	function getToken($fun){
+		var a=setAjax("GET","//nearby.yaotv.cn/g/set_user_info?userInfo="+encodeURIComponent(JSON.stringify({tvmid:user.tvmid})));
+        a.callBack=function($data){
+            var data=toObject($data);
+            user.token=data.token;
+            $fun();
+        }
+        a.send()
+        a.err=function(){
+            hideLoading();
+            tishi('获取token失败')
+        }
+	}
+	if(user.token){
+		action()
+	}else{
+		getToken(action)
+	}
+	function action(){
+		mainVar.timer=setInterval(function(){
+				var t=Math.random()*300
+				if(!flag){
+					flag=true
+					setTimeout(function(){
+						hit()
+					},t)
+				}
+			},100)
+	}
+	function hit(){
+		if(!bid)return
+		var a=setAjax('get','//nearby.yaotv.cn/g/use_card_daodan?tvmid='+user.tvmid+'&token='+user.token+'&id='+bid+'&atoken=41bb336f1c7898327235d7ac48a5d24b&msg=')
+		a.callBack=function($data){
+			var data=toObject($data),s,coin
+			if(data.code){
+				tishi('攻击失败~~'+data.msg,{showTime:3000})
+				createNode(cont,'p',{html:data.msg},'p3')
+				bFlag=true
+				clearInterval(mainVar.timer)
+			}else{
+				s=data.status
+				coin=data.money.coin
+				switch(s){
+					case 1:
+						createNode(cont,'p',{html:'攻击失败',style:'color:red;'},'p3')
+					break;
+					case 2:
+						createNode(cont,'p',{html:'攻击成功~~得到'+coin+'金币',style:'color:green;'},'p3')
+						tcoin+=coin
+					break;
+					case 3:
+						createNode(cont,'p',{html:'攻击成功~~得到'+coin+'金币',style:'color:green;'},'p3')
+						tcoin+=coin
+						createNode(cont,'p',{html:'完成--共得到'+tcoin+'金币~~共用'+(tNum+1)+'发导弹('+(tNum+1)*200+'块)',style:'color:green;'},'p3')
+						bFlag=true
+						clearInterval(mainVar.timer)
+					break;
+					case 4:
+						createNode(cont,'p',{html:'攻击成功~~得到'+coin+'金币',style:'color:green;'},'p3')
+						tcoin+=coin
+					break;
+				}
+				tNum++
+			}
+			flag=false
+		}
+		a.send()
+	}
+	function timeNow(){
+		var rq=(new Date()),tttt='&nbsp;&nbsp;'+B(rq.getHours())+' : '+B(rq.getMinutes())+'&nbsp;&nbsp;'
+		return tttt
+	}
+
+}
+</script>
+</body></html>

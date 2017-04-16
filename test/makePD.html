@@ -1,0 +1,68 @@
+<!doctype html><html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+<meta content="email=no" name="format-detection" />
+<meta name="apple-touch-fullscreen" content="YES">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>制造导弹</title>
+<style type="text/css">
+	*{margin:0;padding:0;}
+	html,body{width:100%;height:100%;overflow: auto;}
+
+</style>
+</head><body>
+
+<script src="jc/xdTools.js"></script>
+<script type="text/javascript">
+var DO=document,DB=DO.body,winW=window.innerWidth,winH=window.innerHeight
+,mainVar={}
+,search=getSearch()
+,ST_user=localStorage.getItem("userInfo")
+,userInfo=toObject(ST_user)||{}
+,user={}
+;
+
+// make('wxh5848bcc2af119c3522ed1fbb','42319','4','4','1')
+
+function make(tvmid,bid,pid,tid,num){if(!tvmid)return
+	user.tvmid=tvmid
+	getToken()
+	function getToken(){
+		var a=setAjax("GET","//nearby.yaotv.cn/g/set_user_info?userInfo="+encodeURIComponent(JSON.stringify({tvmid:user.tvmid})));
+        a.callBack=function($data){
+            var data=toObject($data);
+            user.token=data.token;
+            action();
+        }
+        a.send()
+        a.err=function(){
+            hideLoading();
+            tishi('获取token失败')
+        }
+	}
+	function action(){
+		if(num>10){}
+		var a=setAjax('post','//nearby.yaotv.cn/index.php?s=bdtech/make_missile')
+		a.data='tvmid='+user.tvmid+'&token='+user.token+'&pid='+pid+'&tid='+tid+'&bid='+bid+'&num='+num+'&level='
+		a.callBack=function($data){
+			var data=toObject($data)
+			if(data.code=='200'){
+				createNode(DB,'p',{html:'制造'+num+'导弹成功~~共有 '+data.data.amount},'p2')
+			}else{
+				createNode(DB,'p',{html:'制造失败~~~'+data.msg},'p2')
+				console.log('制造失败~~~'+data.msg)
+			}
+		}
+		a.send();
+		a.err=function(){
+			console.log('err~~~')
+		}
+	}
+}
+
+
+
+</script>
+</body></html>

@@ -1,0 +1,103 @@
+<!doctype html><html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta content="email=no" name="format-detection" />
+    <meta name="apple-touch-fullscreen" content="YES">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!-- <link href="jc/main.css" rel="stylesheet" type="text/css">
+    <link href="jc/index.css" rel="stylesheet" type="text/css"> -->
+    <title>全民买楼</title>
+</head>
+<body>
+    <script charset="utf-8" src="http://map.qq.com/api/js?v=2.exp&key=IPVBZ-BO4HG-MD3QU-I75W4-F7KUZ-PSBYI"></script>
+   <!--  <script src="data/demo.js"></script> -->
+    <script src="jc/xdTools.js"></script>
+    <!-- <script src="jc/index.js"></script> -->
+</body>
+</html>
+<script type="text/javascript">
+(function(){
+var DO=document,DB=DO.body,winW=window.innerWidth,winH=window.innerHeight
+,mainVar={temporary:{}}
+,search=getSearch()
+,ST_user=localStorage.getItem("userInfo")
+,addata=localStorage.getItem("adobj")
+,adObj=toObject(addata)||{data:[],time:0}
+,ADDATA=adObj.data
+,userInfo=toObject(ST_user)||{}
+,MAP={
+    box:null,
+    zoom:15,
+    //maxZoom:10,
+    zoomControl:!1,
+    house:0,
+    city:"北京"
+    }    
+
+    var wrap=createNode(DB,"div",{className:"mainBox"});    
+    MAP.wrap=mainVar.box=wrap
+    setMap(MAP);
+
+    /*
+初始设置地图
+*/
+    function setMap($t){
+        var main=qq.maps,position=userInfo.location||{},region=position.region||"0-0-0-0"
+        ,lat=position.latitude||39.916527,lng=position.longitude||116.397128
+        ,menuH=20//Math.max(winW/5.6,50)
+        $t.LatLng=main.LatLng   
+        $t.center=new $t.LatLng(lat,lng);
+        $t.main=createNode($t.wrap,"div",{className:"mapBox",style:"height:"+(winH-menuH)+"px"});
+        $t.obj=new main.Map($t.main,$t);
+        $t.cityToPos=function($val){
+            if(!$t.geo)$t.geo=new main.Geocoder({
+                complete:function(result){                  
+                    var gps=result.detail.location
+                    gps.item="house"
+                    getHouse(gps)
+                    }})
+             $t.geo.getLocation($val)
+            }
+        //$t.latlngBounds=new main.LatLngBounds();
+        //调用地址解析类
+        $t.innerEle=function($opt){
+            var overlay=new CustomOverlay({pos:$opt.latlng,ele:$opt.ele});
+                overlay.setMap($t.obj);
+                return overlay
+        }
+        main.event.addListener($t.obj, 'bounds_changed', function() {
+            var bound=$t.obj.getBounds(),north=bound.getNorthEast(),south=bound.getSouthWest();
+               //console.log(north.getLat(),north.getLng(),south.getLat(),south.getLng())
+            });
+        function CustomOverlay($opt){
+            this.position =$opt.pos;
+            this.div=$opt.ele
+        }
+        CustomOverlay.prototype=new main.Overlay();
+        CustomOverlay.prototype.construct=function(){
+            var panes = this.getPanes(),div=this.div,sty=div.style;
+            sty.cursor = "pointer";
+            sty.position="absolute"
+            panes.overlayMouseTarget.appendChild(div);
+        }
+        CustomOverlay.prototype.draw=function($x,$y) {
+            var t=this,overlayProjection=t.getProjection()
+            ,pos=overlayProjection.fromLatLngToDivPixel(t.position)
+            ,x=$x||0,y=$y||0
+            ,sty=t.div.style;
+            sty.left=pos.x-x+"px";
+            sty.top =(pos.y-y-10)+"px";
+        }
+        CustomOverlay.prototype.destroy=function(){
+            this.div.onclick = null;
+            this.div.parentNode.removeChild(this.div);
+            this.div = null
+        }   
+    }
+
+
+
+})();   
+</script>

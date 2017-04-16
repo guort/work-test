@@ -1,0 +1,149 @@
+<!doctype html><html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+<meta content="email=no" name="format-detection" />
+<meta name="apple-touch-fullscreen" content="YES">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>收租</title>
+<style type="text/css">
+	*{margin:0;padding:0;}
+	html,body{width:100%;height:100%;overflow: auto;}
+
+</style>
+</head><body>
+
+<script src="jc/xdTools.js"></script>
+<script type="text/javascript">
+var DO=document,DB=DO.body,winW=window.innerWidth,winH=window.innerHeight
+,mainVar={}
+,search=getSearch()
+,ST_user=localStorage.getItem("userInfo")
+,userInfo=toObject(ST_user)||{}
+;
+
+
+
+GRT('wxh5848bcc2af119c3522ed1fbb','郭瑞涛');
+// GRT('wxh585e853020a7f857e463a2e3','你 猜');
+// GRT('wxh5848d5f4af119c3522ed1fce','沈  平');
+// GRT('wxh58540e0b9824e73adb61a10b','杜  桐');
+// GRT('wxh585b4d371f9d034241823b4b','小  雪');
+// GRT('wxh586711f3d85f6817d70e90c4','晓  峰');
+// GRT('wxh584b93b9a1d9223d37463758','廖志阳');
+// GRT('wxh58ca9514f629d57eedf3501e','心  动');
+// GRT('wxh5848c20f603f7b352a442096','章 节');
+
+
+
+
+
+function GRT(tvmid,name){if(!tvmid)return
+	var arr=[],ajax={},len=arr.length,i=0,tyh={},user={},timer=null
+	user.tvmid=tvmid
+	getToken()
+	function getToken(){
+		var a=setAjax("GET","//nearby.yaotv.cn/g/set_user_info?userInfo="+encodeURIComponent(JSON.stringify({tvmid:user.tvmid})));
+        a.callBack=function($data){
+            var data=toObject($data);
+            user.token=data.token;
+            getID()
+        }
+        a.send()
+        a.err=function(){
+            hideLoading();
+            tishi('获取token失败')
+        }
+	}
+	function getID(){
+		var a=setAjax("GET","http://nearby.yaotv.cn/g/q_user_buildings?tvmid="+user.tvmid+"&token="+user.token)
+        a.callBack=function($data){
+            var data=toObject($data);
+            if(data.code>0){
+            	console.log('获取id失败')
+            	tishi('获取id失败')
+            }else{
+            	for(var j=0;j<data.blist.length;j++){
+            		arr[j]=data.blist[j].id
+            	}
+            	action()
+            }
+        }
+        a.send()
+        a.err=function(){
+        	console.log('获取id失败')
+            tishi('获取id失败')
+        }
+	}
+	function action(){
+		var d,ppp,qqq
+		for(;i<arr.length;i++){
+			ajax[i]=setAjax('get','//nearby.yaotv.cn/g/get_rent?tvmid='+user.tvmid+'&token='+user.token+'&id='+arr[i])
+			ajax[i].callBack=function($data){
+				var data=toObject($data)
+				if(!data.code){
+					ppp=createNode(DB,'p',{className:'',html:timeNow()+name+' 收租成功&nbsp;&nbsp;'+data.money.bal+'----'+data.money.coin},'p2')
+					ppp.remove=function(){
+						var _=this
+						setTimeout(function(){
+							removeNode(_)
+						},300000)
+					}
+					ppp.remove()
+				}else{
+					console.log('  收租失败~~~~~'+timeNow())
+					clearInterval(getToken.timer)
+					getToken.timer=setInterval(function(){
+						for(var j=0;j<len;j++){
+							ajax[j].send();
+							tyh[i].send()
+						}
+					},300000)
+				} 
+			}
+			tyh[i]=setAjax('post','//nearby.yaotv.cn/index.php?s=bdtech/more_collection_sunshine')
+			tyh[i].data="tvmid="+
+						user.tvmid+
+						"&token="+user.token+
+						"&bid="+arr[i]+
+						"&tid=6";
+			tyh[i].callBack=function($data){
+				var data=toObject($data);
+				if(data.code==200)
+				{
+					var dt=data.data||{};
+					dt.num=dt.num||0;
+					console.log(name+' 收花'+dt.num)	
+					qqq=createNode(DB,'p',{className:'',html:timeNow()+name+' 收太阳花成功&nbsp;&nbsp;'+dt.num},'p2')	
+					qqq.remove=function(){
+						var _=this
+						setTimeout(function(){
+							removeNode(_)
+						},300000)
+					}
+					qqq.remove()		
+				}else{
+					if(data.msg.indexOf('太阳还在制造中')<0){
+						console.log(name+"  "+data.msg)
+					}
+				}
+			};
+			ajax[i].send();
+			tyh[i].send()
+		}
+		getToken.timer=setInterval(function(){
+			for(var j=0;j<arr.length;j++){
+				ajax[j].send();
+				tyh[j].send()
+			}
+		},5.5*60*1000)
+	}
+	function timeNow(){
+		var rq=(new Date()),tttt='&nbsp;&nbsp;'+B(rq.getHours())+' : '+B(rq.getMinutes())+'&nbsp;&nbsp;'
+		return tttt
+	}
+}
+
+</script>
+</body></html>

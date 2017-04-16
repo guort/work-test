@@ -1,0 +1,142 @@
+<!doctype html><html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+<meta content="email=no" name="format-detection" />
+<meta name="apple-touch-fullscreen" content="YES">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link href="" rel="stylesheet" type="text/css">
+<style type="text/css">
+	html,body{width:100%;height:100%;margin:0;}
+	/*提示*/
+.tips{width:100%;height:26px;background-color:rgba(0,0,0,.4);position:absolute;top:48px;text-align:center;overflow:hidden;opacity:0;-webkit-transform:translate3d(0,0,0);}
+.tips .radio{height:100%;font-size:12px;line-height:25px;color:#e1c110;display:inline-block;white-space:nowrap;position: absolute;left:100%;-webkit-transform:translate3d(0,0,0);}
+.tips .radio img{width:30px;height:26px;vertical-align:top;}
+.tips .radio b{display:inline-block;overflow:hidden;vertical-align:top;}
+.tips .radio b.name{}
+.animated{-webkit-animation-duration:7s;animation-duration:7s;-webkit-animation-fill-mode:both;animation-fill-mode:both;}
+@-webkit-keyframes bounceInRight {from, 60%, 75%, 90%, to {-webkit-animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);}from {opacity: 0;-webkit-transform: translate3d(1000px, 0, 0);transform: translate3d(1000px, 0, 0);}60% {opacity: 1;-webkit-transform: translate3d(-25px, 0, 0);transform: translate3d(-25px, 0, 0);}75% {-webkit-transform: translate3d(10px, 0, 0);transform: translate3d(10px, 0, 0);}90% {-webkit-transform: translate3d(-5px, 0, 0);transform: translate3d(-5px, 0, 0);}to {-webkit-transform: none;transform: none;}}
+@-webkit-keyframes bounceOutLeft {20% {opacity: 1;-webkit-transform: translate3d(20px, 0, 0);transform: translate3d(20px, 0, 0);}to {opacity: 0;-webkit-transform: translate3d(-2000px, 0, 0);transform: translate3d(-2000px, 0, 0);}}
+.bounceInRight {-webkit-animation-name: bounceInRight;animation-name: bounceInRight;}
+.bounceOutLeft {-webkit-animation-name: bounceOutLeft;animation-name: bounceOutLeft;}
+@-webkit-keyframes bouceLeft {0% {opacity:1;}to {opacity:1;left:0;-webkit-transform:translate3d(-100%,0,0);}}
+.bouceLeft {-webkit-animation-name: bouceLeft;animation-name: bouceLeft;-webkit-animation-timing-function:linear;}
+
+
+@media screen and (min-width:320px) and (max-width:359px){
+	.protectBG{font-size:42.667px;}
+}
+@media screen and (min-width:360px) and (max-width:374px){
+	.protectBG{font-size:48px;}
+}
+@media screen and (min-width:375px) and (max-width:413px){
+	.protectBG{font-size:50px;}
+}
+@media screen and (min-width:414px){
+	.protectBG{font-size:55.2px;}
+}
+
+</style>
+<title>倒计时</title>
+</head><body>
+<script src="jc/xdTools.js"></script>
+<script src=""></script>
+<script type="text/javascript">
+var DO=document,DB=DO.body,winW=window.innerWidth,winH=window.innerHeight
+,mainVar={}
+,search=getSearch()
+,ST_user=localStorage.getItem("userInfo")
+,userInfo=toObject(ST_user)||{}
+;
+
+
+
+
+
+
+//http://qa-nearby.yaotv.cn/g/q_world_dynamic?tvmid=wxh587d7e4f594af2290c79d259&token=ce3c3bd0c3f640208e021ba9c0644db5&stime=0&nocache=0.5552177356687222
+userInfo.tvmid='wxh587d7e4f594af2290c79d259'
+userInfo.token='b7fbdb37855d45fb8641d2e962a8aea2'
+tips()
+function tips(){                    
+    var box=createNode(DB,'div',{className:'tips'},'p3')
+        ,tipsArr=[]
+        ,timer=null
+        ,actionFlag=true//true 动画执行 false 等待
+        ,getFlag=true//获取数据开关
+        ,stime=0
+        ;
+    getDM()
+    function getDM(){
+        if(!getFlag)return
+        getFlag=false;    
+        var a,data,len
+        a=setAjax('GET',HOST.GL+'/g/q_world_dynamic?tvmid='+userInfo.tvmid+'&token='+userInfo.token+'&stime='+stime+'&'+nocache())
+        a.callBack=function($data){
+            if($data){
+                data=toObject($data)||{};
+                if(!data.code)tipsArr=data.dynamics||[]
+            }
+            getFlag=true;
+        }
+        a.send()
+        a.err=function(){
+            getFlag=true;
+        }
+    }
+    function tipsAction(){
+        if(!actionFlag)return
+        actionFlag=false
+        var data,nickname,building,desc
+        if(!!tipsArr&&tipsArr.length!=0){
+            box.style.opacity='1'
+            data=tipsArr.shift();
+            stime=data.time||stime
+            desc=data.content||''
+            var html='<img src="img/trumpet.png"><b>&nbsp;&nbsp;:&nbsp;&nbsp;</b><b class="name">'+desc+'</b>';
+            var li=createNode(box,'div',{className:'radio animated bouceLeft',html:html,},'p3')
+            li.timer=function(){
+                var _this=this
+                setTimeout(function(){
+                    // _this.className='radio animated'
+                    li.addEventListener('webkitAnimationEnd',function(){
+                    	console.log(1)
+                    	box.removeChild(_this)
+                    },false)
+                    setTimeout(function(){
+                        actionFlag=true
+                    },500)
+                },5000)
+            }
+            li.timer();
+            paopao({ele:DB,frameImg:"img/jianshe.png"
+                ,frameLen:14
+                ,framePosition:"bottom"
+                ,width:120
+                ,height:120
+                ,runTime:2
+                ,style:"position:absolute;z-index:10;top:100px;left:100px;-webkit-transform:translate(-13px,-69px)"
+                ,overFun:function(){
+                    // alert('动画结束')
+                }
+            });
+        }else{
+            box.style.opacity='0'
+            actionFlag=true
+            if(getFlag){
+                getFlag=false;
+                setTimeout(function(){
+                    getFlag=true;
+                    getDM()
+                },5000)
+            }
+        }
+    }
+    timer=setInterval(function(){
+        tipsAction()
+    },200)
+}
+
+</script>
+</body></html>

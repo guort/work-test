@@ -1,0 +1,269 @@
+<!doctype html><html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+<meta content="email=no" name="format-detection" />
+<meta name="apple-touch-fullscreen" content="YES">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>收  花</title>
+<style type="text/css">
+	*{margin:0;padding:0;}
+	html,body{width:100%;height:100%;overflow: auto;}
+		#ipt{display: block;width:200px;height:50px;font-size: 18px;color:red;border:1px solid #000;margin-top: 50px;}
+		#ipt2{display: block;width:200px;height:50px;font-size: 18px;color:red;border:1px solid #000;margin-top: 50px;}
+	#btn{width: 100px;height: 40px;display: inline-block;background-color: red;color:#000;font-size: 15px;font-weight: 700;}
+	#btn2{width: 100px;height: 40px;display: block;background-color: red;color:#000;font-size: 15px;font-weight: 700;}
+	#btn3{width:30px;height:30px;margin-left: 20px;background-color:pink;}
+	#stop11{width: 100px;height: 40px;display: inline-block;margin-top: 50px;background-color: yellow;color:#000;font-size: 15px;font-weight: 700;}
+	#stop22{width: 50px;height: 40px;display: inline-block;margin-top: 50px;margin-left:20px;background-color: red;color:#000;font-size: 15px;font-weight: 700;}
+
+	#cont{
+		width: 60%;
+		height: 100%;
+		position: absolute;
+		top:0;
+		right: 0;
+	}
+</style>
+</head><body>
+<input type="test" name="bid" id='ipt' placeholder="被收者tvmid">
+<button id="btn">收 花（全）</button><button id="btn3">清除</button>
+<input type="test" name="bid" id='ipt2' placeholder="被收者bid">
+<button id="btn2">收 花（单）</button>
+<button id="stop11"> 随机收花 </button><button id="stop22">停止</button>
+<div id="cont"></div>
+<script src="jc/xdTools.js"></script>
+<script type="text/javascript">
+var DO=document,DB=DO.body,winW=window.innerWidth,winH=window.innerHeight
+,mainVar={}
+,search=getSearch()
+,ST_user=localStorage.getItem("userInfo")
+,userInfo=toObject(ST_user)||{}
+,flag=true
+,user={}
+,people={}
+;
+// wxh5848bcc2af119c3522ed1fbb
+// 4fcf774618d348c681a7066f5e855bf8
+
+
+//大户
+// wxh5888b862c028902375a3ed01
+//wxh588c907681f61e4d0bef421c
+//sjh58586d98ecd5337a7429ef7d
+//wxh588c84f465dba347b64df6a0 十级护盾
+
+
+// GRT({tvmid:'wxh5848bcc2af119c3522ed1fbb',pTvmid:'wxh5857d94ae860367f300aa41a',bid:''});
+
+
+btn.onclick=function(){
+	var v=ipt.value;
+	if(!v){
+		tishi('请输入tvmid')
+	}else{
+		cont.innerHTML=''
+		GRT({tvmid:'wxh5848bcc2af119c3522ed1fbb',pTvmid:v,bid:''});
+		
+	}
+}
+btn2.onclick=function(){
+	var v=ipt2.value;
+	if(!v){
+		tishi('请输入bid')
+	}else{
+		cont.innerHTML=''
+		GRT({tvmid:'wxh5848bcc2af119c3522ed1fbb',pTvmid:'',bid:v});
+	}
+}
+btn3.onclick=function(){
+	ipt.value=''
+	ipt2.value=''
+}
+
+
+stop11.onclick=function(){
+	muchHua()
+}
+stop22.onclick=function(){
+	clearInterval(mainVar.timer2)
+}
+
+
+
+
+
+function GRT($opt){if(!$opt)return
+	var opt=$opt||{},arr=[],ajax={},len=arr.length,i=0,timer=null,maxNum=opt.num,tt,l=0
+	user.tvmid=opt.tvmid||'wxh5848bcc2af119c3522ed1fbb'
+	people.tvmid=opt.pTvmid||"wxh5848bcc2af119c3522ed1fbb"
+	people.bid=opt.bid
+	if(people.tvmid=='wxh5848bcc2af119c3522ed1fbb'&&user.tvmid!='wxh5848bcc2af119c3522ed1fbb'){
+		alert('不能收我的太阳~~~')
+		return
+	}
+	getToken()
+	function getToken(){
+		var a=setAjax("GET","//nearby.yaotv.cn/g/set_user_info?userInfo="+encodeURIComponent(JSON.stringify({tvmid:user.tvmid})));
+        a.callBack=function($data){
+            var data=toObject($data);
+            user.token=data.token;
+            getPeopleToken()
+        }
+        a.send()
+        a.err=function(){
+            hideLoading();
+            tishi('获取token失败')
+        }
+	}
+	function getPeopleToken(){
+		var a=setAjax("GET","//nearby.yaotv.cn/g/set_user_info?userInfo="+encodeURIComponent(JSON.stringify({tvmid:people.tvmid})));
+        a.callBack=function($data){
+            var data=toObject($data);
+            people.token=data.token;
+            getID()
+        }
+        a.send()
+        a.err=function(){
+            hideLoading();
+            tishi('获取token失败')
+        }
+	}
+	function getID(){
+		var a=setAjax("GET","http://nearby.yaotv.cn/g/q_user_buildings?tvmid="+people.tvmid+"&token="+people.token)
+        a.callBack=function($data){
+            var data=toObject($data);
+            if(data.code>0){
+            	console.log('获取id失败')
+            	tishi('获取id失败')
+            }else{
+            	for(var j=0;j<data.blist.length;j++){
+            		arr[j]=data.blist[j].id
+            	}
+            	shou()
+            }
+        }
+        a.send()
+        a.err=function(){
+        	console.log('获取id失败')
+            tishi('获取id失败')
+        }
+	}
+	function shou(){
+		var a,i=0,qqq
+		if(people.bid){
+			arr=[people.bid]
+		}
+		for(;i<arr.length;i++){
+			ajax[i]=setAjax('post','//nearby.yaotv.cn/index.php?s=bdtech/more_collection_sunshine')
+			ajax[i].data="tvmid="+
+				user.tvmid+
+				"&token="+user.token+
+				"&bid="+arr[i]+
+				"&tid=6";
+			ajax[i].callBack=function($data){
+				var data=toObject($data);
+				if(data.code==200)
+				{
+					var dt=data.data||{};
+					dt.num=dt.num||0;
+					qqq=createNode(cont,'p',{className:'',html:timeNow()+' 收太阳花成功&nbsp;&nbsp;'+dt.num},'p2')	
+					qqq.remove=function(){
+						var _=this
+						setTimeout(function(){
+							removeNode(_)
+						},300000)
+					}
+					// qqq.remove()		
+				}else{
+					console.log("  "+data.msg)
+					tt=createNode(cont,'p',{className:'',html:timeNow()+' '+data.msg},'p2')
+					tt.remove=function(){
+						var _=this
+						setTimeout(function(){
+							removeNode(_)
+						},2000)
+					}
+					tt.remove()
+				}
+				flag=true;
+			};	
+			ajax[i].err=function(){
+				alert('发送失败')
+			}
+		}
+		mainVar.timer=setInterval(function(){
+			var t=Math.random()*700+300
+			if(flag){
+				flag=false;
+				setTimeout(function(){
+					ajax[l].send();
+					l++
+					if(l>=arr.length){
+						tishi('收花完成~~',{showTime:2000})
+						clearInterval(mainVar.timer)
+					}
+				},t)
+			}
+		},500)
+	}
+	function timeNow(){
+		var rq=(new Date()),tttt='&nbsp;&nbsp;'+B(rq.getHours())+' : '+B(rq.getMinutes())+'&nbsp;&nbsp;'
+		return tttt
+	}
+}
+function muchHua($opt){
+	var number=0
+	user.tvmid='wxh5848bcc2af119c3522ed1fbb'
+	getToken()
+	function getToken(){
+		var a=setAjax("GET","//nearby.yaotv.cn/g/set_user_info?userInfo="+encodeURIComponent(JSON.stringify({tvmid:user.tvmid})));
+        a.callBack=function($data){
+            var data=toObject($data);
+            user.token=data.token;
+           	time2()
+        }
+        a.send()
+        a.err=function(){
+            hideLoading();
+            tishi('获取token失败')
+        }
+	}
+	function shouhua($bid){
+		var a=setAjax('post','//nearby.yaotv.cn/index.php?s=bdtech/more_collection_sunshine')
+		a.data="tvmid="+user.tvmid+
+			"&token="+user.token+
+			"&bid="+$bid+
+			"&tid=6";
+		a.callBack=function($data){
+				var data=toObject($data),n;
+				if(data.code==200)
+				{
+					var dt=data.data||{};
+					n=dt.num||0;
+					number+=n
+					cont.innerHTML='收到太阳花~~'+number+'朵'
+				}else{
+					
+				}
+				
+			};	
+		a.send()	
+		a.err=function(){
+				
+		}
+	}
+
+	function time2(){
+		mainVar.timer2=setInterval(function(){
+			var n=Math.ceil(Math.random()*50000) 
+			shouhua(n)
+		},200)
+	}
+}
+
+
+
+</script>
+</body></html>
