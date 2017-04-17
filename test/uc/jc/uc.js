@@ -16,13 +16,13 @@ function init(){
 	mainVar.dialog=new confirmAlert()
 	// mainVar.dialog.init();
 	mainVar.dialog.extend('alert',function($opt){
-		var CSS='#confirm_dialog{width:5.36em;height:3.25em;position:absolute;left:50%;top:50%;margin-top:-1.62em;margin-left:-2.68em;background-color:#f9f7fa;border-radius:5px;}\
-		#confirm_dialog .cont{height:2.16em;padding:0 0.5em;text-align:center;overflow:hidden;}\
-		#confirm_dialog .cont b{vertical-align:top;}\
-		#confirm_dialog .cont .c1{margin-top:0.8em;line-height:0.6em;}\
-		#confirm_dialog .cont .c1 b{font-size:0.3em;color:#000;}\
-		#confirm_dialog .close{height:1.09em;border-top:1px solid #666;line-height:1.09em;color:#0067bf;text-align:center;}\
-		#confirm_dialog .close b{font-size:0.35em;}'
+		var CSS='#confirm_dialog1{width:5.36em;height:3.25em;position:absolute;left:50%;top:50%;margin-top:-1.62em;margin-left:-2.68em;background-color:#f9f7fa;border-radius:5px;}\
+		#confirm_dialog1 .cont{height:2.16em;padding:0 0.5em;text-align:center;overflow:hidden;}\
+		#confirm_dialog1 .cont b{vertical-align:top;}\
+		#confirm_dialog1 .cont .c1{margin-top:0.8em;line-height:0.6em;}\
+		#confirm_dialog1 .cont .c1 b{font-size:0.3em;color:#000;}\
+		#confirm_dialog1 .close{height:1.09em;border-top:1px solid #666;line-height:1.09em;color:#0067bf;text-align:center;}\
+		#confirm_dialog1 .close b{font-size:0.35em;}'
 
 		if(!this.temporary.css['alert']){
 			setStyle(CSS);
@@ -40,7 +40,7 @@ function init(){
 				cont='<b>已注册手机号不可领取</b><br/><b>请重新输入</b>'
 			break;
 		}
-		var html='<div id="confirm_dialog">\
+		var html='<div id="confirm_dialog1">\
 			<div class="cont"><div class="c1">'+cont+'</div></div>\
 			<div class="close" action="close-dialog"><b>确认</b></div>\
 		</div>'
@@ -48,7 +48,7 @@ function init(){
 			name:'confirm',
 			html:html,
 			bgColor:1,
-			bgClose:1
+			bgClose:0
 		})
 
 	})
@@ -178,7 +178,7 @@ function confirmAlert(){
 		bgBox=createNode(ele,'div',{className:'confirm_Dialog_Box'},'p3')
 		contentBox=createNode(bgBox,'div',{className:'content_Dialog_Box dialog-in-1',action:(bgClose?'close-dialog':''),html:html},'p3')
 		if(!isFirstDom){isFirstDom=bgBox}
-		if(!isColor){
+		if(bgColor&&!isColor){
 			isFirstDom.style.backgroundColor='rgba(0,0,0,.7)'
 			isColor=true;
 		}
