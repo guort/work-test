@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=375,user-scalable=no">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="//assets.yaomall.tvm.cn/staticfile/assets/css/common.css" />
+    <link rel="stylesheet" href="//assets.yaomall.tvm.cn/staticfile/assets/css/store-shipping-address.css" />
+    <link rel="stylesheet" href="//assets.yaomall.tvm.cn/staticfile/assets/css/store-new-address.css" />
+    <link rel="stylesheet" href="//assets.yaomall.tvm.cn/staticfile/assets/css/choose-district.css" />
+    <script src="//assets.yaomall.tvm.cn/staticfile/assets/js/jquery-latest.min.js"></script>
+    <script src="//assets.yaomall.tvm.cn/staticfile/assets/js/index.min.js"></script>
+    <script src="//assets.yaomall.tvm.cn/staticfile/assets/js/common.js"></script>
+    <script src="//assets.yaomall.tvm.cn/staticfile/assets/js/deal-districts.js"></script>
+    <script src="//assets.yaomall.tvm.cn/staticfile/assets/js/store-select-area.js"></script>
+    <script src="//assets.yaomall.tvm.cn/staticfile/assets/js/store-shipping-address.js"></script>
+    <title>收货地址管理</title>
+    <script>
+        var _wxToken = "46497107fa23";
+        var _apiToken = "1076c7e576";
+    </script>
+</head>
+<body>
+    <div id="store-shipping-address-main">
+        <div id="deal-shipping-address-empty-tip" data-address-size="4">
+            还没有收货地址，点击右下角 "+" 添加^_^
+        </div>
+        <div class="store-shipping-address-list-parent">
+                            <div class="store-shipping-address-list"
+                     data-address-id="6b35b713-5e02-6f97-772e-364fb66c684a"
+                     data-address-name="张建斌"
+                     data-address-phone="18610827608"
+                     data-address-provice="北京"
+                     data-address-provice_id="1"
+                     data-address-city="朝阳区"
+                     data-address-city_id="72"
+                     data-address-area="三环到四环之间"
+                     data-address-area_id="2819"
+                     data-address-town=""
+                     data-address-town_id=""
+                     data-address-street="金台西路2号院民1号楼411室"
+                     data-address-postalcode=""
+                     data-address-district-value="1,72,2819">
+                    <div class="store-shipping-address-detail-shipping-person">
+                        <div class="store-shipping-address-detail-person-phonenum">
+                            <div class="store-shipping-address-detail-person">
+                                <div class="store-shipping-address-detail-person-value">
+                                    张建斌                                </div>
+                            </div>
+                            <span class="store-shipping-address-detail-phone-num">18610827608</span>
+                        </div>
+                        <div class="store-shipping-address-detail-shipping-address">
+                            <div class="store-shipping-address-detail-shipping-address-value">
+                                北京朝阳区三环到四环之间金台西路2号院民1号楼411室                            </div>
+                        </div>
+                    </div>
+                    <div class="store-shipping-address-operator">
+                        <div data-name="set-default-icon" class="store-shipping-address-operator-left">
+                            <em class="store-shipping-address-default-icon-en">
+                            </em>
+                            <span class="store-shipping-address-setting-default">默认地址</span>
+                        </div>
+                        <div class="store-shipping-address-operator-right">
+                            <span class="store-shipping-address-operator-edit">编辑</span>
+                            <span class="store-shipping-address-operator-delete">删除</span>
+                        </div>
+                    </div>
+                </div>
+                            <div class="store-shipping-address-list"
+                     data-address-id="eac474e8-7ca9-09b7-a112-5eef6664708a"
+                     data-address-name="郭瑞涛"
+                     data-address-phone="15611508116"
+                     data-address-provice="北京"
+                     data-address-provice_id="1"
+                     data-address-city="朝阳区"
+                     data-address-city_id="72"
+                     data-address-area="三环以内"
+                     data-address-area_id="2799"
+                     data-address-town=""
+                     data-address-town_id=""
+                     data-address-street="北京市朝阳区工体北路甲6号中宇大厦2层天脉聚源"
+                     data-address-postalcode="100027"
+                     data-address-district-value="1,72,2799">
+                    <div class="store-shipping-address-detail-shipping-person">
+                        <div class="store-shipping-address-detail-person-phonenum">
+                            <div class="store-shipping-address-detail-person">
+                                <div class="store-shipping-address-detail-person-value">
+                                    郭瑞涛                                </div>
+                            </div>
+                            <span class="store-shipping-address-detail-phone-num">15611508116</span>
+                        </div>
+                        <div class="store-shipping-address-detail-shipping-address">
+                            <div class="store-shipping-address-detail-shipping-address-value">
+                                北京朝阳区三环以内北京市朝阳区工体北路甲6号中宇大厦2层天脉聚源                            </div>
+                        </div>
+                    </div>
+                    <div class="store-shipping-address-operator">
+                        <div data-name="set-default-icon" class="store-shipping-address-operator-left">
+                            <em class="store-shipping-address-default-icon-un">
+                            </em>
+                            <span class="store-shipping-address-setting-default">默认地址</span>
+                        </div>
+                        <div class="store-shipping-address-operator-right">
+                            <span class="store-shipping-address-operator-edit">编辑</span>
+                            <span class="store-shipping-address-operator-delete">删除</span>
+                        </div>
+                    </div>
+                </div>
+                            <div class="store-shipping-address-list"
+                     data-address-id="69b36092-2d7c-e3ba-888b-c13393136065"
+                     data-address-name="郭瑞涛"
+                     data-address-phone="15611508116"
+                     data-address-provice="北京"
+                     data-address-provice_id="1"
+                     data-address-city="昌平区"
+                     data-address-city_id="2901"
+                     data-address-area="六环以内"
+                     data-address-area_id="4135"
+                     data-address-town=""
+                     data-address-town_id=""
+                     data-address-street="北京市昌平区 天通苑4区11号楼6单元602"
+                     data-address-postalcode="102200"
+                     data-address-district-value="1,2901,4135">
+                    <div class="store-shipping-address-detail-shipping-person">
+                        <div class="store-shipping-address-detail-person-phonenum">
+                            <div class="store-shipping-address-detail-person">
+                                <div class="store-shipping-address-detail-person-value">
+                                    郭瑞涛                                </div>
+                            </div>
+                            <span class="store-shipping-address-detail-phone-num">15611508116</span>
+                        </div>
+                        <div class="store-shipping-address-detail-shipping-address">
+                            <div class="store-shipping-address-detail-shipping-address-value">
+                                北京昌平区六环以内北京市昌平区 天通苑4区11号楼6单元602                            </div>
+                        </div>
+                    </div>
+                    <div class="store-shipping-address-operator">
+                        <div data-name="set-default-icon" class="store-shipping-address-operator-left">
+                            <em class="store-shipping-address-default-icon-un">
+                            </em>
+                            <span class="store-shipping-address-setting-default">默认地址</span>
+                        </div>
+                        <div class="store-shipping-address-operator-right">
+                            <span class="store-shipping-address-operator-edit">编辑</span>
+                            <span class="store-shipping-address-operator-delete">删除</span>
+                        </div>
+                    </div>
+                </div>
+                            <div class="store-shipping-address-list"
+                     data-address-id="423bb2a1-b9c9-be08-82ed-b71615f4d141"
+                     data-address-name="崔国勇"
+                     data-address-phone="13522414321"
+                     data-address-provice="北京"
+                     data-address-provice_id="1"
+                     data-address-city="通州区"
+                     data-address-city_id="2809"
+                     data-address-area="永顺镇"
+                     data-address-area_id="51218"
+                     data-address-town=""
+                     data-address-town_id=""
+                     data-address-street="通州区永顺镇温榆河西路新建村18号楼二单元1801"
+                     data-address-postalcode=""
+                     data-address-district-value="1,2809,51218">
+                    <div class="store-shipping-address-detail-shipping-person">
+                        <div class="store-shipping-address-detail-person-phonenum">
+                            <div class="store-shipping-address-detail-person">
+                                <div class="store-shipping-address-detail-person-value">
+                                    崔国勇                                </div>
+                            </div>
+                            <span class="store-shipping-address-detail-phone-num">13522414321</span>
+                        </div>
+                        <div class="store-shipping-address-detail-shipping-address">
+                            <div class="store-shipping-address-detail-shipping-address-value">
+                                北京通州区永顺镇通州区永顺镇温榆河西路新建村18号楼二单元1801                            </div>
+                        </div>
+                    </div>
+                    <div class="store-shipping-address-operator">
+                        <div data-name="set-default-icon" class="store-shipping-address-operator-left">
+                            <em class="store-shipping-address-default-icon-un">
+                            </em>
+                            <span class="store-shipping-address-setting-default">默认地址</span>
+                        </div>
+                        <div class="store-shipping-address-operator-right">
+                            <span class="store-shipping-address-operator-edit">编辑</span>
+                            <span class="store-shipping-address-operator-delete">删除</span>
+                        </div>
+                    </div>
+                </div>
+                    </div>
+
+        <!-- 删除提示 -->
+        <div id="store-shipping-address-delete-window">
+            <div class="store-shipping-address-deltips">
+                <div class="store-shipping-address-deltips-question">确定要删除此收货地址吗？</div>
+                <div class="store-shipping-address-deltips-answer">
+                    <div class="store-shipping-address-deltips-answer-no">取消</div>
+                    <div class="store-shipping-address-deltips-answer-yes">确定</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="store-shipping-address-new">
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
+    <!-- 新增地址弹窗 -->
+<div id="store-payment-edit-new-address">
+    <div class="store-payment-edit-new-address-title">
+        <span class="store-payment-edit-new-address-title-left">取消</span>
+        <span class="store-payment-edit-new-address-title-middle">新增地址</span>
+    </div>
+    <div class="store-payment-edit-new-address-person-info">
+        <div class="store-payment-edit-new-address-person-info-items">
+            <div class="store-payment-edit-new-address-person-info-items-key">收件人</div>
+            <div class="deal-address-item-value">
+                <input id="add-address-person-name" class="store-payment-edit-new-address-person-info-items-value"
+                       type="text" placeholder="" maxlength="10">
+            </div>
+        </div>
+        <div class="store-payment-edit-new-address-person-info-items">
+            <div class="store-payment-edit-new-address-person-info-items-key">手机号码</div>
+            <div class="deal-address-item-value">
+                <input id="add-address-person-phone" class="store-payment-edit-new-address-person-info-items-value"
+                       type="tel" placeholder=""
+                                    />
+            </div>
+        </div>
+        <div class="store-payment-edit-new-address-person-info-items">
+            <div class="store-payment-edit-new-address-person-info-items-key">选择地区</div>
+            <div class="deal-address-item-value">
+                <input id="add-address-person-region"
+                       class="store-payment-edit-new-address-person-info-items-value store-region-select" type="text"
+                       placeholder=""
+                       readonly="readonly"
+                       value="" data-value="" data-text="" />
+            </div>
+        </div>
+        <div class="store-payment-edit-new-address-person-info-items store-payment-detailed-addres">
+            <div class="store-payment-edit-new-address-person-info-items-key">详细地址</div>
+            <div class="deal-address-item-value">
+                <textarea id="add-address-person-street"
+                          class="store-payment-edit-new-address-person-info-items-value store-payment-detailed-addres-value"
+                          type="text" placeholder=""></textarea>
+            </div>
+        </div>
+        <div class="store-payment-edit-new-address-person-info-items">
+            <div class="store-payment-edit-new-address-person-info-items-key">邮政编码</div>
+            <div class="deal-address-item-value">
+                <input id="add-address-person-zipcode" class="store-payment-edit-new-address-person-info-items-value"
+                       type="tel" placeholder="" maxlength="6">
+            </div>
+        </div>
+    </div>
+    <div class="store-payment-edit-new-address-title-right">保存</div>
+</div>
+
+<!-- 编辑地址弹窗 -->
+<div id="store-shipping-address-edit-new-address">
+    <div class="store-shipping-address-edit-new-address-title">
+        <span class="store-shipping-address-edit-new-address-title-left">取消</span>
+        <span class="store-payment-edit-new-address-title-middle">编辑地址</span>
+    </div>
+    <div class="store-payment-edit-new-address-person-info">
+        <div class="store-payment-edit-new-address-person-info-items">
+            <div class="store-payment-edit-new-address-person-info-items-key">收件人</div>
+            <div class="deal-address-item-value">
+                <input id="address-person-name"
+                       class="store-payment-edit-new-address-person-info-items-value" type="text"
+                       placeholder="" maxlength="10">
+                <input id="address-person-id" type="hidden" value="" />
+            </div>
+        </div>
+        <div class="store-payment-edit-new-address-person-info-items">
+            <div class="store-payment-edit-new-address-person-info-items-key">手机号码</div>
+            <div class="deal-address-item-value">
+                <input id="address-person-phone"
+                       class="store-payment-edit-new-address-person-info-items-value" type="text"
+                       placeholder="">
+            </div>
+        </div>
+        <div class="store-payment-edit-new-address-person-info-items">
+            <div class="store-payment-edit-new-address-person-info-items-key">选择地区</div>
+            <div class="deal-address-item-value">
+                <input id="address-person-region"
+                       class="store-payment-edit-new-address-person-info-items-value store-region-select" type="text"
+                       placeholder=""
+                       readonly="readonly"
+                       value="" data-value="" data-text="" />
+            </div>
+        </div>
+        <div class="store-payment-edit-new-address-person-info-items store-payment-detailed-addres">
+            <div class="store-payment-edit-new-address-person-info-items-key">详细地址</div>
+            <div class="deal-address-item-value">
+                <textarea id="address-person-street"
+                          class="store-payment-edit-new-address-person-info-items-value store-payment-detailed-addres-value"
+                          type="text" placeholder=""></textarea>
+            </div>
+        </div>
+        <div class="store-payment-edit-new-address-person-info-items">
+            <div class="store-payment-edit-new-address-person-info-items-key">邮政编码</div>
+            <div class="deal-address-item-value">
+                <input id="address-person-zipcode"
+                       class="store-payment-edit-new-address-person-info-items-value" type="tel"
+                       placeholder="" maxlength="6">
+            </div>
+        </div>
+    </div>
+    <div class="store-shipping-address-edit-new-address-title-right">保存</div>
+</div><!-- 新增和编辑地址弹窗 -->
+
+    <!-- 页面loading层 -->
+    <div id="store-shipping-address-loading">
+        <div class="loading-dot">
+            <div class="loading-dot-container">
+                <div class="loading-dot-wheel">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

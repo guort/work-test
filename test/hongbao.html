@@ -1,0 +1,710 @@
+<!doctype html><html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+<meta content="email=no" name="format-detection" />
+<meta name="apple-touch-fullscreen" content="YES">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>收  花</title>
+<style type="text/css">
+	*{margin:0;padding:0;}
+	html,body{width:100%;height:100%;overflow: auto;}
+		#ipt{display: block;width:200px;height:50px;font-size: 18px;color:red;border:1px solid #000;margin-top: 50px;}
+		#ipt2{display: block;width:200px;height:50px;font-size: 18px;color:red;border:1px solid #000;margin-top: 50px;}
+	#btn{width: 100px;height: 40px;display: inline-block;background-color: red;color:#000;font-size: 15px;font-weight: 700;}
+	#btn2{width: 100px;height: 40px;display: block;background-color: red;color:#000;font-size: 15px;font-weight: 700;}
+	#btn3{width:30px;height:30px;margin-left: 20px;background-color:pink;}
+	#stop11{width: 100px;height: 40px;display: inline-block;margin-top: 50px;background-color: yellow;color:#000;font-size: 15px;font-weight: 700;}
+	#stop22{width: 50px;height: 40px;display: inline-block;margin-top: 50px;margin-left:20px;background-color: red;color:#000;font-size: 15px;font-weight: 700;}
+
+	#cont{
+		width: 60%;
+		height: 100%;
+		position: absolute;
+		top:0;
+		right: 0;
+	}
+</style>
+</head><body>
+<input type="test" name="bid" id='ipt' placeholder="被收者tvmid">
+<button id="btn">收 花（全）</button><button id="btn3">清除</button>
+<div id="cont"></div>
+<script src="jc/xdTools.js"></script>
+<script src='https://cdn-public-ylc.yaotv.tvm.cn/hall/static/ext/jquery-1.11.0.min.js'></script>
+<script src='https://cdn-public-ylc.yaotv.tvm.cn/hall/static/ext/cookie-storage.js'></script>
+<script type="text/javascript">
+var DO=document,DB=DO.body,winW=window.innerWidth,winH=window.innerHeight
+,mainVar={}
+,search=getSearch()
+,ST_user=localStorage.getItem("userInfo")
+,userInfo=toObject(ST_user)||{}
+,flag=true
+,user={}
+,people={}
+;
+// wxh5848bcc2af119c3522ed1fbb
+// 4fcf774618d348c681a7066f5e855bf8
+
+
+//大户
+// wxh5888b862c028902375a3ed01
+//wxh588c907681f61e4d0bef421c
+//sjh58586d98ecd5337a7429ef7d
+//wxh588c84f465dba347b64df6a0 十级护盾
+
+
+// GRT({tvmid:'wxh5848bcc2af119c3522ed1fbb',pTvmid:'wxh5857d94ae860367f300aa41a',bid:''});
+
+
+btn.onclick=function(){
+	GRT()
+}
+function GRT($opt){
+
+
+	getToken()
+	function getToken(){
+		storage.set("rbt_join", 50);
+		var a=setAjax("POST","//hall-app.yaotv.tvm.cn/building/moneytree/partakeMoneyTree")
+		a.data='gold=50'
+        a.callBack=function($data){
+            var data=toObject($data);
+           	console.log(data)
+        }
+        a.send()
+        a.err=function(){
+           tishi('err')
+        }
+	}
+	
+}
+
+
+
+</script>
+</body></html>
+<script type="text/javascript">
+// var joinGold = winGold = 0,
+// animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+// var change_success = false,
+// 	check_change, change_status = 0,
+// 	stop_check = false,
+// 	set_ad_status = 0,
+// 	join_status = 0;
+// $(function() {
+// 	ajax_tree();
+// 	if (!tvmid) {
+// 		// 读取用户信息
+// 		getUserInfo(function(data) {
+// 			try {
+// 				if (data && data.tvmid) {
+// 					tvmid = data.tvmid;
+// 					var img = data.headimgurl;
+// 					if (img.indexOf('@') > 0) {
+// 						img = img.substring(img, img.indexOf('@'));
+// 					}
+// 					img += '/64';
+// 					$("#yqs .user .user-head img").attr("src", img);
+// 					$("#yqs .user .user-name").html(htmlEncode(data.nickname));
+// 					$.ajax({
+// 						url: appurl + "/building/login/app",
+// 						data: {
+// 							data_string: JSON.stringify(data)
+// 						},
+// 						type: "POST",
+// 						success: function(data) {
+// 							if (data.status == "success") {
+// 								if (tvmid == owner_tvmid) {
+// 									$("#money-area").removeClass("none");
+// 								}
+// 								getGold();
+// 							} else {
+// 								showFailText(data.msg);
+// 							}
+// 						},
+// 						error: function() {
+// 							showFailText("抱歉，服务器失联了，正在努力找回，稍后重试");
+// 						}
+// 					});
+// 				}
+// 			} catch (e) {}
+// 		}, function() {
+// 			// location.reload();
+// 		});
+// 	} else {
+// 		getGold();
+// 	}
+
+// 	// 点击头像
+// 	$("#yqs .top-field").on("click", ".head-mask", function() {
+// 		goUserSpace(tvmid);
+// 	});
+
+// 	// 金币充值点击
+// 	$("#yqs .top-field").on("click", ".gold", function() {
+// 		jumpto(xlz_url + "/Pay/Index/index?redirect_url=");
+// 	});
+// 	// 点击开摇
+// 	$("#yqs").on("click", "#drawbtn", function() {
+// 		if ($("#draw-tool").hasClass("tree-watering") || $("#draw-tool").hasClass("moved")) {
+// 			return false;
+// 		}
+// 		show_join_dialog();
+// 	});
+
+// 	// 关闭参与
+// 	$("#yqs").on("click", "#by-div-clode", function() {
+// 		$("#draw-tool").removeClass("moved");
+// 		if ($("#yqs .join-layer").hasClass("animated")) {
+// 			return false;
+// 		}
+// 		$("#yqs .mask,#yqs .join-layer").addClass("none");
+// 	});
+
+// 	$("#yqs .join-layer #by-num-text").on("propertychange", function() {
+// 		console.info($(this).val());
+// 	});
+
+// 	// 点击快捷按钮
+// 	$("#yqs .join-layer").on("click", ".fast", function() {
+// 		var num = parseInt($(this).attr("data-num"));
+// 		var curr_gold = parseInt($("#yqs .join-layer #by-num-text").val());
+// 		if (curr_gold <= join_gold_min) {
+// 			var new_gold = num;
+// 		} else {
+// 			var new_gold = curr_gold + num;
+// 		}
+// 		if (new_gold >= max_gold) {
+// 			new_gold = max_gold;
+// 		}
+// 		show_add_minus(new_gold);
+// 		$("#yqs .join-layer #by-num-text").val(new_gold);
+// 		$("#yqs .mask .join-layer .tree_gold").html(new_gold * 2);
+// 	});
+
+// 	// 重置按钮
+// 	$("#yqs .join-layer").on("click", "#reset", function() {
+// 		$("#yqs .mask .join-layer #oper-minus").addClass("oper-minus-disable");
+// 		if (tree_num < 1) {
+// 			if (!$("#yqs .join-layer .oper-add").hasClass("oper-add-disable")) {
+// 				$("#yqs .join-layer .oper-add").addClass("oper-add-disable");
+// 			}
+// 		} else {
+// 			$("#yqs .join-layer .oper-add").removeClass("oper-add-disable");
+// 		}
+// 		$("#yqs .mask .join-layer .max_join").html(max_gold * 2);
+// 		$("#yqs .mask .join-layer #by-num-text").val(join_gold_min);
+// 		$("#yqs .mask .join-layer .tree_gold").html(join_gold_min * 2);
+// 	});
+
+// 	// 换棵树
+// 	$("#yqs").on("click", ".change_tree", function() {
+// 		change_tree();
+// 	});
+
+// 	$("#yqs").on("click", "#oper-submit", function() {
+// 		if ($("#yqs .join-layer").hasClass("animated")) {
+// 			return false;
+// 		}
+// 		var num = $.trim($("#yqs .join-layer #by-num-text").val());
+// 		if ($(this).hasClass("oper-submit-disable")) {
+// 			return false;
+// 		}
+// 		if (num == 0 || num == '' || num == null) {
+// 			// showNotice('请选择参与红包树');
+// 			return false;
+// 		}
+// 		if (!tvmid) {
+// 			return false;
+// 		}
+// 		$("#yqs .join-layer,#yqs .mask").addClass("none");
+
+// 		$("#drawbtn").addClass("drawbtnanim");
+// 		setTimeout(function() {
+// 			$("#drawbtn").removeClass("drawbtnanim");
+// 		}, 100);
+// 		$("#draw-tool").addClass("tree-watering").one(animationEnd, function() {
+// 			$(this).addClass("moved").removeClass("tree-watering");
+// 			$(this).addClass("watering");
+// 		});
+// 		setTimeout(function() {
+// 			start(num);
+// 		}, 1500);
+// 	});
+
+// 	$("#yqs").on("click", ".mask", function() {
+// 		if ($("#yqs .join-layer").hasClass("none")) {
+// 			return false;
+// 		}
+// 		$("#yqs .mask").addClass("none");
+// 		$("#yqs .join-layer").addClass("none");
+// 	});
+
+// 	$("#yqs").on("click", ".join-layer", function(e) {
+// 		e.stopPropagation();
+// 		e.preventDefault();
+// 		return false;
+// 	});
+// 	$("#left-rb,#right-rb").on("click", function() {
+// 		if ($(this).hasClass("rb-turning")) {
+// 			return false;
+// 		}
+// 		$(this).addClass("rb-turning").one(animationEnd, function() {
+// 			$(this).removeClass("rb-turning");
+// 		});
+// 		if (join_status == 1) {
+// 			return false;
+// 		}
+// 		join_status = 1;
+// 		setTimeout(function() {
+// 			show(joinGold);
+// 		}, 1000);
+// 	});
+// 	// 点击确定收取
+// 	$("#get_money").on("click", function() {
+// 		if ($(this).hasClass("no_yue") || $(this).hasClass("go_close")) {
+
+// 		} else {
+// 			$.ajax({
+// 				url: appurl + "/building/moneytree/harvestCommission",
+// 				type: "GET",
+// 				data: {
+// 					gold: $("#money-num").text()
+// 				},
+// 				success: function(data) {
+// 					if (data.status == "success") {
+// 						$("#money_notice,.mn_desc,.mask").addClass("none");
+// 						var i = 0;
+// 						$('#money-area .move_div').each(function() {
+// 							var dom = $(this);
+// 							setTimeout(function() {
+// 								dom.show();
+// 								dom.addClass('animation1');
+// 								dom.children().addClass('animation2').one(animationEnd, function() {
+// 									dom.hide();
+// 									if (dom.hasClass('last_div')) {
+// 										hideMask();
+// 										var s = parseInt($('#yqs .gold-panel .gold-num').html());
+// 										var e = s + parseInt(data.data.commission);
+// 										$('#yqs .gold-panel .gold-num').prop('number', s).animateNumber({
+// 											number: e
+// 										}, 2000);
+// 									}
+// 								});
+// 							}, 300 * i);
+// 							i++;
+// 						});
+// 						$("#money-num").html("0");
+// 					} else {
+// 						var code = data.code;
+// 						if (code == 402) {
+// 							$("#get_money").addClass("no_yue");
+// 						} else {
+// 							$("#get_money").addClass("go_close");
+// 						}
+// 						$("#money_notice .mn_desc").html(data.msg);
+// 						$("#money_notice .mn_desc").removeClass("none");
+// 					}
+// 				},
+// 				error: function() {
+// 					$("#get_money").addClass("go_close");
+// 					$("#money_notice .mn_desc").html("您的网络不给力！");
+// 					$("#money_notice .mn_desc").removeClass("none");
+// 				}
+// 			});
+// 		}
+// 	});
+// 	// 点击去买余额
+// 	$("#money_notice").on("click", ".no_yue", function() {
+// 		$("#get_money").removeClass("no_yue");
+// 		$("#money_notice,.mn_desc,.mask").addClass("none");
+// 		jumpto(yue_url);
+// 	});
+// 	// 点击关闭收取金币界面
+// 	$("#money_notice").on("click", ".go_close", function() {
+// 		$("#get_money").removeClass("go_close");
+// 		$("#money_notice,.mn_desc,.mask").addClass("none");
+// 	});
+// 	// 点击收取
+// 	$("#money-btn").on("click", function() {
+// 		var num = $("#money-num").text();
+// 		if (!num) {
+// 			return;
+// 		}
+// 		$("#mn_gold").html(num);
+// 		$("#mn_yue").html((num * gold_money_percent).toFixed(2));
+// 		$(".mask").removeClass("none");
+// 		$("#money_notice").removeClass("none").addClass("animated bounceIn").one(animationEnd, function() {
+// 			$(this).removeClass("animated bounceIn");
+// 		});
+// 	});
+
+// 	// 点击设置广告语
+// 	$("#yqs").on("click", "#wood", function() {
+// 		if (tvmid == owner_tvmid) {
+// 			if ($("#yqs .ad-title-mask").css("display") == "none") {
+// 				show_ad_title();
+// 			}
+// 			// showFailText("您的网路不给力！请稍后再试");
+// 		}
+// 	});
+
+// 	// 关闭广告语
+// 	$("#yqs").on("click", ".ad-title-close", function() {
+// 		$("#yqs .ad-title-mask").hide();
+// 	});
+
+// 	// 设置广告语
+// 	$("#yqs").on("click", ".sure_set", function() {
+// 		var ad_title = $.trim($("#yqs .ad-title-mask #ad-title-textarea").val());
+// 		set_ad_title(ad_title);
+// 	});
+// 	// 读取树的金币量
+// 	if (tvmid == owner_tvmid) {
+// 		getTreeGold();
+// 	}
+
+// 	// 关闭提取金币
+// 	$("#mn_close").on("click", function() {
+// 		$(".mask,#money_notice,.mn_desc").addClass("none");
+// 		$("#get_money").removeClass("go_close").removeClass("no_yue");
+// 	});
+
+// 	// 关闭首次登陆提示
+// 	$(".msg_div").on("click", function(e) {
+// 		e.stopPropagation();
+// 		return;
+// 	});
+
+// 	$("#msg_close, .msg_mask").on("click", function() {
+// 		$("#yqs .msg_mask").hide();
+// 	});
+
+// 	var flag = storage.get("is_first_login");
+// 	if (flag === undefined || flag == true) {
+// 		$("#yqs .msg_mask").show();
+// 		storage.set("is_first_login", false);
+// 	}
+// });
+
+// function getTreeGold() {
+// 	$.getJSON(appurl + "/building/moneytree/queryCommission", function(data) {
+// 		if (data.status == "success") {
+// 			if (data.data.commission > 0) {
+// 				$("#money-area").removeClass("money_empty");
+// 			} else {
+// 				$("#money-area").addClass("money_empty");
+// 			}
+// 			$("#money-num").html(data.data.commission);
+// 		}
+// 	});
+// }
+
+// function start(gold) {
+// 	joinGold = gold;
+// 	$(".rbmask,.rb-layer").removeClass("none");
+// 	$("#rb-top").show().addClass("animated slideInDown").one(animationEnd, function() {
+// 		$(this).removeClass("animated slideInDown");
+// 	});
+// 	$("#rb-bottom").show().addClass("animated slideInUp").one(animationEnd, function() {
+// 		$(this).removeClass("animated slideInUp");
+// 		$("#left-rb").show().addClass("animated bounceInDown").one(animationEnd, function() {
+// 			$(this).removeClass("animated bounceInDown");
+// 			$("#right-rb").show().addClass("animated bounceInDown").one(animationEnd, function() {
+// 				$(this).removeClass("animated bounceInDown");
+// 			});
+// 		});
+// 	});
+// 	$("#draw-tool").removeClass("moved").removeClass("watering");
+// 	return false;
+// }
+
+// function show(gold) {
+// 	storage.set("rbt_join", gold);
+// 	$.ajax({
+// 		url: appurl + "/building/moneytree/partakeMoneyTree",
+// 		type: "POST",
+// 		data: {
+// 			gold: gold
+// 		},
+// 		complete: function() {
+// 			$("#left-rb,#right-rb").removeClass("rb-turning");
+// 			$("#rb-top,#rb-bottom,#left-rb,#right-rb").hide();
+// 			$(".rbmask,.rb-layer").addClass("none");
+// 			join_status = 0;
+// 			if (tvmid == owner_tvmid) {
+// 				getTreeGold();
+// 			}
+// 		},
+// 		success: function(data) {
+// 			if (data.status == "success") {
+// 				if (data.data.result == "win") {
+// 					winGold = data.data.win_gold;
+// 					getTreeRecord();
+// 					// getGold();
+// 					showResultSuccess(winGold);
+// 				} else {
+// 					winGold = 0;
+// 					getTreeRecord();
+// 					getGold();
+// 					showResultFail();
+// 				}
+
+// 			} else {
+// 				switch (data.code) {
+// 					case 405:
+// 						getGold();
+// 						showFailText("您的金币不足！");
+// 						break;
+// 					default:
+// 						showFailText("抱歉，服务器失联了，正在努力找回，稍后重试");
+// 						break;
+// 				}
+// 			}
+// 		},
+// 		error: function() {
+// 			join_status = 0;
+// 			showFailText("抱歉，服务器失联了，正在努力找回，稍后重试");
+// 		}
+// 	});
+// }
+
+// function show_join_dialog() {
+// 	$("#yqs .mask .join-layer #oper-minus").addClass("oper-minus-disable");
+// 	if (tree_num < 1) {
+// 		$("#yqs .mask .join-layer #oper-add").addClass("oper-add-disable");
+// 	}
+// 	$("#yqs .mask .join-layer .max_join").html(max_gold * 2);
+// 	var lastGold = storage.get("rbt_join");
+// 	if (!isNaN(lastGold) && lastGold <= max_gold) {
+// 		$("#yqs .mask .join-layer #by-num-text").val(lastGold);
+// 		$("#yqs .mask .join-layer .tree_gold").html(lastGold * 2);
+// 	} else {
+// 		$("#yqs .mask .join-layer #by-num-text").val(max_gold);
+// 		$("#yqs .mask .join-layer .tree_gold").html(max_gold * 2);
+// 	}
+// 	$("#yqs .mask .marquee-layer").addClass("none");
+// 	$("#yqs .mask .result-success").addClass("none");
+// 	$("#yqs .mask .result-layer").addClass("none");
+// 	$("#yqs .mask").removeClass("none");
+// 	$("#yqs .mask .join-layer").removeClass("none").addClass("animated slideInUp").one(animationEnd, function() {
+// 		$(this).removeClass('animated slideInUp');
+// 	});
+// }
+
+// function show_add_minus(new_gold) {
+// 	if (new_gold > join_gold_min && new_gold < max_gold) {
+// 		if ($("#yqs .join-layer .oper-add").hasClass("oper-add-disable")) {
+// 			$("#yqs .join-layer .oper-add").removeClass("oper-add-disable");
+// 		}
+// 		if ($("#yqs .join-layer .oper-minus").hasClass("oper-minus-disable")) {
+// 			$("#yqs .join-layer .oper-minus").removeClass("oper-minus-disable");
+// 		}
+// 	} else {
+// 		if (new_gold >= max_gold) {
+// 			if (!$("#yqs .join-layer .oper-add").hasClass("oper-add-disable")) {
+// 				$("#yqs .join-layer .oper-add").addClass("oper-add-disable");
+// 			}
+
+// 		}
+
+// 		if (new_gold <= join_gold_min) {
+
+// 			if (!$("#yqs .join-layer .oper-minus").hasClass("oper-minus-disable")) {
+// 				$("#yqs .join-layer .oper-minus").addClass("oper-minus-disable");
+// 			}
+// 		}
+// 	}
+// }
+
+// function getGold() {
+// 	$.ajax({
+// 		url: appurl + "/building/moneytree/query",
+// 		data: {
+// 			tvmid: tvmid
+// 		},
+// 		success: function(data) {
+// 			if (data.status == "success") {
+// 				$("#yqs .gold-panel .gold-num").html(data.data);
+// 			}
+// 		}
+// 	});
+// }
+
+// function goUserSpace(tvmid) {
+// 	var url = space_url + "?id=" + tvmid;
+// 	jumpto(url);
+// }
+
+// function open_cloud() {
+// 	// return false;
+// 	if ($(".change_tree").hasClass("animate")) {
+// 		return false;
+// 	}
+// 	$(".change_tree").addClass("animate");
+// 	$(".top_cloud").animate({
+// 		"left": "-100%"
+// 	}, 1000);
+// 	$(".bottom_cloud").animate({
+// 		"left": "100%"
+// 	}, 1000, "", function() {
+// 		$(".change_tree").removeClass("animate");
+// 		$(".top_cloud").addClass("none");
+// 		$(".bottom_cloud").addClass("none");
+// 		$(".mask_cloud").addClass("none");
+// 	});
+// }
+
+// function close_cloud() {
+// 	$(".mask_cloud").removeClass("none");
+// 	$(".top_cloud").removeClass("none");
+// 	$(".bottom_cloud").removeClass("none");
+// 	$(".change_tree").addClass("animate");
+// 	$(".top_cloud").animate({
+// 		"left": "0"
+// 	}, 1000);
+// 	$(".bottom_cloud").animate({
+// 		"left": "0"
+// 	}, 1000, "swing", function() {
+// 		$(".change_tree").removeClass("animate");
+// 		close_callback();
+// 	});
+// }
+
+// function close_callback() {
+// 	if (change_status == 1) {
+// 		return false;
+// 	}
+// 	change_status = 1;
+// 	$.ajax({
+// 		url: appurl + "/building/moneytree/getTreeInfo",
+// 		success: function(data) {
+// 			change_status = 0;
+// 			if (data.status == "success") {
+// 				var tree_data = data.data;
+// 				change_status = 0;
+// 				if (tree_data.length > 0) {
+// 					change_success = tree_data[0];
+// 					load_tree(change_success);
+// 					getTreeRecord();
+// 					open_cloud();
+// 				}
+// 			}
+// 		},
+// 		error: function() {
+// 			change_status = 0;
+// 		}
+// 	});
+// }
+
+// function ajax_tree() {
+// 	$.ajax({
+// 		url: appurl + "/building/moneytree/getTreeInfo",
+// 		type: "POST",
+// 		data: {
+// 			"owner_tvmid": owner_tvmid
+// 		},
+// 		success: function(data) {
+// 			if (data.status == "success") {
+// 				var tree_data = data.data;
+// 				if (tree_data.length > 0) {
+// 					load_tree(tree_data[0]);
+// 					getTreeRecord();
+// 				} else {
+// 					location.replace(appurl + "/building/moneytree/show_error");
+// 				}
+// 			} else {
+// 				// open_cloud();
+// 				location.replace(appurl + "/building/moneytree/show_error");
+// 			}
+// 		},
+// 		error: function() {
+// 			location.replace(appurl + "/building/moneytree/show_error");
+// 		}
+// 	});
+// }
+
+// function change_tree() {
+// 	if ($(".change_tree").hasClass("animate")) {
+// 		return false;
+// 	}
+// 	$(".change_tree").addClass("animate");
+// 	close_cloud();
+// }
+
+// function load_tree(data) {
+// 	owner_tvmid = data.tvmid;
+// 	owner_nickname = data.nick_name;
+// 	if (tvmid == owner_tvmid) {
+// 		$("#yqs #money-area").removeClass("none");
+// 		$("#yqs #tree-name").html("<div class='set-txt'>设置广告语</div>");
+// 		getTreeGold();
+// 	} else {
+// 		if (!$("#yqs #money-area").hasClass("none")) {
+// 			$("#yqs #money-area").addClass("none");
+// 		}
+// 		$("#yqs #tree-name").html("<div class='owner_pic'><img src='" + data.head_url + "' /></div><div class='owner_nickname'>" + owner_nickname + "</div>");
+// 	}
+// 	tree_num = data.tree_count;
+// 	max_gold = parseInt(data.max_win_gold) / 2;
+// 	if (change_success) {
+// 		change_success = false;
+// 	}
+
+// }
+
+// function show_ad_title() {
+// 	$.ajax({
+// 		url: appurl + "/building/moneytree/getAdTitle",
+// 		type: "GET",
+// 		success: function(result) {
+// 			if (result.status == "success") {
+// 				var ad_data = result.data;
+// 				if (ad_data.length > 0) {
+// 					$("#yqs .ad-title-mask #ad-title-textarea").val(ad_data[0].ad_title);
+// 				} else {
+// 					$("#yqs .ad-title-mask #ad-title-textarea").val("");
+// 				}
+
+// 			} else {
+// 				$("#yqs .ad-title-mask #ad-title-textarea").val("");
+// 			}
+// 			$("#yqs .ad-title-mask").show();
+// 		},
+// 		error: function() {
+// 			$("#yqs .ad-title-mask").show();
+// 			$("#yqs .ad-title-mask #ad-title-textarea").val("");
+// 		}
+// 	});
+// }
+
+// function set_ad_title(ad_title) {
+// 	$("#yqs .ad-title-mask .ad-error").addClass("none");
+// 	if (ad_title.length > 20) {
+// 		$("#yqs .ad-title-mask .ad-error").removeClass("none");
+// 		return false;
+// 	}
+// 	if (set_ad_status == 1) {
+// 		return false;
+// 	}
+// 	set_ad_status = 1;
+// 	$.ajax({
+// 		url: appurl + "/building/moneytree/setAdTitle",
+// 		type: "POST",
+// 		data: {
+// 			"ad_title": encodeURIComponent(ad_title)
+// 		},
+// 		success: function(result) {
+// 			set_ad_status = 0;
+// 			$("#yqs .ad-title-mask").hide();
+// 		},
+// 		error: function() {
+// 			set_ad_status = 0;
+// 			$("#yqs .ad-title-mask").hide();
+// 		}
+// 	});
+// }
+
+
+</script>

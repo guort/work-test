@@ -1,0 +1,765 @@
+<!doctype html><html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+<meta content="email=no" name="format-detection" />
+<meta name="apple-touch-fullscreen" content="YES">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>弹窗demo</title>
+</head><body>
+<script src="jc/xdTools.js"></script>
+</body></html>
+<script type="text/javascript">
+var mainVar={}
+
+mainVar.dialog=new confirmAlert()
+
+
+
+
+mainVar.dialog.extend('grt',function($num){
+        var CSS='\
+        .wrong_dialog{width:6.2em;border-radius:0.1em;background-color:#f0f0f0;position:absolute;top:50%;left:50%;margin-top:-2.88em;margin-left:-3.1em;padding-bottom:1.4em;}\
+        .wrong_dialog .close{width:0.68em;height:0.68em;position:absolute;right:-0.3em;top:-0.3em;}\
+        .wrong_dialog .icon_wrong{display:block;height:2.5em;margin:0 auto;margin-top:0.8em;}\
+        .wrong_dialog .l1{height:0.28em;margin-top:0.8em;line-height:0.28em;text-align:center;}\
+        .wrong_dialog .l1 b{font-size:0.28em;color:#333333;}\
+        .wrong_dialog .l2{height:0.28em;margin-top:0.28em;line-height:0.28em;text-align:center;}\
+        .wrong_dialog .l2 b{font-size:0.28em;color:#333333;}\
+        .wrong_dialog .l3{margin-top:0.9em;line-height:0.28em;text-align:center;}\
+        .wrong_dialog .l3 b{font-size:0.28em;color:#333333;font-weight:300;}\
+        .wrong_dialog .l2 b.r{color:#ff4a4a;}\
+        '
+        if(!this.temporary.css['grt']){
+            setStyle(CSS);
+            this.temporary.css['grt']=true;
+        };
+        var html,imgSrc="",desc=""
+        switch($num){
+            case 1://出错了
+                imgSrc='http://qa.h5.mtq.tvm.cn/yao_zhoubian/ttdsb/img/icon_s2.png'
+                desc='<div class="l1"><b>诶呀，出错啦 !</b></div><div class="l2"><b>刷新页面试试吧 !</b></div>'
+            break;
+            case 2://已经是app用户
+                imgSrc='http://qa.h5.mtq.tvm.cn/yao_zhoubian/ttdsb/img/icon_s3.png'
+                desc='<div class="l1"><b>您已经是电视红包的尊贵用户啦!</b></div><div class="l2"><b>快去拉人组团</b><b class="r">帮你赚钱</b><b>吧!</b></div>'
+            break;
+            case 3://邀请自己
+                imgSrc='http://qa.h5.mtq.tvm.cn/yao_zhoubian/ttdsb/img/icon_s4.png'
+                desc='<div class="l3"><b>您不可以邀请自己噢!</b></div>'
+            break;
+        }
+   		html='<div class="wrong_dialog">\
+                <img src="http://qa.h5.mtq.tvm.cn/yao_zhoubian/ttdsb/img/p_close.png" class="close" action="close-dialog-demo.,wrong.,slideOutRight">\
+                <img src="'+imgSrc+'" class="icon_wrong">'+desc+'\
+        </div>'
+        this.open({
+             name:'grt'							//名称（必填）
+            ,html:html 							//内容
+            ,bgClose:1							//点击背景关闭（0，1）
+            ,bgColor:1							//背景颜色（0，1）
+            ,dialogClose:1						//点击弹窗本身关闭（0，1）
+            ,fun:function(){}					//open后的回调函数
+            ,openFunTime:400					//执行open回调的时间点（延迟）
+            ,animate:''				//open弹窗的动画效果（有默认）
+            ,closeFun:function(){}				//close回调函数
+            ,closeFunTime:300					//执行close回调的时间点（延迟）
+            ,closeAnimate:''		//close弹窗的动画效果（有默认）
+            ,deldialogTime:0
+        })  
+})
+
+// mainVar.dialog['grt'](1)
+// mainVar.dialog.example(1)
+mainVar.dialog.grt(1)
+mainVar.dialog.grt(2)
+mainVar.dialog.grt(3)
+
+
+//最新弹窗3.0（改版关闭弹窗逻辑）
+function confirmAlert(){
+	var _this=this,temporary={'css':{},"options":{}},bgBox,wBox=mainVar.box||document.body,isColor=false,isFirstDom=null,confirmBox=null,dialogCon={},closeFlag=true;
+	
+	this.example=function($num){
+        var CSS='\
+        .example_dialog{width:6.2em;border-radius:0.1em;background-color:#f0f0f0;position:absolute;top:50%;left:50%;margin-top:-2.88em;margin-left:-3.1em;padding-bottom:1.4em;}\
+        .example_dialog .close{width:0.68em;height:0.68em;position:absolute;right:-0.3em;top:-0.3em;}\
+        .example_dialog .icon_wrong{display:block;height:2.5em;margin:0 auto;margin-top:0.8em;}\
+        .example_dialog .l1{height:0.28em;margin-top:0.8em;line-height:0.28em;text-align:center;}\
+        .example_dialog .l1 b{font-size:0.28em;color:#333333;}\
+        .example_dialog .l2{height:0.28em;margin-top:0.28em;line-height:0.28em;text-align:center;}\
+        .example_dialog .l2 b{font-size:0.28em;color:#333333;}\
+        .example_dialog .l3{margin-top:0.9em;line-height:0.28em;text-align:center;}\
+        .example_dialog .l3 b{font-size:0.28em;color:#333333;font-weight:300;}\
+        .example_dialog .l2 b.r{color:#ff4a4a;}\
+        '
+        if(!this.temporary.css['example']){
+            setStyle(CSS);
+            this.temporary.css['example']=true;
+        };
+        var html='<div class="example_dialog">\
+                <img src="http://qa.h5.mtq.tvm.cn/yao_zhoubian/ttdsb/img/p_close.png" class="close" action="close-dialog-demo.,example.,slideOutRight">\
+                <img src="http://qa.h5.mtq.tvm.cn/yao_zhoubian/ttdsb/img/icon_s2.png" class="icon_wrong"><div class="l1"><b>诶呀，出错啦 !</b></div><div class="l2"><b>刷新页面试试吧 !</b></div>\
+        </div>'
+        this.open({
+             name:'example'						//名称（必填）
+            ,html:html 							//内容
+            ,bgClose:1							//点击背景关闭（0，1）
+            ,bgColor:1							//背景颜色（0，1）
+            ,dialogClose:1						//点击弹窗本身关闭（0，1）
+            ,fun:function(){}					//open后的回调函数
+            ,openFunTime:400					//执行open回调的时间点（延迟）
+            ,animate:'slideInRight'				//open弹窗的动画效果（有默认）
+            ,closeFun:function(){mainVar.dialog.example()}				//close回调函数
+            ,closeFunTime:300					//执行close回调的时间点（延迟）
+            ,closeAnimate:'slideOutRight'		//close弹窗的动画效果（有默认）
+            ,deldialogTime:0
+        })  
+    }
+	this.btnAnimation=function(elem){
+		elem.classList.add('but_animation');
+		elem.addEventListener('webkitAnimationEnd',function(){
+			elem.classList.remove('but_animation');
+		},false);
+	};
+	this.init=function(){
+		var css='\
+		.confirmBox_dialog_grt{display:none;width:100%;height:100%;position:absolute;top:0;left:0;z-index:100;}\
+		.confirm_Dialog_Box{width:100%;height:100%;position:absolute;top:0;left:0;z-index:100;}\
+		.confirm_Dialog_Box .content_Dialog_Box{width:100%;height:100%;opacity:1;}\
+		.confirm_Dialog_Box b{vertical-align:top;}\
+		.but_animation{-webkit-transform:scale(1);-webkit-animation:but_animation 600ms ease 1}\
+		@-webkit-keyframes but_animation{\
+		  0%{-webkit-transform:scale(.9);}\
+		  50%{-webkit-transform:scale(1.1)}\
+		  100%{-webkit-transform:scale(1)}\
+		}\
+		@-webkit-keyframes slideInRight {0% {opacity:1;transform: translate3d(100%, 0, 0);visibility: visible;}100% {opacity:1;transform: translate3d(0, 0, 0);}}\
+        @-webkit-keyframes slideOutRight {from {opacity:1;transform: translate3d(0, 0, 0);}to {opacity:1;visibility: hidden;transform: translate3d(100%, 0, 0);}}\
+        .slideInRight {animation-name: slideInRight;animation-duration: 300ms;animation-fill-mode: both;}\
+        .slideOutRight {animation-name: slideOutRight;animation-duration: 400ms;animation-fill-mode: both;}\
+		.dialog-in-1{-webkit-animation:dialog-in-1 400ms ease-out forwards;}\
+		@-webkit-keyframes dialog-in-1{\
+		      0% {-webkit-transform:scale(0,0);opacity:0;}\
+		    60% {-webkit-transform:scale(1.2,1.2);}\
+		   100% {-webkit-transform:scale(1,1);opacity:1;}\
+		}\
+		.dialog-out-1{-webkit-animation:dialog-out-1 300ms ease-in forwards;}\
+		@-webkit-keyframes dialog-out-1{\
+			   0% {-webkit-transform:scale(1,1);opacity:1;}\
+			  40% {-webkit-transform:scale(1.2,1.2);}\
+			 100% {-webkit-transform:scale(0,0);opacity:0;}\
+		}\
+		@media screen and (min-width:320px) and (max-width:359px){\
+			.confirm_Dialog_Box{font-size:42.667px;}\
+		}\
+		@media screen and (min-width:360px) and (max-width:374px){\
+			.confirm_Dialog_Box{font-size:48px;}\
+		}\
+		@media screen and (min-width:375px) and (max-width:413px){\
+			.confirm_Dialog_Box{font-size:50px;}\
+		}\
+		@media screen and (min-width:414px){\
+			.confirm_Dialog_Box{font-size:55.2px;}\
+		}\
+		'
+		setStyle(css)
+		confirmBox=createNode(wBox,'div',{className:'confirmBox_dialog_grt'},'p3')
+		this.eventEntrust({ele:confirmBox,event:'click',fun:function(){
+			var $acton=arguments[0],$t=this
+			switch($acton){
+                case 'close-dialog':
+                	mainVar.dialog.close({'t':$t,'name':arguments[1],'animate':arguments[2]})
+                break;
+                case 'close-dialog-demo':
+                	mainVar.dialog.close({'t':$t,'name':arguments[1],'animate':arguments[2]})
+                break;
+			}
+		}})
+		_this.temporary=temporary
+	}
+	this.open=function($opt){
+		var opt=$opt||{},bgColor=opt.bgColor||0,bgClose=opt.bgClose||0,dialogClose=opt.dialogClose||0,html=opt.html||"",contentBox,bgCss='',name=opt.name||'dialog-grt',ele=confirmBox,selfbg=opt.selfbg||false,fun=opt.fun,animate=opt.animate||'dialog-in-1',openFunTime=opt.openFunTime||300,closeAnimate=opt.closeAnimate||""
+		ele.style.display='block';
+		bgBox=createNode(ele,'div',{className:'confirm_Dialog_Box',action:(bgClose?'close-dialog.,'+name+'.,'+closeAnimate:'')},'p3')
+		contentBox=createNode(bgBox,'div',{className:'content_Dialog_Box '+animate,html:html},'p3')
+		if(!dialogCon[name]){
+			dialogCon[name]=[contentBox]
+		}else{
+			dialogCon[name].unshift(contentBox)
+		}
+		if(!_this.temporary["options"][name]){
+			_this.temporary["options"][name]=[opt]
+		}else{
+			_this.temporary["options"][name].unshift(opt)
+		}
+		if(!isFirstDom){isFirstDom=bgBox}
+		if(bgColor&&!isColor){confirmBox.style.backgroundColor='rgba(0,0,0,.7)';isColor=true;}
+		if(selfbg&&!isColor){bgBox.style.backgroundColor='rgba(0,0,0,.7)'}
+		if(dialogClose){
+			contentBox.children[0].setAttribute('action','close-dialog.,'+name+'.,'+closeAnimate);
+		}else{
+			if(bgClose)contentBox.children[0].setAttribute('action',name+"-00");
+		}
+		setTimeout(function(){//回调函数
+			isFun(fun)
+		},openFunTime)
+	}
+	this.close=function($opt){
+		if(!closeFlag){closeFlag=true;return;}closeFlag=false;
+		var opt=$opt||{},ele=opt.t,name=opt.name,c,openOption,thisCloseOpt,finalAnimate=opt.animate,finalFunction=opt.fun,finalDelTime=opt.delTime,finalFunctionTime=opt.closeTime
+		if(name){
+			openOption=temporary["options"][name]||[];
+			thisCloseOpt=openOption[0]?openOption.shift():{}
+			finalAnimate=finalAnimate?finalAnimate:(thisCloseOpt['closeAnimate']||'dialog-out-1');
+			finalFunction=finalFunction?finalFunction:(thisCloseOpt['closeFun']||function(){});
+			finalFunctionTime=finalFunctionTime?finalFunctionTime:(thisCloseOpt['closeFunTime']||300);
+			finalDelTime=finalDelTime?finalDelTime:(thisCloseOpt['deldialogTime']||400);
+			if(dialogCon[name]){
+				c=dialogCon[name].shift();
+				if(c)c.className='content_Dialog_Box '+finalAnimate
+				setTimeout(function(){
+					closeFlag=true
+		    		var p=c?c.parentNode:false
+		    		if(p===isFirstDom){
+		    			isColor=false;
+		    			isFirstDom=null;
+		    		}
+		    		if(p)removeNode(p)
+		    		if(confirmBox.childElementCount==0){
+		    			confirmBox.style.backgroundColor='rgba(0,0,0,0)'
+		    			confirmBox.style.display='none'
+		    		}
+		    	},(finalDelTime||400))
+			}else{
+				closebyele()
+			}
+			closeActionFun()
+		}else{
+			closebyele()
+			closeActionFun()
+		}
+		function closebyele(){//关闭弹窗（没有name情况，最好都加上name）
+			if(ele.setAttribute)ele.setAttribute('action','')
+			do{
+				if(ele.nodeType!==1)break;
+			    if(ele.className.indexOf('content_Dialog_Box')>=0)break; 
+			}while(ele=ele.parentNode)
+			ele.className='content_Dialog_Box '+(finalAnimate||'dialog-out-1')
+			setTimeout(function(){
+	    		closeFlag=true
+	    		var p=ele.parentNode
+	    		if(p===isFirstDom){
+	    			isColor=false;
+	    			isFirstDom=null;
+	    		}
+	    		if(p)removeNode(p)
+	    		if(confirmBox.childElementCount==0){
+	    			confirmBox.style.backgroundColor='rgba(0,0,0,0)'
+	    			confirmBox.style.display='none'
+	    		}
+	    	},(finalDelTime||400))
+		}
+		function closeActionFun(){//执行回调函数
+			setTimeout(function(){
+				isFun(finalFunction)
+			},(finalFunctionTime||300))
+		}
+	}//事件代理
+	this.eventEntrust=function($opt){
+		var ele=$opt.ele,
+			event=$opt.event,
+			action=$opt.action||"action",
+			split=$opt.splitStr||".,";
+		addEvent(ele,event,function(e){
+			var ele=e.srcElement||e.target,
+				attribute,
+				argument,
+				a1,
+				fun=typeof($opt.fun)==="function"?$opt.fun:function(){};	
+			do{
+				if(ele.nodeType!==1)break
+				if(attribute=ele.getAttribute(action))break			
+				}
+			while(ele=ele.parentNode);								
+			if(attribute){						
+				fun.apply(ele,attribute.split(split))
+			}			
+		});	
+	};
+	this.extend=function($name,$fun){
+		if(!$name){
+			alert('添加函数失败')
+			return
+		}
+		_this[$name]=$fun
+	}
+	this.init();
+}
+
+
+
+
+
+
+
+//最新弹窗2.0（增加关闭弹窗时的回调函数）
+function confirmAlert_v_2(){
+	var _this=this,temporary={'css':{}},bgBox,wBox=mainVar.box||document.body,isColor=false,isFirstDom=null,confirmBox=null,dialogCon={},closeFlag=true,dialogFun={};
+	
+	this.wrong=function($num){
+        var CSS='\
+        .wrong_dialog{width:6.2em;border-radius:0.1em;background-color:#f0f0f0;position:absolute;top:50%;left:50%;margin-top:-2.88em;margin-left:-3.1em;padding-bottom:1.4em;}\
+        .wrong_dialog .close{width:0.68em;height:0.68em;position:absolute;right:-0.3em;top:-0.3em;}\
+        .wrong_dialog .icon_wrong{display:block;height:2.5em;margin:0 auto;margin-top:0.8em;}\
+        .wrong_dialog .l1{height:0.28em;margin-top:0.8em;line-height:0.28em;text-align:center;}\
+        .wrong_dialog .l1 b{font-size:0.28em;color:#333333;}\
+        .wrong_dialog .l2{height:0.28em;margin-top:0.28em;line-height:0.28em;text-align:center;}\
+        .wrong_dialog .l2 b{font-size:0.28em;color:#333333;}\
+        .wrong_dialog .l3{margin-top:0.9em;line-height:0.28em;text-align:center;}\
+        .wrong_dialog .l3 b{font-size:0.28em;color:#333333;font-weight:300;}\
+        .wrong_dialog .l2 b.r{color:#ff4a4a;}\
+        '
+        if(!temporary.css['wrong']){
+            setStyle(CSS);
+            temporary.css['wrong']=true;
+        };
+        var html,imgSrc="",desc=""
+        switch($num){
+            case 1://出错了
+                imgSrc='http://qa.h5.mtq.tvm.cn/yao_zhoubian/ttdsb/img/icon_s2.png'
+                desc='<div class="l1"><b>诶呀，出错啦 !</b></div><div class="l2"><b>刷新页面试试吧 !</b></div>'
+            break;
+            case 2://已经是app用户
+                imgSrc='http://qa.h5.mtq.tvm.cn/yao_zhoubian/ttdsb/img/icon_s3.png'
+                desc='<div class="l1"><b>您已经是电视红包的尊贵用户啦!</b></div><div class="l2"><b>快去拉人组团</b><b class="r">帮你赚钱</b><b>吧!</b></div>'
+            break;
+            case 3://邀请自己
+                imgSrc='http://qa.h5.mtq.tvm.cn/yao_zhoubian/ttdsb/img/icon_s4.png'
+                desc='<div class="l3"><b>您不可以邀请自己噢!</b></div>'
+            break;
+        }
+   		html='<div class="wrong_dialog">\
+                <img src="http://qa.h5.mtq.tvm.cn/yao_zhoubian/ttdsb/img/p_close.png" class="close" action="close-dialog.,wrong.,slideOutRight">\
+                <img src="'+imgSrc+'" class="icon_wrong">'+desc+'\
+        </div>'
+        this.open({
+             name:'wrong'						//名称（必填）
+            ,html:html 							//内容
+            ,bgClose:1							//点击背景关闭（0，1）
+            ,bgColor:1							//背景颜色（0，1）
+            ,dialogClose:1						//点击弹窗本身关闭（0，1）
+            ,fun:function(){}					//open后的回调函数
+            ,openFunTime:400					//执行open回调的时间点（延迟）
+            ,animate:'slideInRight'				//open弹窗的动画效果（有默认）
+            ,closeFun:function(){}				//close回调函数
+            ,closeFunTime:1000					//执行close回调的时间点（延迟）
+            ,closeAnimate:'slideOutRight'		//close弹窗的动画效果（有默认）
+            ,deldialogTime:1000
+        })  
+    }
+	this.btnAnimation=function(elem){
+		elem.classList.add('but_animation');
+		elem.addEventListener('webkitAnimationEnd',function(){
+			elem.classList.remove('but_animation');
+		},false);
+	};
+	this.init=function(){
+		var css='\
+		.confirmBox_dialog_grt{display:none;width:100%;height:100%;position:absolute;top:0;left:0;z-index:100;}\
+		.confirm_Dialog_Box{width:100%;height:100%;position:absolute;top:0;left:0;z-index:100;}\
+		.confirm_Dialog_Box .content_Dialog_Box{width:100%;height:100%;opacity:1;}\
+		.confirm_Dialog_Box b{vertical-align:top;}\
+		.but_animation{-webkit-transform:scale(1);-webkit-animation:but_animation 600ms ease 1}\
+		@-webkit-keyframes but_animation{\
+		  0%{-webkit-transform:scale(.9);}\
+		  50%{-webkit-transform:scale(1.1)}\
+		  100%{-webkit-transform:scale(1)}\
+		}\
+		@-webkit-keyframes slideInRight {0% {opacity:1;transform: translate3d(100%, 0, 0);visibility: visible;}100% {opacity:1;transform: translate3d(0, 0, 0);}}\
+        @-webkit-keyframes slideOutRight {from {opacity:1;transform: translate3d(0, 0, 0);}to {opacity:1;visibility: hidden;transform: translate3d(100%, 0, 0);}}\
+        .slideInRight {animation-name: slideInRight;animation-duration: 300ms;animation-fill-mode: both;}\
+        .slideOutRight {animation-name: slideOutRight;animation-duration: 400ms;animation-fill-mode: both;}\
+		.dialog-in-1{-webkit-animation:dialog-in-1 400ms ease-out forwards;}\
+		@-webkit-keyframes dialog-in-1{\
+		      0% {-webkit-transform:scale(0,0);opacity:0;}\
+		    60% {-webkit-transform:scale(1.2,1.2);}\
+		   100% {-webkit-transform:scale(1,1);opacity:1;}\
+		}\
+		.dialog-out-1{-webkit-animation:dialog-out-1 300ms ease-in forwards;}\
+		@-webkit-keyframes dialog-out-1{\
+			   0% {-webkit-transform:scale(1,1);opacity:1;}\
+			  40% {-webkit-transform:scale(1.2,1.2);}\
+			 100% {-webkit-transform:scale(0,0);opacity:0;}\
+		}\
+		@media screen and (min-width:320px) and (max-width:359px){\
+			.confirm_Dialog_Box{font-size:42.667px;}\
+		}\
+		@media screen and (min-width:360px) and (max-width:374px){\
+			.confirm_Dialog_Box{font-size:48px;}\
+		}\
+		@media screen and (min-width:375px) and (max-width:413px){\
+			.confirm_Dialog_Box{font-size:50px;}\
+		}\
+		@media screen and (min-width:414px){\
+			.confirm_Dialog_Box{font-size:55.2px;}\
+		}\
+		'
+		setStyle(css)
+		confirmBox=createNode(wBox,'div',{className:'confirmBox_dialog_grt'},'p3')
+		this.eventEntrust({ele:confirmBox,event:'click',fun:function(){
+			var $acton=arguments[0],$t=this
+			switch($acton){
+                case 'close-dialog':
+                	mainVar.dialog.close({'t':$t,'name':arguments[1],'animate':arguments[2]})
+                break;
+			}
+		}})
+		this.temporary=temporary
+	}
+	this.open=function($opt){
+		var opt=$opt||{},bgColor=opt.bgColor||0,bgClose=opt.bgClose||0,dialogClose=opt.dialogClose||0,html=opt.html||"",contentBox,bgCss='',name=opt.name||'dialog-grt',ele=confirmBox,selfbg=opt.selfbg||false,fun=opt.fun,animate=opt.animate||'dialog-in-1',openFunTime=opt.openFunTime||300,closeFun=opt.closeFun,closeFunTime=opt.closeFunTime||300,closeAnimate=opt.closeAnimate||""
+		ele.style.display='block';
+		bgBox=createNode(ele,'div',{className:'confirm_Dialog_Box',action:(bgClose?'close-dialog.,'+name+'.,'+closeAnimate:'')},'p3')
+		contentBox=createNode(bgBox,'div',{className:'content_Dialog_Box '+animate,html:html},'p3')
+		if(!dialogCon[name]){//创建的该弹窗dom
+			dialogCon[name]=[contentBox]
+		}else{
+			dialogCon[name].unshift(contentBox)
+		}
+		if(!dialogFun[name]){//关闭弹窗时执行的函数
+			dialogFun[name]=[{"fun":closeFun,"time":closeFunTime}]
+		}else{
+			dialogFun[name].unshift({"fun":closeFun,"time":closeFunTime})
+		}
+		if(!isFirstDom){isFirstDom=bgBox}
+		if(bgColor&&!isColor){
+			confirmBox.style.backgroundColor='rgba(0,0,0,.7)'
+			isColor=true;
+		}
+		if(selfbg&&!isColor){
+			bgBox.style.backgroundColor='rgba(0,0,0,.7)'
+		}
+		if(dialogClose){
+			contentBox.children[0].setAttribute('action','close-dialog.,'+name+'.,'+closeAnimate);
+		}else{
+			if(bgClose)contentBox.children[0].setAttribute('action',name+"-00");
+		}
+		setTimeout(function(){
+			isFun(fun)
+		},openFunTime)
+	}
+	this.close=function($opt){
+		if(!closeFlag){
+			closeFlag=true;
+			return
+		}
+		closeFlag=false;
+		var opt=$opt||{},ele=opt.t,name=opt.name,c,animate=opt.animate||'dialog-out-1',cFun=opt.fun,closeFunction,closeFunctionTime,thisClosrFun
+		if(name){
+			if(dialogCon[name]){
+				c=dialogCon[name].shift();
+				c.className='content_Dialog_Box '+animate
+				setTimeout(function(){
+					closeFlag=true
+		    		var p=c.parentNode
+		    		if(p===isFirstDom){
+		    			isColor=false;
+		    			isFirstDom=null;
+		    		}
+		    		if(p)removeNode(p)
+		    		if(confirmBox.childElementCount==0){
+		    			confirmBox.style.backgroundColor='rgba(0,0,0,0)'
+		    			confirmBox.style.display='none'
+		    		}
+		    	},400)
+			}else{
+				closebyele()
+			}
+			closeActionFun()
+		}else{
+			closebyele()
+			closeActionFun()
+		}
+		function closebyele(){//关闭弹窗（没有name情况，最好都加上name）
+			if(ele.setAttribute)ele.setAttribute('action','')
+			do{
+				if(ele.nodeType!==1)break;
+			    if(ele.className.indexOf('content_Dialog_Box')>=0)break; 
+			}while(ele=ele.parentNode)
+			ele.className='content_Dialog_Box '+animate
+			setTimeout(function(){
+	    		closeFlag=true
+	    		var p=ele.parentNode
+	    		if(p===isFirstDom){
+	    			isColor=false;
+	    			isFirstDom=null;
+	    		}
+	    		if(p)removeNode(p)
+	    		if(confirmBox.childElementCount==0){
+	    			confirmBox.style.backgroundColor='rgba(0,0,0,0)'
+	    			confirmBox.style.display='none'
+	    		}
+	    	},400)
+		}
+		function closeActionFun(){//关闭后执行回调（close-dialog不传name不执行open里面的回调
+			if(cFun){				//但执行close里面的回调）
+				setTimeout(function(){
+					isFun(cFun)
+				},300)
+			}else{
+				if(dialogFun[name]){
+					thisClosrFun=dialogFun[name].shift()
+					setTimeout(function(){
+						isFun(thisClosrFun['fun'])
+					},thisClosrFun['time'])
+				}
+			}
+		}
+	}//事件代理
+	this.eventEntrust=function($opt){
+		var ele=$opt.ele,
+			event=$opt.event,
+			action=$opt.action||"action",
+			split=$opt.splitStr||".,";
+		addEvent(ele,event,function(e){
+			var ele=e.srcElement||e.target,
+				attribute,
+				argument,
+				a1,
+				fun=typeof($opt.fun)==="function"?$opt.fun:function(){};	
+			do{
+				if(ele.nodeType!==1)break
+				if(attribute=ele.getAttribute(action))break			
+				}
+			while(ele=ele.parentNode);								
+			if(attribute){						
+				fun.apply(ele,attribute.split(split))
+			}			
+		});	
+	};
+	this.extend=function($name,$fun){
+		_this[$name]=$fun
+	}
+	this.init();
+}
+
+
+
+
+
+
+//早期弹窗1.0
+function confirmAlert_v_1(){
+    var _this=this,temporary={'css':{}},bgBox,wBox=mainVar.box||document.body,isColor=false,isFirstDom=null,confirmBox=null,dialogCon={},closeFlag=true;
+    this.changeAge=function(){
+         var CSS='\
+        .changeAge_dialog{width:100%;height:100%;background-color:#f6f6f6;position:absolute;top:0;left:0;overflow-y:auto;}\
+        .close_changeAge{height:100%;}\
+        .changeAge_dialog .li{padding-left:0.3em;}\
+        .changeAge_dialog .li .con{height:1em;border-bottom:1px solid #e4e4e4;line-height:1em; text-align:left;}\
+        .changeAge_dialog .li .con b{font-size:0.3em;color:#000;}\
+        '
+        if(!temporary.css['changeAge']){
+            setStyle(CSS);
+            temporary.css['changeAge']=true;
+        };
+        var html='<div class="changeAge_dialog" action="close-dialog.,changeAge">\
+                    <div class="close_changeAge" action="close_changeAge">\
+                <div class="li" action="selectAge.,1"><div class="con"><b>18岁以下</b></div></div>\
+                <div class="li" action="selectAge.,2"><div class="con"><b>18~24岁</b></div></div>\
+                <div class="li" action="selectAge.,3"><div class="con"><b>25~34岁</b></div></div>\
+                <div class="li" action="selectAge.,4"><div class="con"><b>35~44岁</b></div></div>\
+                <div class="li" action="selectAge.,5"><div class="con"><b>45~54岁</b></div></div>\
+                <div class="li" action="selectAge.,6"><div class="con"><b>55~64岁</b></div></div>\
+                <div class="li" action="selectAge.,7"><div class="con"><b>65岁以上</b></div></div>\
+                </div>\
+        </div>'
+        this.open({
+            name:'changeAge',
+            html:html,
+            bgColor:1,
+            bgClose:1,
+            animate:'slideInRight'
+        })  
+    }
+    this.btnAnimation=function(elem){
+        elem.classList.add('but_animation');
+        elem.addEventListener('webkitAnimationEnd',function(){
+            elem.classList.remove('but_animation');
+        },false);
+    };
+    this.init=function(){
+        var css='\
+        .confirmBox_dialog_grt{display:none;width:100%;height:100%;position:absolute;top:0;left:0;z-index:100;}\
+        .confirm_Dialog_Box{width:100%;height:100%;position:absolute;top:0;left:0;z-index:100;}\
+        .confirm_Dialog_Box .content_Dialog_Box{width:100%;height:100%;opacity:0;}\
+        .confirm_Dialog_Box b{vertical-align:top;}\
+        .but_animation{-webkit-transform:scale(1);-webkit-animation:but_animation 600ms ease 1}\
+        @-webkit-keyframes but_animation{\
+          0%{-webkit-transform:scale(.9);}\
+          50%{-webkit-transform:scale(1.1)}\
+          100%{-webkit-transform:scale(1)}\
+        }\
+        @-webkit-keyframes slideInRight {from {opacity:1;transform: translate3d(100%, 0, 0);visibility: visible;}to {opacity:1;transform: translate3d(0, 0, 0);}}\
+        @-webkit-keyframes slideOutRight {from {opacity:1;transform: translate3d(0, 0, 0);}to {opacity:1;visibility: hidden;transform: translate3d(100%, 0, 0);}}\
+        .slideInRight {animation-name: slideInRight;animation-duration: 300ms;animation-fill-mode: both;}\
+        .slideOutRight {animation-name: slideOutRight;animation-duration: 300ms;animation-fill-mode: both;}\
+        .dialog-in-1{-webkit-animation:dialog-in-1 400ms ease-out forwards;}\
+        @-webkit-keyframes dialog-in-1{\
+              0% {-webkit-transform:scale(0,0);opacity:0;}\
+            60% {-webkit-transform:scale(1.2,1.2);}\
+           100% {-webkit-transform:scale(1,1);opacity:1;}\
+        }\
+        .dialog-out-1{-webkit-animation:dialog-out-1 300ms ease-in forwards;}\
+        @-webkit-keyframes dialog-out-1{\
+               0% {-webkit-transform:scale(1,1);opacity:1;}\
+              40% {-webkit-transform:scale(1.2,1.2);}\
+             100% {-webkit-transform:scale(0,0);opacity:0;}\
+        }\
+        @media screen and (min-width:320px) and (max-width:359px){\
+            .confirm_Dialog_Box{font-size:42.667px;}\
+        }\
+        @media screen and (min-width:360px) and (max-width:374px){\
+            .confirm_Dialog_Box{font-size:48px;}\
+        }\
+        @media screen and (min-width:375px) and (max-width:413px){\
+            .confirm_Dialog_Box{font-size:50px;}\
+        }\
+        @media screen and (min-width:414px){\
+            .confirm_Dialog_Box{font-size:55.2px;}\
+        }\
+        '
+        setStyle(css)
+        confirmBox=createNode(wBox,'div',{className:'confirmBox_dialog_grt'},'p3')
+        this.eventEntrust({ele:confirmBox,event:'click',fun:function(){
+            var $acton=arguments[0],$t=this
+            switch($acton){
+                case 'close-dialog':
+                    mainVar.dialog.close({'t':$t,'name':arguments[1]})
+                break;
+                case 'close-dialog-changeSex':
+                    mainVar.dialog.close({'t':$t,'name':'changeSex',animate:'slideOutRight'})
+                break;
+                case 'close_changeAge':
+                    mainVar.dialog.close({'t':$t,'name':'changeAge',animate:'slideOutRight'})
+                break;
+                case 'close-changePhoneNum':
+                    if(mainVar.dialog.clockTimer)clearInterval(mainVar.dialog.clockTimer)
+                    mainVar.dialog.close({'t':$t,'name':'changePhoneNum',animate:'slideOutRight'})
+                break;
+            }
+        }})
+        this.temporary=temporary
+    }
+    this.open=function($opt){
+        var opt=$opt||{},bgColor=opt.bgColor||0,bgClose=opt.bgClose||0,html=opt.html||"",contentBox,bgCss='',name=opt.name||'dialog-grt',ele=confirmBox,selfbg=opt.selfbg||false,fun=opt.fun,animate=opt.animate||'dialog-in-1'
+        ele.style.display='block';
+        bgBox=createNode(ele,'div',{className:'confirm_Dialog_Box'},'p3')
+        contentBox=createNode(bgBox,'div',{className:'content_Dialog_Box '+animate,action:(bgClose?'close-dialog.,'+name:''),html:html},'p3')
+        if(!dialogCon[name]){
+            dialogCon[name]=[contentBox]
+        }else{
+            dialogCon[name].unshift(contentBox)
+        }
+        if(!isFirstDom){isFirstDom=bgBox}
+        if(bgColor&&!isColor){
+            // isFirstDom.style.backgroundColor='rgba(0,0,0,.7)'
+            confirmBox.style.backgroundColor='rgba(0,0,0,.7)'
+            isColor=true;
+        }
+        if(selfbg){
+            bgBox.style.backgroundColor='rgba(0,0,0,.7)'
+        }
+        if(bgClose)contentBox.children[0].setAttribute('action',name+"-00");
+        setTimeout(function(){
+            isFun(fun)
+        },400)
+    }
+    this.close=function($opt){
+        if(!closeFlag){
+            closeFlag=true;
+            return
+        }
+        closeFlag=false;
+        var opt=$opt||{},ele=opt.t,name=opt.name,c,animate=opt.animate||'dialog-out-1'
+        if(name){
+            if(dialogCon[name]){
+                c=dialogCon[name].shift();
+                c.className='content_Dialog_Box '+animate
+                setTimeout(function(){
+                    closeFlag=true
+                    var p=c.parentNode
+                    if(p===isFirstDom){
+                        isColor=false;
+                        isFirstDom=null;
+                    }
+                    if(p)removeNode(p)
+                    if(confirmBox.childElementCount==0){
+                        confirmBox.style.backgroundColor='rgba(0,0,0,0)'
+                        confirmBox.style.display='none'
+                    }
+                },400)
+            }else{
+                closebyele()
+            }
+        }else{
+            closebyele()
+        }
+        function closebyele(){
+            if(ele.setAttribute)ele.setAttribute('action','')
+            do{
+                if(ele.nodeType!==1)break;
+                if(ele.className.indexOf('content_Dialog_Box')>=0)break; 
+            }while(ele=ele.parentNode)
+            ele.className='content_Dialog_Box '+animate
+            setTimeout(function(){
+                closeFlag=true
+                var p=ele.parentNode
+                if(p===isFirstDom){
+                    isColor=false;
+                    isFirstDom=null;
+                }
+                if(p)removeNode(p)
+                if(confirmBox.childElementCount==0){
+                    confirmBox.style.backgroundColor='rgba(0,0,0,0)'
+                    confirmBox.style.display='none'
+                }
+            },400)
+        }
+    }//事件代理
+    this.eventEntrust=function($opt){
+        var ele=$opt.ele,
+            event=$opt.event,
+            action=$opt.action||"action",
+            split=$opt.splitStr||".,";
+        addEvent(ele,event,function(e){
+            var ele=e.srcElement||e.target,
+                attribute,
+                argument,
+                a1,
+                fun=typeof($opt.fun)==="function"?$opt.fun:function(){};    
+            do{
+                if(ele.nodeType!==1)break
+                if(attribute=ele.getAttribute(action))break         
+                }
+            while(ele=ele.parentNode);                              
+            if(attribute){                      
+                fun.apply(ele,attribute.split(split))
+            }           
+        }); 
+    };
+    this.extend=function($name,$fun){
+    	if(!$name){
+    		tishi('添加方法失败')
+    		return
+    	}
+        _this[$name]=$fun
+    }
+    this.init();
+
+}
+
+
+</script>

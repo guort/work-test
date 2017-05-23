@@ -107,7 +107,7 @@ function GRT(tvmid,name){if(!tvmid)return
 						user.tvmid+
 						"&token="+user.token+
 						"&bid="+arr[i]+
-						"&tid=6";
+						"&tid=6|8";
 			tyh[i].callBack=function($data){
 				var data=toObject($data);
 				if(data.code==200)
@@ -137,7 +137,7 @@ function GRT(tvmid,name){if(!tvmid)return
 				ajax[j].send();
 				tyh[j].send()
 			}
-		},5.5*60*1000)
+		},4*60*1000)
 	}
 	function timeNow(){
 		var rq=(new Date()),tttt='&nbsp;&nbsp;'+B(rq.getHours())+' : '+B(rq.getMinutes())+'&nbsp;&nbsp;'

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0, user-scalable=0">
+<meta name="format-detection" content="telephone=no" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="yes" name="apple-touch-fullscreen">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta http-equiv="Content-Security-Policy" content="script-src 'unsafe-inline' 'unsafe-eval' 'self'  cdn-public-ylc.yaotv.tvm.cn hm.baidu.com res.wx.qq.com">
+<meta http-equiv="X-Content-Security-Policy" content="script-src 'unsafe-inline' 'unsafe-eval' 'self'  cdn-public-ylc.yaotv.tvm.cn hm.baidu.com res.wx.qq.com">
+<title>摇钱树</title>
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?32dd305f5b4678b11797d3b1ae05f470";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<script type="text/javascript" src="https://cdn-public-ylc.yaotv.tvm.cn/hall/static/ext/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="https://cdn-public-ylc.yaotv.tvm.cn/hall/static/ext/jquery.animateNumber.js"></script>
+<script type="text/javascript" src="https://cdn-public-ylc.yaotv.tvm.cn/hall/static/ext/cookie-storage.js"></script>
+<script type="text/javascript" src="https://cdn-public-ylc.yaotv.tvm.cn/hall/static/ext/app2h5.js?v=1.0.7"></script>
+<script type="text/javascript">
+	var appurl = "";
+	var staticurl = "https://cdn-public-ylc.yaotv.tvm.cn/hall/static";
+	var version = "1.0.7";
+	var login_type = "app";
+	var thisurl = "https://hall-app.yaotv.tvm.cn";
+	var nearby_url = "";
+	var tvmid = "wxh5848bcc2af119c3522ed1fbb";
+	var apiurl =  "https://gamesapi.yaotv.tvm.cn/red_tree";
+</script>
+<style type="text/css">
+html, body {
+	moz-user-select: -moz-none;
+	-moz-user-select: none;
+	-o-user-select: none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+</style>
+</head>
+<body oncontextmenu='return false' ondragstart='return false' onselectstart='return false' onselect='return false' oncopy='return false' onbeforecopy='return false'> 
+<link rel="stylesheet" type="text/css" href="https://cdn-public-ylc.yaotv.tvm.cn/hall/static/building/moneytree/index.css?v=1.0.7" />
+<script type="text/javascript">
+	var xlz_url = "https://games-app.yaotv.tvm.cn";
+	var space_url = "https://life-app.yaotv.tvm.cn/wsq/yao8/zone.html";
+	var yue_url = "http://yaomall.tvm.cn/html/?q=deal/46497107fa23/0/store-balance-trading";
+	var owner_tvmid = "wxh5848bcc2af119c3522ed1fbb";
+	var owner_nickname = "";
+	var tree_num = 0;
+	var join_gold_min = 50;
+	var join_gold_max = 100;
+	var max_gold = 0;
+	var gold_money_percent = parseFloat("0.1");
+</script>
+<script type="text/javascript" src="https://cdn-public-ylc.yaotv.tvm.cn/hall/static/building/moneytree/index.js?v=1.0.7"></script>
+<div id="yqs">
+	<!--动画遮罩-->
+	<div class="top_cloud none"></div>
+<div class="bottom_cloud none"></div>
+<div class="mask_cloud none"></div>
+	<!-- 头部用户信息 -->
+	<div class="top-field w">
+	<div class="user fl">
+		<div class="user-left fl">
+			<div class="head-mask"></div>
+			<div class="user-head">
+				<img src="http://imgser.yaotv.tvm.cn/2017-04-17/2017041717171665.jpg" />
+			</div>
+		</div>
+		<div class="user-right">
+			<div class="user-name">涛涛GRT-火箭军团</div>
+		</div>
+	</div>
+	<div class="gold fl">
+		<div class="gold-panel">
+			<div class="gold-num-panel tc fl">
+				<div class="gold-img fl"></div>
+				<div class="gold-add fl"></div>
+				<div class="gold-num">86548</div>
+			</div>
+		</div>
+	</div>
+</div>
+	<!-- 中间摇钱树界面 -->
+	<div class="main-filed w">
+	<div class="tree-bag tree-bag-400" style="top: 1px; left: -72px; z-index: 1;"></div>
+	<div class="tree-bag tree-bag-1200" style="top: 19px; left: -7px;"></div>
+	<div class="tree-bag tree-bag-1200" style="top: 164px; left: 0px;"></div>
+	<div class="tree-bag tree-bag-600" style="top: 92px; left: -64px;"></div>
+	<div class="tree-bag tree-bag-400" style="top: 97px; left: -66px;"></div>
+	<div class="tree-bag tree-bag-1400" style="top: 124px; left: 29px;"></div>
+	<div class="tree-bag tree-bag-1400" style="top: 70px; left: 31px;"></div>
+	<div id="tree"></div>
+	<div id="wood">
+		<div id="tree-name" class="tc"></div>
+	</div>
+</div>
+<div id="money-area" class="">
+	<div id="money-num"></div>
+	<div class="move_div"><div class="gold-img"></div></div>
+	<div class="move_div"><div class="gold-img"></div></div>
+	<div class="move_div"><div class="gold-img"></div></div>
+	<div class="move_div"><div class="gold-img"></div></div>
+	<div class="move_div last_div"><div class="gold-img"></div></div>
+	<div id="money-btn">收钱</div>
+</div>
+<div class="change_tree"></div>
+<div id="drawbtn"></div>
+<div id="draw-tool" class=""></div>
+	<!-- 尾部列表界面 -->
+	<link rel="stylesheet" type="text/css"
+	href="https://cdn-public-ylc.yaotv.tvm.cn/hall/static/building/moneytree/list.css?v=1.0.7" />
+<script type="text/javascript"
+	src="https://cdn-public-ylc.yaotv.tvm.cn/hall/static/building/moneytree/list.js?v=1.0.7"></script>
+<script type="text/javascript" src="https://cdn-public-ylc.yaotv.tvm.cn/hall/static/ext/iscroll.js"></script>
+<div class="bottom-field w">
+	<div id="record_list">
+		<div id="Wrapper">
+			<div id="Scroller" class="scroll">
+				<div id="list-items"></div>
+			</div>
+		</div>
+		<div id="no_photo" class="none">
+		<div class="none_photo">
+			<img src="https://cdn-public-ylc.yaotv.tvm.cn/hall/static/images/building/no_photo.png" />
+			<div class="no_photo_div">还没人摇中 您是第一个</div>
+		</div>
+	</div>
+	</div>
+</div>
+	<!--遮罩-->
+	<link rel="stylesheet" href="https://cdn-public-ylc.yaotv.tvm.cn/hall/static/ext/animate.css" />
+<div class="rbmask none">
+	<!-- 挂红包 -->
+	<div class="rb-layer w none">
+		<div id="rb-top"></div>
+		<div id="rb-bottom"></div>
+		<div id="left-rb"></div>
+		<div id="right-rb"></div>
+		<div id="rb-desc"></div>
+	</div>
+</div>
+<div class="mask none">
+	<!--底下参与-->
+	<div class="join-layer w none">
+		<div id="by-div-detail">请选择浇水的金币量</div>
+		<div class="max-gold-detail">
+			(最大红包&nbsp;
+			</span>
+			<span class="max_join"></span>
+			&nbsp;金币)
+		</div>
+		<div id="by-div-clode"></div>
+		<div id="by-div-oper">
+			<div id="oper-btn" class="fl">
+				<div class="fl oper-num-btn oper-left">金币:</div>
+				<div id="oper-text" class="fl">
+					<input type="tel" id="by-num-text" value="0" data-role="none" readonly="readonly" />
+				</div>
+				<div id="reset" class="fl oper-num-btn oper-right"></div>
+			</div>
+			<div id="oper-fast" class="w fl">
+				<div id="oper-fast-line">
+					<span class="oper-fast-btn fast" data-num="100">+100</span>
+					<span class="oper-fast-btn fast" data-num="200">+200</span>
+					<span class="oper-fast-btn fast" data-num="500">+500</span>
+				</div>
+			</div>
+			<div id="oper-notice">
+				收获&nbsp;<font class="tree_gold"></font>&nbsp;金币红包的概率是<font class="fifty">50%</font>
+			</div>
+		</div>
+		<div id="oper-submit"></div>
+	</div>
+	<!--恭喜-->
+	<link rel="stylesheet" type="text/css" href="https://cdn-public-ylc.yaotv.tvm.cn/hall/static/building/moneytree/result.css?v=1.0.7" />
+<script src="https://cdn-public-ylc.yaotv.tvm.cn/hall/static/building/moneytree/result.js"></script>
+
+<div class=" result-success none bounceIn animated">
+    <img class="congratulation_title" src="https://cdn-public-ylc.yaotv.tvm.cn/hall/static/images/building/result_top_win.png"/>
+    <img class="congratulation_light rotate_continue" src="https://cdn-public-ylc.yaotv.tvm.cn/hall/static/images/building/light.png"/>
+    <img class="success-bag" src="https://cdn-public-ylc.yaotv.tvm.cn/hall/static/images/building/bag.png">
+    <p class="success-gold-number">0</p>
+    <p class="success-gold-unit">金币</p>
+    <img class="success-again" src="https://cdn-public-ylc.yaotv.tvm.cn/hall/static/images/building/result_btn.png"/>
+    
+    <div class="move_div"><div class="gold-img"></div></div>
+	<div class="move_div"><div class="gold-img"></div></div>
+	<div class="move_div"><div class="gold-img"></div></div>
+	<div class="move_div"><div class="gold-img"></div></div>
+	<div class="move_div last_div"><div class="gold-img"></div></div>
+    
+</div>
+
+	<!--失败-->
+	<div class="result-layer result-fail none clearfix">
+    <!--<div class="cancelbtn"></div>-->
+    <!--<div class="continue">不服再来</div>-->
+    <img class="failure-title none" src="https://cdn-public-ylc.yaotv.tvm.cn/hall/static/images/building/result_top.png"/>
+    <!--<img class="failure-sad none" src="https://cdn-public-ylc.yaotv.tvm.cn/hall/static/images/building/sad.png"/>-->
+    <p class="failure-title-text none">很遗憾</p>
+    <p class="failure-subtitle none">红包是空的～</p>
+    <img class="failure-empty none" src="https://cdn-public-ylc.yaotv.tvm.cn/hall/static/images/building/bag_empty.png"/>
+    <p class="failure-notice none"></p>
+    <img class="failure-again none" src="https://cdn-public-ylc.yaotv.tvm.cn/hall/static/images/building/result_btn.png"/>
+    <img class="failure-known none" src="https://cdn-public-ylc.yaotv.tvm.cn/hall/static/images/building/result_btn.png">
+</div>
+	<div id="money_notice" class="none">
+		<div id="mn_close"></div>
+		收取
+		<span class="money-num" id="mn_gold">1020</span>
+		金币<br /> 需
+		<span class="money-num" id="mn_yue">102</span>
+		余额<br>
+		<span class="mn_desc none">您的余额不足</span>
+		<div id="get_money"></div>
+	</div>
+</div>
+	<!--广告语-->
+	<div class="ad-title-mask">
+	<div class="ad-title-content">
+		<div class="ad-title-close"></div>
+		<div class="ad-title-text">设置您的广告语</div>
+		<div class="ad-title-input"><textarea id="ad-title-textarea" placeholder="最多20个字"></textarea></div>
+		<div class="ad-error none">您的字数太多啦~</div>
+		<div class="sure_set"></div>
+	</div>
+</div>
+	<div class="msg_mask">
+		<div class="msg_div">
+			<div id="msg_close"></div>
+			<img class="part1" src="https://cdn-public-ylc.yaotv.tvm.cn/hall/static/images/building/g_01.png">
+			<div class="msg part2">1.点击浇水，选择金币量，金币越多获得红包将会越大</div>
+			<img class="part3" src="https://cdn-public-ylc.yaotv.tvm.cn/hall/static/images/building/g_02.png">
+			<div class="msg part4">2.选择您想采摘的红包，摘得红包的机会为50%</div>
+			<img class="part5" src="https://cdn-public-ylc.yaotv.tvm.cn/hall/static/images/building/g_03.png">
+			<div class="msg part6">3.获得金币红包，金币实时到账</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

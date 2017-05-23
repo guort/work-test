@@ -1,0 +1,52 @@
+<!doctype html><html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+<meta content="email=no" name="format-detection" />
+<meta name="apple-touch-fullscreen" content="YES">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link href="" rel="stylesheet" type="text/css">
+<style type="text/css">
+	html,body{width:100%;height:100%;margin:0;}
+	/*提示*/
+
+</style>
+<title>倒计时</title>
+</head><body>
+<input type="text" name="ajax" style="width:200px;height:50px;border:1px solid #000;" id="ipt" placeholder="请输入ajax地址">
+<!-- <input type="text" name="2" style="width:100px;height:50px;border:1px solid #000;margin-top:20px;" id="ipt2" placeholder="GET"> -->
+<button id="btn" style="width:50px;height:30px;display: block;margin-top: 50px;background-color:red;">测设</button>
+<script src="jc/xdTools.js"></script>
+<script src=""></script>
+<script type="text/javascript">
+var DO=document,DB=DO.body,winW=window.innerWidth,winH=window.innerHeight
+,mainVar={}
+,search=getSearch()
+,ST_user=localStorage.getItem("userInfo")
+,userInfo=toObject(ST_user)||{}
+;
+
+btn.onclick=function(){
+    if(!ipt.value){
+        alert('请输入请求地址')
+        return
+    }
+    var a=setAjax('get','http://12345.chengdu.gov.cn/returnTotleMailTel')
+    a.callBack=function($data){
+        var data=toObject($data)
+        console.log(data)
+        alert('请求成功')
+    }
+    a.err=function($data){
+        alert('发送请求失败（接口跨域或者网络不好）')
+    }
+    a.send()
+}
+
+
+
+
+
+</script>
+</body></html>

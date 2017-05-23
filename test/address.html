@@ -1,0 +1,119 @@
+<!doctype html><html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+<meta content="email=no" name="format-detection" />
+<meta name="apple-touch-fullscreen" content="YES">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>上飘提示</title>
+<style type="text/css">
+	*{margin:0;padding:0;}
+	html,body{width:100%;height:100%;}
+
+</style>
+</head><body>
+<script src="jc/xdTools.js"></script>
+<script type="text/javascript">
+var a=setAjax('POST','https://secure.yaomall.tvm.cn/html/?q=service/yaotvc/get_addresses_by_openid'),d={"openid":"orEt2t-5LqQAgPyC3GVDuwUJfg9U"}
+a.data=JSON.stringify(d)
+a.callBack=function($data){
+	var data=toObject($data)
+	console.log(data)
+}
+a.send()
+
+
+
+
+
+	var GetAddressList = function() {
+		ajax({
+			url: preurl + "?q=service/yaotvc/get_addresses_by_openid",
+			data: JSON.stringify({
+				"openid": openid
+			}),
+			async: true,
+			type: 'post',
+			dataType: 'json',
+			timeout: 10000,
+			beforeSend: function() {
+				document.getElementById("common-loading").style.display = "block";
+			},
+			success: function(data) {
+				if (AjaxStatus(data)) {
+					return true;
+				} else {
+					//document.getElementById(posid).innerHtml=frameHtml;
+					var address_list = data["data"]["address_list"];
+					var shippingAddressList = '';
+					// document.getElementById("#deal-shipping-address-empty-tip").setAttribute("data-address-size",address_list.length);
+					for (var i = 0; i < address_list.length; i++) {
+						var adr = address_list[i];
+						var default_address_en = "";
+						/* if(i==0&&adr["default"]==1){
+                         default_address_en = "selected-addrs";
+                         }*/
+
+						if (i == 0) {
+							default_address_en = "selected-addrs";
+						}
+
+						if (adr["town"] == null) {
+							adr["town"] = "";
+						}
+						if (adr["zipcode"] == null) {
+							adr["zipcode"] = "";
+						}
+						if (adr["identity_card"] == null) {
+							adr["identity_card"] = "";
+						}
+						var addressItem = ' <div class="yaotvc-address-myaddrs-item"' + 'data-address-id="' + adr["id"] + '"' +
+							' data-address-name="' + adr["addressee"] + '"' +
+							' data-address-phone="' + adr["phone"] + '"' +
+							' data-address-provice="' + adr["province"] + '"' +
+							' data-address-provice_id="' + adr["province_id"] + '"' +
+							' data-address-city="' + adr["city"] + '"' +
+							' data-address-city_id="' + adr["city_id"] + '"' +
+							' data-address-area="' + adr["area"] + '"' +
+							' data-address-area_id="' + adr["area_id"] + '"' +
+							' data-address-town="' + adr["town"] + '"' +
+							' data-address-town_id="' + adr["town_id"] + '"' +
+							' data-address-street="' + adr["street"] + '"' +
+							' data-address-postalcode="' + adr["zipcode"] + '"' +
+							' data-address-sfzcode="' + adr["identity_card"] + '"' +
+							' data-address-district-value="' + adr["tag"] + '">' + '<div class="yaotvc-address-item-info">\
+                                <span class="yaotvc-address-info-name">' + adr["addressee"] + '</span>\
+                                <span class="yaotvc-address-info-phone">' + adr["phone"] + '</span>\
+                            </div>\
+                            <div class="yaotvc-address-info-detailaddrs">' + adr["province"] + adr["city"] + adr["area"] + adr["town"] + adr["street"] + '</div>\
+                            <div class="yaotvc-address-info-oprator">\
+                                <span class="yaotvc-address-info-sendhere ' + default_address_en + '">寄到这里</span>\
+                                <span class="yaotvc-address-info-delete">删除</span>\
+                                <span class="yaotvc-address-info-edit">编辑</span>\
+                            </div>\
+                        </div>';
+						shippingAddressList += addressItem;
+					}
+					var myaddrs = document.getElementById("myaddrsList");
+					myaddrs.innerHTML = shippingAddressList;
+					setEvent();
+					if (address_list.length == 0) {
+						addAddressClick();
+					}
+				}
+			},
+			error: function() {
+
+			},
+			complete: function() {
+				document.getElementById("common-loading").style.display = "none";
+			}
+		});
+	}
+
+
+
+
+</script>
+</body></html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+<meta http-equiv="expires" content="Wed, 26 Feb 1997 08:21:57 GMT">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no,minimal-ui">
+<meta http-equiv="Content-Security-Policy" content="script-src 'unsafe-inline' 'unsafe-eval' 'self' *.tvm.cn">
+<meta http-equiv="X-Content-Security-Policy" content="script-src 'unsafe-inline' 'unsafe-eval' 'self' *.tvm.cn">
+<meta http-equiv="X-Webkit-CSP" content="script-src 'unsafe-inline' 'unsafe-eval' 'self' *.tvm.cn">
+ <!-- dd -->
+<title>战队</title>
+<link rel="stylesheet" href="css/comm.css" />
+<link rel="stylesheet" href="css/index.css" />
+<script src="../../libs/jquery.js"></script>
+<script src="../../libs/config.js"></script>
+<script src="../../libs/baselib.js"></script>
+<script src="../component/appservice.js"></script>
+<script src="../component/opendao.js"></script>
+<script src="../guild/component/modal.js"></script>
+<script>
+    try{var parenthost=parent.location.host}catch(Exc){try{document.domain = "tvm.cn";}catch(Ex){}}
+    $(function(){
+        // if(window.frameElement && window.frameElement.tagName == "IFRAME"){
+        //     window.AppService=window.parent.AppService;
+        // }
+        // AppService.init(null,function(appui){
+        //     // OpenDao.init(appui);
+        //     // Modal.init({wrap:$("#basemainpanel")});
+        //     var userInfo={"isWX":0,"openid":"orEt2t0E5ZTLHk8Ny5IsfnzZiGTI","sig":"4eb60dfd9090dbea3768ad918e9c8203","tokenSig":"51b374dd67f3cc83cd80d8626e09aedd","sigExpire":1479362326,"nickname":"love.","weixin_avatar_url":"http://wx.qlogo.cn/mmopen/ZJTL4IVribPPSNJKKoSP4RtQZIaCEqvGoUxWal49hiaye2BYRucN49OabwUQj7qUo0BODoOoErm67wNibjNrziaNFljFj2yABibwu/0","id":"y8_wxh5848bcc2af119c3522ed1fbb_0","request":"XD","appToken":"0b58a0a5ad9ebbb8972b36b39fa46ffd","location":{"lat":39.93163292528095,"lng":116.4493551609525,"region":"0-0-0-0","adcode":110100,"gps":"39.93163292528095,116.4493551609525"}}
+        //     if(userInfo&&userInfo.id){
+        //         tvmview.utilop.ajax('//'+HOST_CONFIG.WSQ_HOST+'/fastcall/gamegroup/getusergamegroupinfo',{success:function(rs){
+        //             if(rs&&rs.status==1){
+        //                 var data=rs.data||{};
+        //                 var guildInfo=data[userInfo.id];
+        //                 var urlParams=tvmview.utilop.url2hash();
+        //                 if(urlParams.from=='chat'){//从聊天室进来，直接进列表页
+        //                     tvmview.use('view/index.js',{info:guildInfo});
+        //                 }else {
+        //                     if (guildInfo) {
+        //                         tvmview.use('view/chat.js',{info: guildInfo});
+        //                     } else {
+        //                         tvmview.use('view/index.js',{info:guildInfo});
+        //                     }
+        //                 }
+        //             }else{
+        //                 var guildInfo={"data":{"y8_wxh5848bcc2af119c3522ed1fbb_0":{"headimg":"http://imgser.yaotv.tvm.cn/2017-04-17/2017041717171665.jpg/96","create_time":"2017-04-27 14:26:09","systemname":"gailou","max_member":30,"userid":"y8_wxh5848bcc2af119c3522ed1fbb_0","badge":"http://imgser.yaotv.tvm.cn/2017-04-27/201704271425440030589669.jpg@_1o","update_time":"2017-05-12 10:00:39","attack_num":0,"create_timestamp":1493274369829,"update_timestamp":1494554439356,"member_num":16,"join_right":1,"grade":1,"name":"火箭军团","nickname":"涛涛GRT-火箭军团","_id":"y8_wxh5848bcc2af119c3522ed1fbb_0_gailou","asset_num":0,"desc":"火箭军团，征战神州，违者必究！！！"}},"status":1}
+
+
+        //                 tvmview.use('view/chat.js',{info: guildInfo});
+        //                 Modal.showTip({'msg':rs&&rs.msg?rs.msg:'获取战队信息失败！'});
+        //             }
+        //         }},{userids:userInfo.id});
+        //     }else{
+        //         Modal.showTip({'msg':'没有用户身份'});
+        //     }
+        // });
+
+         var guildInfo={"headimg":"http://imgser.yaotv.tvm.cn/2017-04-17/2017041717171665.jpg/96","create_time":"2017-04-27 14:26:09","systemname":"gailou","max_member":30,"userid":"y8_wxh5848bcc2af119c3522ed1fbb_0","badge":"http://imgser.yaotv.tvm.cn/2017-04-27/201704271425440030589669.jpg@_1o","update_time":"2017-05-12 10:00:39","attack_num":0,"create_timestamp":1493274369829,"update_timestamp":1494554439356,"member_num":16,"join_right":1,"grade":1,"name":"火箭军团","nickname":"涛涛GRT-火箭军团","_id":"y8_wxh5848bcc2af119c3522ed1fbb_0_gailou","asset_num":0,"desc":"火箭军团，征战神州，违者必究！！！"}
+                        
+            tvmview.use('view/chat.js',{info: guildInfo});
+
+    })
+</script>
+</head>
+<body>
+<div id="basemainpanel" class="basemainpanel guildmainbg"></div>
+</body> 
+</html> 
+

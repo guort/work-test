@@ -41,15 +41,11 @@ var DO=document,DB=DO.body,winW=window.innerWidth,winH=window.innerHeight
 ;
 
 // wxh5848bcc2af119c3522ed1fbb
-// 4fcf774618d348c681a7066f5e855bf8
 
-//wxh5895cbaa62837247af5c917c  这家伙干死
+//裴蓓 sjh5848bb9208696d352471e02d
 
-//wxh5857fb4de5641e7a7fa9db2a  徐小伤  女
+//wxh587f21be3dfe1204dfda3451  大户
 
-
-//wxh58c5345a631fc8397d1c0868   目标
-//wxh58a70afa2994045e875236c5
 
 btn.onclick=function(){
 	if(!bFlag)return
@@ -114,7 +110,7 @@ function GRT($opt){if(!$opt)return
 	}
 	function hit(){
 		if(!bid)return
-		var a=setAjax('get','//nearby.yaotv.cn/g/use_card_daodan?tvmid='+user.tvmid+'&token='+user.token+'&id='+bid+'&atoken=41bb336f1c7898327235d7ac48a5d24b&msg=')
+		var a=setAjax('get','//nearby.yaotv.cn/g/use_card_daodan?tvmid='+user.tvmid+'&token='+user.token+'&id='+bid+'&atoken=c3c816eb46b3341945257c7ed910e865&msg=')
 		a.callBack=function($data){
 			var data=toObject($data),s,coin
 			if(data.code){
@@ -156,6 +152,7 @@ function GRT($opt){if(!$opt)return
 		return tttt
 	}
 
+	
 }
 </script>
 </body></html>
