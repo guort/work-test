@@ -1,0 +1,72 @@
+
+
+.mainbox{width:100%;height:100%;position: relative;}
+.mainbox b{vertical-align: top;font-weight:500;font-family:myfont;color:#fff;}
+.confirmBox_dialog_grt{font-family:myfont;}
+
+.black{background-color:#000;}
+.sound{position: absolute;top:0.2em;right:0.2em;z-index:300;display:none;}
+.slide_page_1{background-color:#000;}
+.slide_page_1 .page_1_bg{width:6.4em;height:8.28em;margin:0 auto;}
+.slide_page_1 .page_1_bg img{width:100%;height:100%;}
+.slide_page_1 .page_1_plane{width:1.1em;height:0.45em;position: absolute;top:2.15em;left:2.4em;}
+.slide_page_1 .page_1_plane img{width:100%;height:100%;}
+.slide_page_1 .next{width:0.57em;height:0.7em;margin:0 auto;margin-top:10px;}
+.star{width:0.2em;height:0.2em;position:absolute;}
+.star img{width:100%;height:100%;}
+.star1{top:0.69em;left:3.27em;}
+.star2{top:1.64em;left:1.58em;}
+.star3{top:1.64em;left:3.96em;}
+.star4{top:2.95em;left:1.27em;}
+.star5{top:2.77em;left:5.66em;}
+
+.slide_page_2 img{width:100%;height:100%;}
+.slide_page_2 .page_2_bg{width:6.4em;height:5.7em;}
+.slide_page_2 .page_2_btn{width:4.2em;height:2.1em;margin:0 auto;margin-top:-0.4em;}
+.slide_page_2 .page_2_hand{width:0.78em;height:1.6em;position: absolute;top:3.96em;right:1.3em;}
+.slide_page_2 .page_2_dian{width:1.8em;height:1.03em;position: absolute;top:4.6em;right:0.86em;}
+.slide_page_2 .page_2_tips{width:4em;height:0.9em;position: absolute;left:1.32em;bottom:1.2em;}
+.slide_page_2 .page_2_ls{width:1.1em;height:1.04em;position: absolute;left:1.32em;bottom:1.6em;}
+.slide_page_2 .page_2_ls img{position: absolute;top:0;left:0;}
+
+.clock_tit{width:100%;height:1.4em;position:absolute;top:0.18em;left:0;z-index:200;}
+.cut_clock{width:1.16em;height:1.4em;background-image:url(../img/cut_clock.png);background-size:100% 100%;position:absolute; top:0;left:40%;line-height:1.7em;text-align:center;}
+.cut_clock b{font-size:0.4em;color:#fff;}
+.c_arrow{width:4.08em;height:0.72em;position:absolute;top:0.42em;left:50%;-webkit-transform:translateX(-50%);}
+
+
+
+
+
+.slide_page_2{background-color:#000;}
+.loading_div{background-color:#000;line-height:14px;}
+.load span{font-size:14px;font-family:myfont;font-weight:700;color:#fff;}
+.grtlevelmove{animation:grtlevelmove 2s linear infinite;}
+.movetobottom{animation:movetobottom 300ms linear both;}
+.flytoleft{animation:flytoleft 2s ease-in infinite;}
+@keyframes grtlevelmove{0% {-webkit-transform:translateX(0px);}70% {-webkit-transform:translateX(-60%);}100%{-webkit-transform:translateX(0%);}}
+@-webkit-keyframes grtlevelmove{0% {-webkit-transform:translateX(0px);}70% {-webkit-transform:translateX(-60%);}100%{-webkit-transform:translateX(0%);}}
+@keyframes movetobottom{0% {-webkit-transform:translateX(0px);}100%{-webkit-transform:translateY(100%);}}
+@-webkit-keyframes movetobottom{0% {-webkit-transform:translateX(0px);}100%{-webkit-transform:translateY(100%);}}
+
+@keyframes flytoleft{0% {-webkit-transform:translate(400px,-800px);opacity:0;}100%{-webkit-transform:translate(0,0);opacity:1;}}
+@-webkit-keyframes flytoleft{0% {-webkit-transform:translate(400px,-800px);opacity:0;}100%{-webkit-transform:translate(0,0);opacity:1;}}
+
+
+@font-face
+{
+font-family: myfont;
+src: url(huakang.ttc);
+}
+@media screen and (min-width:320px) and (max-width:359px){
+	.mainbox{font-size:50px;}
+}
+@media screen and (min-width:360px) and (max-width:374px){
+	.mainbox{font-size:56.25px;}
+}
+@media screen and (min-width:375px) and (max-width:413px){
+	.mainbox{font-size:58.5938px;}
+}
+@media screen and (min-width:414px){
+	.mainbox{font-size:64.6875px;}
+}
