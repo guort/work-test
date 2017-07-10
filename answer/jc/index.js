@@ -1,29 +1,41 @@
 //分享链接
 var mainVar={},userInfo={},DO=document,DB=document.body,winW=window.innerWidth,winH=window.innerHeight;
+var search=getSearch();
+var openid=search.openid
 var url = window.location.href;
-var productName = '中国新富人群洞察报告';
-var productImg = getRootPath() + "/img/logo.png";
-var productDesc = '《中国新富人群洞察报告》，有“财花”的最新标准！';
 var curIndex=0;
-var appid = "wxa7018ce027ce9f16";
+var totalNumber=0;
+var rightNumber=0;
+var userInfo={};
+var topic_right='';
+var topic_id='';
 
 
-
+if(!openid){
+	toWXSQ()
+}
+function toWXSQ($url){
+    localStorage.clear()
+    var url=$url||location.href;
+    HOST.AD='//qa-mb.mtq.tvm.cn'
+    location.replace(HOST.AD+"/yyyoauth?wx_token=33580c57d3c86f07&redirecturl="+encodeURIComponent(url))
+}
 
 $(function() {
 
 mainVar.box=mainBox;
 //倒计时
 mainVar.num=30;
+mainVar.selList={};
+mainVar.sunmitFlag=true;
+mainVar.slidFlag=true;
+mainVar.bgFlag=true;
 
 
 
 loadImg();
 mainVar.dialog=new confirmAlert()
-//这个是禁止页面上下滑动露出微信的黑色背景
-// $('body').on('touchmove touchstart', function (event) { 
-// 	event.preventDefault(); 
-// });
+//禁止页面上下滑动露出微信的黑色背景
 stopWXPageMove()
 function stopWXPageMove(){
 	var overscroll = function(el) {
@@ -77,6 +89,20 @@ $("#sound_control").bind('touchstart', function() {
 		bgMusic.play();
 	}
 });
+function bgMusicPause(){
+	$("#sound_img").attr("src", "img/sounds_02.png");
+	$("#sound_control").removeClass("clockwise-rotate").addClass("clockwise-pause");
+	bgMusic.pause();
+}
+function bgMusicPlay(){
+	$("#sound_img").attr("src", "img/sounds_01.png");
+	$("#sound_control").removeClass("clockwise-pause").addClass("clockwise-rotate");
+	bgMusic.play();
+}
+
+
+
+
 //星星闪
 pageOneStarAdd()
 function pageOneStarAdd(){
@@ -91,17 +117,27 @@ function pageOneStarAdd(){
 
 $(".page_2_btn").bind('click',function(){
 	if(!$(".clock_dialog").length){
-		btn_music.src='media/btn.mp3'
-		btn_music.volume=0.9
-		btn_music.play();
+		btn_music_play();
 
 		mainVar.dialog.clock()
 	}
 })
 
+function btn_music_play(){
+	btn_music.src='media/btn.mp3'
+	btn_music.volume=0.9
+	btn_music.play();
+}
+function bg_music_play(){
+	$("#sound_img").attr("src", "img/sounds_01.png");
+	$("#sound_control").removeClass("clockwise-pause").addClass("clockwise-rotate");
+	buy_music.src="media/bg.mp3"
+	buy_music.play();
+}
 
-
-
+$('#share_yd_dialog').bind('click',function(){
+	$('#share_yd_dialog').hide()
+})
 
 
 
@@ -130,7 +166,14 @@ function slideFun(){
         deltaY = endPosition.y - startPosition.y;
     });
     el.addEventListener('touchend', function (e) {
-        
+        console.log(mainVar.slidFlag)
+        if(!mainVar.slidFlag){
+			setTimeout(function(){
+				// mainVar.slidFlag=true
+			},150)
+			return
+		}
+		mainVar.slidFlag=false
 		if(/*startPosition.y < (clientHeight * 0.4) && */deltaY > 10) {
 			//上一页
 			if(curIndex == 0) {
@@ -181,25 +224,28 @@ function slideFun(){
     });
 }
 
-	
 
+// var nonce = getNonceStr();
+// var timeStamp = new Date().getTime();
+// var jsapi_ticket = getTicket();
+// var signStr = hex_sha1("jsapi_ticket=" + jsapi_ticket + "&noncestr=" + nonce + "&timestamp=" + timeStamp + "&url=" + window.location.href);
+// wx.config({
+//     debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+//     appId: appid, // 必填，公众号的唯一标识
+//     timestamp: timeStamp, // 必填，生成签名的时间戳
+//     nonceStr: nonce, // 必填，生成签名的随机串
+//     signature: signStr,// 必填，签名，见附录1
+//     jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQZone','onMenuShareWeibo','onMenuShareQQ'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+// });
 
-
-
-var nonce = getNonceStr();
-var timeStamp = new Date().getTime();
-var jsapi_ticket = getTicket();
-var signStr = hex_sha1("jsapi_ticket=" + jsapi_ticket + "&noncestr=" + nonce + "&timestamp=" + timeStamp + "&url=" + window.location.href);
-wx.config({
-    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-    appId: appid, // 必填，公众号的唯一标识
-    timestamp: timeStamp, // 必填，生成签名的时间戳
-    nonceStr: nonce, // 必填，生成签名的随机串
-    signature: signStr,// 必填，签名，见附录1
-    jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQZone','onMenuShareWeibo','onMenuShareQQ'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-});
-
-
+var shareInfo={
+	title:'中企动力移动门户',
+	icon:'http://qa-h5.mtq.tvm.cn/yao/guort/answer/img/share_logo.png',
+	resources:location.href,
+	link:location.href.replace(/\?.*/,''),
+	desc:'划重点，考到60分儿，算你入门儿互联网'
+}
+wxShare(shareInfo)
 
 
 //加载图片
@@ -232,10 +278,7 @@ function loadImg() {
 }
 
 
-
-
-
-//倒计时
+//倒计时页
 mainVar.dialog.extend('clock',function($num){
     var CSS='\
         .clock_dialog{width:100%;height:100%;overflow:hidden;position:relative;}\
@@ -257,7 +300,7 @@ mainVar.dialog.extend('clock',function($num){
         this.temporary.css['clock']=true;
     };
     setTimeout(function(){
-    	bgMusic.pause();
+    	bgMusicPause();
     	$(".clock_tit").removeClass('hide');
     	clock_music.play();
     },300)
@@ -290,7 +333,8 @@ mainVar.dialog.extend('clock',function($num){
         		five_num.innerHTML=num;
         		if(num<=0){
         			clock_music.pause();
-
+        			mainVar.dialog.cutdown()
+        			mainVar.dialog['selText'](20)
         			clearInterval(timer)
         		}
         	},1000) 
@@ -303,6 +347,343 @@ mainVar.dialog.extend('clock',function($num){
         ,deldialogTime:0
     })
 })
+//全局30秒倒计时
+mainVar.dialog.extend('cutdown',function($num){
+	var number=$num||30;
+	mainVar.cutTimer=setInterval(function(){
+		number--;
+		cut_num.innerHTML=number;
+		if(number<=0){
+			endFun()
+			clearInterval(mainVar.cutTimer)
+		}
+	},1000)
+	//暂停
+	mainVar.pasueCutTimer=function(){
+		if(mainVar.cutTimer)clearInterval(mainVar.cutTimer)
+	}
+	//继续倒计时
+	mainVar.continueCutTimer=function(){
+		if(mainVar.cutTimer)clearInterval(mainVar.cutTimer)
+		if(number==0)return	
+		mainVar.cutTimer=setInterval(function(){
+			number--;
+			cut_num.innerHTML=number;
+			if(number<=0){
+				endFun()
+				clearInterval(mainVar.cutTimer)
+			}
+		},1000)
+	}
+	//回调函数
+	function endFun(){
+		mainVar.dialog.share()
+	}
+})
+//选题
+mainVar.dialog.extend('selText',function($num){
+	if(mainVar.bgFlag){
+		bg_music_play();
+		mainVar.bgFlag=false
+	}
+	
+	//题目数量
+	var num=$num||20,number,randomNum,length,endFl=false;
+	if(!mainVar.initSelNum){
+		for(var i=0;i<33;i++){
+			mainVar.selList[i+1]=true;
+		}
+		mainVar.initSelNum=true;
+	}
+	randomNum=Math.floor(Math.random()*33+1)
+	if(totalNumber==0||totalNumber==1||totalNumber==2){
+			randomNum=totalNumber+1
+		}
+	if(mainVar.selList[randomNum]){
+		if(totalNumber>=num){
+			mainVar.dialog.share()
+			return
+		}
+		mainVar.selList[randomNum]=false;
+		mainVar.sunmitFlag=true;
+		mainVar.dialog.page1(randomNum)
+	}else{
+		for(var j=0;j<num;j++){
+			if(mainVar.selList[j+1]){
+				endFl=true;
+			}
+		}
+		if(endFl){
+			mainVar.dialog['selText']();
+		}else{
+			tishi('没有更多题目了',{showTime:2000})
+		}
+	}
+})
+//发送数据
+mainVar.dialog.extend('sendDate',function($opt){
+	$.ajax({
+		type:'POST'
+		,url:'http://47.95.7.100/index.php?s=api/add_update'
+		,dataType:'json'
+		,data:{
+			openid:openid
+			,nickname:'1'
+			,image:'1'
+			,topic_right:(topic_right.replace(/\|$/,''))
+			,topic_id:topic_id.replace(/\|$/,'')
+		}
+		,success:function($data){
+			mainVar.dialog.getRank()
+		}
+		,error:function(){
+			mainVar.dialog.getRank()
+		}
+	})
+})
+//获取排名
+mainVar.dialog.extend('getRank',function($opt){
+	$.ajax({
+		type:'POST'
+		,url:'http://47.95.7.100/index.php?s=api/select_find_openid'
+		,dataType:'json'
+		,data:{
+			openid:openid
+			,act:'find_openid'
+		}
+		,success:function($data){
+			var data=toObject($data),d,rownum
+			d=data.data[0]||{}
+			if(data.code==200){
+				rownum=d.rownum||""
+				if(user_rank)user_rank.innerHTML=rownum
+			}
+		}
+		,error:function(){
+			tishi('获取名次失败')
+		}
+	})
+})
+//答题页
+mainVar.dialog.extend('page1',function($num){
+    var CSS='\
+        .page1_dialog{width:100%;height:100%}\
+        '
+    if(!this.temporary.css['page1']){
+        setStyle(CSS);
+        this.temporary.css['page1']=true;
+    };
+    $('.page_num').removeClass('hide');
+    totalNumber++;
+    var html="",h="",num=$num-1,iconHtml="",rightResult=ansList[num]['right']
+	    mainVar.userSelect='';
+	    mainVar.rightResult=rightResult;
+	    page_qus_num.innerHTML=totalNumber+'/20';
+	    topic_id+=(num+'|')
+    	iconHtml='<img src="img/clock_fly.png" class="icon page_fly twinkling3">\
+    			<img src="img/clock_star.png" class="icon page_star twotwinklingtwo">\
+    			<img src="img/clock_star2.png" class="icon page_fly_star flytoleft">'
+		h='<div class="qus_data">\
+	    	<div class="li" action="select.,1"><div class="check_box"></div><div class="li_right"><p><b>'+ansList[num]['ans'][0]+'</b></p></div></div>\
+	    	<div class="li" action="select.,2"><div class="check_box"></div><div class="li_right"><p><b>'+ansList[num]['ans'][1]+'</b></p></div></div>\
+	    	<div class="li" action="select.,3"><div class="check_box"></div><div class="li_right"><p><b>'+ansList[num]['ans'][2]+'</b></p></div></div>\
+	    	<div class="li" action="select.,4"><div class="check_box"></div><div class="li_right"><p><b>'+ansList[num]['ans'][3]+'</b></p></div></div>\
+		</div>'
+
+    	switch(num){
+    		case 5:case 10:case 11:case 26:case 26:
+    			iconHtml+=''
+    		break;
+    		default:
+    			iconHtml+='<img src="img/page_left.png" class="icon page_left">\
+    			<img src="img/page_1_plane.png" class="icon page_plane flytoleft2">\
+    			<img src="img/page_glass.png" class="icon page_glass glassAni">'
+    		break;
+    	}
+		html='<div class="page1_dialog page">\
+			<div class="qus_tit">\
+				<p><b>'+totalNumber+'. &nbsp;'+ansList[num].tit+'</b></p>\
+			</div>'+h+'<div class="qus_btn" action="submit.,'+(num)+'"><b id="qus_btn">下一题</b></div>'+iconHtml+'\
+			</div>'
+    this.open({
+         name:'page'+num
+        ,html:html
+        ,fun:function(){
+        	var n=num
+        	mainVar.continueCutTimer()
+        	setTimeout(function(){
+        		if(n==0)return
+        		mainVar.dialog.close({'name':'page'+(n-1),'animate':'movetobottom'})
+        	},400)
+        }
+        ,animate:'moveFromBottom'
+        ,closeFun:function(){}
+        ,closeAnimate:'movetobottom'
+    })
+})
+//分享
+mainVar.dialog.extend('share',function($num){
+    var CSS='\
+        .share_dialog{width:100%;height:100%;background-size:100% 100%;background-image:url(img/share_bg.png);}\
+        .part1{margin-top:1em;padding-left:0.58em;text-align:left;}\
+        .part1 p{height:0.5em;line-height:0.5em;}\
+        .part1 p b{font-size:0.34em;}\
+        .part1 p b.red{color:#d92b00;}\
+        .l2{margin-bottom:0.4em;}\
+        .l3{}\
+        .share_dialog .l3 b{font-size:0.38em;}\
+        .share_dialog .l4{margin-top:0.1em;text-align:right;}\
+        .share_dialog .l4 b{font-size:0.62em;}\
+        .shareImg{position:absolute;left:0;}\
+        .sharebtn{width:2.28em;height:1.1em;position:absolute;bottom:0.7em;}\
+        .share_l{left:0.6em;}\
+        .share_r{right:0.6em;}\
+        .share_4_head{width:1em;height:1.16em;top:3.14em;right:0.96em;}\
+        .share_4_g{width:1.5em;height:0.44em;top:4.3em;right:1.19em;}\
+        .share_4_xin{width:0.72em;height:0.72em;top:3.33em;right:2.37em;}\
+        .share_4_b{width:4.9em;heihgt:0.84em;bottom:2.07em;left:50%;-webkit-transform:translateX(-50%);}\
+        .share_3_head{width:1.44em;height:1.37em;top:3.7em;right:2.14em;}\
+        .share_3_t{width:2.68em;height:1.79em;top:3.6em;right:0.56em;}\
+        .share_3_ball{width:0.8em;height:0.6em;top:4.6em;left:1.13em;}\
+        .share_3_icon1{width:0.78em;heihgt:0.42em;top:0.65em;right:1.24em;}\
+        .share_3_icon2{width:0.52em;heihgt:0.36em;bottom:2.76em;right:1.1em;}\
+        .share_3_icon3{width:0.74em;heihgt:0.43em;bottom:3.36em;right:0.52em;}\
+        .share_3_icon4{width:0.64em;heihgt:0.37em;bottom:2.09em;left:0.78em;}\
+        .share_2_hand{width:1.2em;height:1.36em;top:4.22em;right:1em;}\
+        .share_2_d{width:0.39em;height:0.5em;top:4em;right:1.7em;}\
+        .share_2_b{width:4.32em;height:1.48em;bottom:2.03em;left:50%;-webkit-transform:translateX(-50%);}\
+        .share_2_ball{width:0.8em;height:0.67em;bottom:2.7em;left:2em;}\
+        .share_2_ss{width:0.74em;height:0.76em;top:1.98em;right:0.57em;}\
+        .share_icon_king{width:0.57em;height:0.52em;top:2.4em;right:0.53em;}\
+        .share_icon_1{width:0.65em;height:0.37em;bottom:2.1em;left:1.15em;}\
+        .share_icon_2{width:0.78em;height:0.48em;bottom:2.46em;right:1.67em;}\
+        .share_icon_ball{width:0.79em;height:0.72em;top:4.76em;right:0.92em;}\
+        .share_1_ball{width:0.8em;height:0.67em;top:3.72em;right:1.94em;}\
+        '
+    if(!this.temporary.css['share']){
+        setStyle(CSS);
+        this.temporary.css['share']=true;
+    };
+    $('.clock_tit').hide();
+    $('.page_num').hide();
+    bgMusicPause()
+    score_music.play();
+    mainVar.dialog.sendDate()
+    var html="",num=$num,descHTML="",t1="",t2="",t3="",t4=""
+    	console.log(rightNumber)
+    	if(rightNumber<10){
+    		num=4
+    	}else if(rightNumber<20){
+    		num=3
+    	}else if(rightNumber<25){
+    		num=2
+    	}else{
+    		num=1
+    	}
+    	switch(num){
+    		case 1:
+    			t1="恭喜您成为"
+    			t2="网管界最强王者"
+    			descHTML='<img src="img/share_1.png" class="shareImg" style="top:4.42em;height:2.36em;">'
+    			t3='<img src="img/share_3_icon1.png" class="img_icon share_3_icon1">\
+    				<img src="img/share_icon_king.png" class="img_icon share_icon_king twinkling">\
+    				<img src="img/share_icon_1.png" class="img_icon share_icon_1">\
+    				<img src="img/share_icon_2.png" class="img_icon share_icon_2">\
+    				<img src="img/share_icon_ball.png" class="img_icon share_icon_ball">\
+    				<img src="img/clock_ball.png" class="img_icon share_1_ball swing_left_right">'
+    		break;
+    		case 2:
+    			t1="拜见"
+    			t2="称职的网管大大"
+    			descHTML='<img src="img/share_2.png" class="shareImg" style="top:4.5em;height:1.85em;">'
+    			t3='<img src="img/share_2_hand.png" class="img_icon share_2_hand twinkling">\
+    				<img src="img/share_2_d.png" class="img_icon share_2_d">\
+    				<img src="img/share_2_b.png" class="img_icon share_2_b">\
+    				<img src="img/clock_ball.png" class="img_icon share_2_ball swing_left_right">\
+    				<img src="img/share_2_ss.png" class="img_icon share_2_ss">\
+    				<img src="img/share_3_icon1.png" class="img_icon share_3_icon1">'
+    		break;
+    		case 3:
+    			t1="你好"
+    			t2="网管界小学生"
+    			descHTML='<img src="img/share_3.png" class="shareImg" style="bottom:2.85em;height:1.4em;">'
+    			t3='<img src="img/share_3_head.png" class="img_icon share_3_head threeheartwo">\
+    			<img src="img/share_3_t.png" class="img_icon share_3_t">\
+    			<img src="img/clock_ball.png" class="img_icon share_3_ball">\
+    			<img src="img/share_3_icon1.png" class="img_icon share_3_icon1">\
+    			<img src="img/share_3_icon2.png" class="img_icon share_3_icon2">\
+    			<img src="img/share_3_icon1.png" class="img_icon share_3_icon3">\
+    			<img src="img/share_3_icon1.png" class="img_icon share_3_icon4">'
+    		break;
+    		case 4:
+    			t1=""
+    			t2="网管界最渣王者"	
+    			descHTML='<img src="img/share_4.png" class="shareImg" style="top:4.4em;height:2.36em;">'
+    			t3='<img src="img/share_4_head.png" class="img_icon share_4_head threeheartwo">\
+	    			<img src="img/share_4_xin.png" class="img_icon share_4_xin">\
+	    			<img src="img/share_4_b.png" class="img_icon share_4_b">\
+	    			<img src="img/share_4_g.png" class="img_icon share_4_g">'
+    		break;
+    		default:
+    			t1=""
+    			t2="网管界最渣王者"	
+    			descHTML='<img src="img/share_4.png" class="shareImg" style="top:4.4em;height:2.36em;">'
+    			t3='<img src="img/share_4_head.png" class="img_icon share_4_head threeheartwo">\
+	    			<img src="img/share_4_xin.png" class="img_icon share_4_xin">\
+	    			<img src="img/share_4_b.png" class="img_icon share_4_b">\
+	    			<img src="img/share_4_g.png" class="img_icon share_4_g">\
+	    			<img src="img/share_3_icon1.png" class="img_icon share_3_icon1">'
+    		break;
+    	}
+
+    	shareInfo.desc='我是'+t2+'，快来试试你能答对几道题！'
+    	setShare(shareInfo)
+
+		html='<div class="share_dialog page">\
+				<div class="part1">\
+					<p class="l1"><b>共答对了</b><b class="red">&nbsp;'+rightNumber+'&nbsp;</b><b>题</b></p>\
+					<p class="l2"><b>您的排名&nbsp;&nbsp;</b><b class="red" id="user_rank">1508</b><b>&nbsp;&nbsp;名</b></p>\
+					<p class="l3" style="'+(num==4?'display:none;':'')+'"><b>'+t1+'</b></p>\
+					<p class="l4"><b>“'+t2+'”</b></p>\
+				</div>'+descHTML+'\
+				<img src="img/share_sharebtn.png" class="sharebtn share_l" action="share">\
+				<img src="img/share_againbtn.png" class="sharebtn share_r" action="again">'+t3+'</div>'
+    this.open({
+         name:'share'
+        ,html:html
+        ,fun:function(){}
+        ,animate:'moveFromBottom'
+        ,closeAnimate:'movetobottom'
+    })
+})
+//引导
+mainVar.dialog.extend('share_yd',function($num){
+    var CSS='\
+        .share_yd_dialog{width:100%;height:100%;background-color:rgba(0,0,0,.9);position:absolute;top:0;left:0;}.share_yd{width:100%;}'
+    if(!this.temporary.css['share_yd']){
+        setStyle(CSS);
+        this.temporary.css['share_yd']=true;
+    };
+    var html,timer=null,num=$num||5
+		html='<div class="share_yd_dialog">\
+				<img src="img/share_yd.png" class="share_yd">\
+			'
+    this.open({
+         name:'share_yd'
+        ,html:html
+        ,bgClose:0
+        ,bgColor:0
+        ,dialogClose:1
+        ,fun:function(){}
+        ,openFunTime:400
+        ,animate:'moveFromBottom'
+        ,closeFun:function(){}
+        ,closeFunTime:300
+        ,closeAnimate:'movetobottom'
+        ,deldialogTime:0
+    })
+})
+
 
 //最新弹窗3.0（改版关闭弹窗逻辑）
 function confirmAlert(){
@@ -326,7 +707,7 @@ function confirmAlert(){
             ,fun:function(){}					//open后的回调函数
             ,openFunTime:400					//执行open回调的时间点（延迟）
             ,animate:'slideInRight'				//open弹窗的动画效果（有默认）
-            ,closeFun:function(){mainVar.dialog.example()}				//close回调函数
+            ,closeFun:function(){}				//close回调函数
             ,closeFunTime:300					//执行close回调的时间点（延迟）
             ,closeAnimate:'slideOutRight'		//close弹窗的动画效果（有默认）
             ,deldialogTime:0
@@ -389,6 +770,62 @@ function confirmAlert(){
                 break;
                 case 'close-dialog-demo':
                 	mainVar.dialog.close({'t':$t,'name':arguments[1],'animate':arguments[2]})
+                break;
+                case 'submit':
+                	if(!mainVar.sunmitFlag)return
+                	mainVar.sunmitFlag=false;
+                	mainVar.pasueCutTimer()	
+                	var res=mainVar.userSelect.split('').sort().join('');
+                	var zzz=mainVar.rightResult.split('');
+                	mainVar.userSelect='';
+                	// btn_music_play();
+                	$('.check_box').removeClass('hasSelect')
+                	//正确
+                	if(res===mainVar.rightResult){
+                		right_music.play()
+                		rightNumber++;
+                		topic_right+=(arguments[1]+"|")
+                		var selectDom=$t.parentNode.querySelector('.qus_data').querySelectorAll('.check_box')
+	                	for(var k=1;k<=4;k++){
+	                		if(res.indexOf(k)>=0&&mainVar.rightResult.indexOf(k)>=0){
+	                			selectDom[k-1].innerHTML='<img src="img/sel_r.png" class="lrbottomswing">'
+	                		}
+	                	}
+	                	setTimeout(function(){
+	                		mainVar.dialog.selText(20)
+	                	},500)
+                	}else{//错误
+                		wrong_music.play()
+                		var selButton=$t.querySelector('b')
+	                	selButton.innerHTML='正确答案：'+mainVar.rightResult.replace('1','A').replace('2','B').replace('3','C').replace('4','D')
+	                	setTimeout(function(){
+	                		mainVar.dialog.selText(20)
+	                	},1500)
+                	}
+                break;
+                case 'select':
+                	btn_music_play();
+                	var s=arguments[1];
+                	var dom=$t.querySelector('.check_box')
+                	if(!$($t).hasClass('hasSelect')){
+                		mainVar.userSelect+=s
+                		$($t).addClass('hasSelect')
+                		$(dom).html('<img src="img/sel_w.png" class="lrbottomswing">')
+                	}else{
+                		$($t).removeClass('hasSelect')
+                		mainVar.userSelect=mainVar.userSelect.replace(s,'')
+                		$(dom).html('')
+                	}
+                break;
+                case 'again':
+                	btn_music_play()
+                	setTimeout(function(){
+                		top.location.replace(url+'&a=123')
+                	},200)
+                break;
+                case 'share':
+                	btn_music_play();
+                	share_yd_dialog.style.display='block'
                 break;
 			}
 		}})

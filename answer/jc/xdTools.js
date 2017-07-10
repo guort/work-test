@@ -44,7 +44,7 @@ WXAPIS:"//apis.map.qq.com/ws/geocoder/v1/",
 YAO:"//yaotv.tvm.cn",
 BASEMTQ:"//base.mtq.tvm.cn",
 HOTWORDS:"http://huge.yaomall.tvm.cn"
-},PAGE={yid:'wx33dc1a5264b4e846',cid:1782,pt:'354e6b14b65b79ad',resource:"",share:{title:'BTV生活分享有礼，特别的爱给特别的你！',ico:'http://q.cdn.mtq.tvm.cn/open/data/upload/201603/b91b2d52bee7c231b67a99b104ffcc61.jpg',link:'https://wximg.gtimg.com/shake_tv/shaketv_new/zip/8sr40iluno08d4989xb8b4/fx.html',desc:'BTV生活最任性，特别的爱给特别的你！'}};
+},PAGE={yid:'wx33dc1a5264b4e846',cid:1782,pt:'354e6b14b65b79ad',resource:"",share:{title:'BTV生活分享有礼，特别的爱给特别的你！',ico:'http://q.cdn.mtq.tvm.cn/open/data/upload/201603/b91b2d52bee7c231b67a99b104ffcc61.jpg',link:'https://wximg.gtimg.com/shake_tv/shaketv_new/zip/8sr40iluno08d4989xb8b4/fx.html',desc:'BTV生活最任性，特别的爱给特别的你！'},token:'46497107fa23'};
 function addEvent(_,Eve,Fun,b){_.addEventListener(Eve,Fun,b||false)};
 function delEvent(_,Eve,Fun,b){_.removeEventListener(Eve,Fun||null,b||false)};
 function getChildNodes(_,tag){var nodes=[],node=_.firstChild;if(tag){tag=tag.toUpperCase();for(;node;node=node.nextSibling)if(tag===node.tagName)nodes.push(node)}else{for(;node;node=node.nextSibling){if(tn=node.tagName)nodes.push(node)}};return (nodes==""?null:nodes)}
@@ -905,7 +905,7 @@ function wxShare($opt){
 					})
 				})
 			}
-			setJsonp(HOST.AD+"/ufo/signature?cb=getWX&url="+encodeURIComponent(opt.resources)+"&wx_token="+PAGE.token)			
+			setJsonp(HOST.AD+"/ufo/signature?cb=getWX&url="+encodeURIComponent(opt.resources)+"&wx_token=46497107fa23")			
 		}
 }
 function setShare($opt){
