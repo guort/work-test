@@ -1,8 +1,8 @@
 
-
 .mainbox{width:100%;height:100%;position: relative;}
-.mainbox b{vertical-align: top;font-weight:500;font-family:myfont;color:#fff;}
-.confirmBox_dialog_grt{font-family:myfont;z-index:101;}
+.mainbox b{vertical-align: top;font-weight:500;font-family:weiruanyahei,FZYQJW,"微软雅黑",Tahoma,"\534E\6587\5B8B\4F53",arial;color:#fff;}
+.mainbox b{}
+.confirmBox_dialog_grt{z-index:101;}
 .page{width:100%;height:100%;position: relative;overflow: hidden;background-color:#000;}
 .page_num{width:1.88em;height:1.88em;position: absolute;top:0;right:0;line-height:1.28em;background-size:100% 100%;background-image:url(../img/page_num.png);text-align: right;z-index: 200;}
 .page_num b{font-size:0.4em;margin-right:0.1em;color:#000;}
@@ -37,7 +37,7 @@
 .cut_clock b{font-size:0.4em;color:#fff;}
 .c_arrow{width:4.08em;height:0.72em;position:absolute;top:0.42em;left:50%;-webkit-transform:translateX(-50%);}
 
-
+.page1_dialog{width:100%;height:100%;}
 .qus_tit{width:100%;position: absolute;top:1.7em;left:0;}
 .qus_tit p{padding:0 0.3em;line-height:0.55em;text-align:left}
 .qus_tit p b{font-size:0.38em;}
@@ -62,6 +62,8 @@
 .img_icon{position: absolute;}
 .share_yd_dialog{width:100%;height:100%;background-color:rgba(0,0,0,.9);position:absolute;top:0;left:0;z-index:500;}
 .share_yd{width:100%;}
+#five_num{}
+
 
 
 .slide_page_2{background-color:#000;}
@@ -86,14 +88,17 @@
 @-webkit-keyframes glassAni{0% {-webkit-transform:translate(20px,50px) rotate(0);opacity:1;}50%{-webkit-transform:translate(-10px,0) rotate(360deg);opacity:1;}100% {-webkit-transform:translate(20px,50px) rotate(0);opacity:1;}}
 @keyframes fly_page{0% {-webkit-transform:translate(500px,1000px);opacity:0.3;}100%{-webkit-transform:translate(0,0);opacity:1;}}
 @-webkit-keyframes fly_page{0% {-webkit-transform:translate(500px,-1000px);opacity:0.3;}100%{-webkit-transform:translate(0,0);opacity:1;}}
-
-
-
+/*
 @font-face
 {
 font-family: myfont;
 src: url(huakang.TTC);
 }
+@font-face
+{
+font-family: youyuan;
+src: url(simyou.TTF);
+}*/
 @media screen and (min-width:320px) and (max-width:359px){
 	.mainbox{font-size:50px;}
 }

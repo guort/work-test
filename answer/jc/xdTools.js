@@ -1,5 +1,5 @@
 var HOST={
-AD:"//mb.mtq.tvm.cn",
+AD:"//qa-mb.mtq.tvm.cn",
 ADJS:"//tvmdata.oss-cn-hangzhou.aliyuncs.com",
 API:"//count.yaotv.tvm.cn",
 APICDN:"//q-cdn.mtq.tvm.cn",
@@ -905,7 +905,7 @@ function wxShare($opt){
 					})
 				})
 			}
-			setJsonp(HOST.AD+"/ufo/signature?cb=getWX&url="+encodeURIComponent(opt.resources)+"&wx_token=46497107fa23")			
+			setJsonp(HOST.AD+"/ufo/signature?cb=getWX&url="+encodeURIComponent(opt.resources)+"&wx_token=33580c57d3c86f07")			
 		}
 }
 function setShare($opt){

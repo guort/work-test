@@ -26,6 +26,8 @@ $(function() {
 mainVar.box=mainBox;
 //倒计时
 mainVar.num=30;
+//答题数
+mainVar.qusNumber=10;
 mainVar.selList={};
 mainVar.sunmitFlag=true;
 mainVar.slidFlag=true;
@@ -35,6 +37,7 @@ mainVar.bgFlag=true;
 
 loadImg();
 mainVar.dialog=new confirmAlert()
+mainVar.dialogBox=document.querySelector('.confirmBox_dialog_grt')
 //禁止页面上下滑动露出微信的黑色背景
 stopWXPageMove()
 function stopWXPageMove(){
@@ -76,7 +79,7 @@ var bgMusic = document.getElementById("buy_music");
 			bgMusic.play();
 		});
 }, false);
-	bgMusic.volume=0.7
+	bgMusic.volume=0.6
 //背景音
 $("#sound_control").bind('touchstart', function() {
 	if($(this).hasClass("clockwise-rotate")) {
@@ -100,9 +103,6 @@ function bgMusicPlay(){
 	bgMusic.play();
 }
 
-
-
-
 //星星闪
 pageOneStarAdd()
 function pageOneStarAdd(){
@@ -114,12 +114,12 @@ function pageOneStarAdd(){
 		},300)
 	})
 }
-
+//开始测试按钮
 $(".page_2_btn").bind('click',function(){
 	if(!$(".clock_dialog").length){
 		btn_music_play();
 
-		mainVar.dialog.clock()
+		mainVar.dialog.clock(3)
 	}
 })
 
@@ -128,6 +128,7 @@ function btn_music_play(){
 	btn_music.volume=0.9
 	btn_music.play();
 }
+//背景音从头播放
 function bg_music_play(){
 	$("#sound_img").attr("src", "img/sounds_01.png");
 	$("#sound_control").removeClass("clockwise-pause").addClass("clockwise-rotate");
@@ -138,10 +139,6 @@ function bg_music_play(){
 $('#share_yd_dialog').bind('click',function(){
 	$('#share_yd_dialog').hide()
 })
-
-
-
-
 //滑动
 slideFun()
 function slideFun(){
@@ -166,7 +163,6 @@ function slideFun(){
         deltaY = endPosition.y - startPosition.y;
     });
     el.addEventListener('touchend', function (e) {
-        console.log(mainVar.slidFlag)
         if(!mainVar.slidFlag){
 			setTimeout(function(){
 				// mainVar.slidFlag=true
@@ -276,15 +272,13 @@ function loadImg() {
 		$(".load3").find("span").html(persent + "%");
 	});
 }
-
-
 //倒计时页
 mainVar.dialog.extend('clock',function($num){
     var CSS='\
         .clock_dialog{width:100%;height:100%;overflow:hidden;position:relative;}\
         .clock_dialog .clock_pan{width:4.25em;height:4.25em;background-size:100% 100%;background-image:url(img/clock_pan.png);position:absolute;top:3.45em;left:50%;-webkit-transform:translateX(-50%);line-height:4.25em;text-align:center;}\
         .clock_dialog .clock_pan .clock_zhen{width:0.3em;height:2.68em;position:absolute;top:-0.7em;left:51%;-webkit-transform:translateX(-50%);}\
-        .clock_dialog .clock_pan b{font-size:1.9em;font-weight:700;color:#fff;position:relative;z-index:2;}\
+        .clock_dialog .clock_pan b{font-size:1.9em;font-weight:400;color:#fff;position:relative;z-index:2;}\
         .clock_dialog .clock_fly{width:1.3em;height:0.8em;position: absolute;top:3.06em;left:0.55em;}\
         .clock_dialog .clock_left{width:2.33em;height:3.05em;position:absolute;top:6.03em;left:0.46em;}\
         .clock_dialog .clock_right{width:0.66em;height:0.69em;position:absolute;top:3.8em;right:0.4em;}\
@@ -333,7 +327,7 @@ mainVar.dialog.extend('clock',function($num){
         		five_num.innerHTML=num;
         		if(num<=0){
         			clock_music.pause();
-        			mainVar.dialog.cutdown()
+        			mainVar.dialog.cutdown(120)
         			mainVar.dialog['selText'](20)
         			clearInterval(timer)
         		}
@@ -347,9 +341,10 @@ mainVar.dialog.extend('clock',function($num){
         ,deldialogTime:0
     })
 })
-//全局30秒倒计时
+//全局倒计时
 mainVar.dialog.extend('cutdown',function($num){
 	var number=$num||30;
+	cut_num.innerHTML=number;
 	mainVar.cutTimer=setInterval(function(){
 		number--;
 		cut_num.innerHTML=number;
@@ -386,9 +381,8 @@ mainVar.dialog.extend('selText',function($num){
 		bg_music_play();
 		mainVar.bgFlag=false
 	}
-	
 	//题目数量
-	var num=$num||20,number,randomNum,length,endFl=false;
+	var num=mainVar.qusNumber||20,number,randomNum,length,endFl=false;
 	if(!mainVar.initSelNum){
 		for(var i=0;i<33;i++){
 			mainVar.selList[i+1]=true;
@@ -414,7 +408,7 @@ mainVar.dialog.extend('selText',function($num){
 			}
 		}
 		if(endFl){
-			mainVar.dialog['selText']();
+			mainVar.dialog['selText'](10);
 		}else{
 			tishi('没有更多题目了',{showTime:2000})
 		}
@@ -466,19 +460,17 @@ mainVar.dialog.extend('getRank',function($opt){
 })
 //答题页
 mainVar.dialog.extend('page1',function($num){
-    var CSS='\
-        .page1_dialog{width:100%;height:100%}\
-        '
-    if(!this.temporary.css['page1']){
-        setStyle(CSS);
-        this.temporary.css['page1']=true;
-    };
+    // var CSS=''
+    // if(!this.temporary.css['page1']){
+    //     setStyle(CSS);
+    //     this.temporary.css['page1']=true;
+    // };
     $('.page_num').removeClass('hide');
     totalNumber++;
     var html="",h="",num=$num-1,iconHtml="",rightResult=ansList[num]['right']
 	    mainVar.userSelect='';
 	    mainVar.rightResult=rightResult;
-	    page_qus_num.innerHTML=totalNumber+'/20';
+	    page_qus_num.innerHTML=totalNumber+'/10';
 	    topic_id+=(num+'|')
     	iconHtml='<img src="img/clock_fly.png" class="icon page_fly twinkling3">\
     			<img src="img/clock_star.png" class="icon page_star twotwinklingtwo">\
@@ -508,13 +500,17 @@ mainVar.dialog.extend('page1',function($num){
     this.open({
          name:'page'+num
         ,html:html
-        ,fun:function(){
+        ,bgColor:1
+        ,opacity:'1'
+        ,selfbg:1
+        ,fun:function($num){
         	var n=num
         	mainVar.continueCutTimer()
         	setTimeout(function(){
         		if(n==0)return
-        		mainVar.dialog.close({'name':'page'+(n-1),'animate':'movetobottom'})
-        	},400)
+        		removeNode(mainVar.dialogBox.querySelectorAll('.confirm_Dialog_Box')[1])
+        		// mainVar.dialog.close({'name':'page'+(n-1),'animate':'movetobottom'})
+        	})
         }
         ,animate:'moveFromBottom'
         ,closeFun:function(){}
@@ -683,8 +679,6 @@ mainVar.dialog.extend('share_yd',function($num){
         ,deldialogTime:0
     })
 })
-
-
 //最新弹窗3.0（改版关闭弹窗逻辑）
 function confirmAlert(){
 	var _this=this,temporary={'css':{},"options":{}},bgBox,wBox=mainVar.box||document.body,isColor=false,isFirstDom=null,confirmBox=null,dialogCon={},closeFlag=true;
@@ -792,14 +786,14 @@ function confirmAlert(){
 	                		}
 	                	}
 	                	setTimeout(function(){
-	                		mainVar.dialog.selText(20)
+	                		mainVar.dialog.selText(10)
 	                	},500)
                 	}else{//错误
                 		wrong_music.play()
                 		var selButton=$t.querySelector('b')
 	                	selButton.innerHTML='正确答案：'+mainVar.rightResult.replace('1','A').replace('2','B').replace('3','C').replace('4','D')
 	                	setTimeout(function(){
-	                		mainVar.dialog.selText(20)
+	                		mainVar.dialog.selText(10)
 	                	},1500)
                 	}
                 break;
@@ -830,16 +824,17 @@ function confirmAlert(){
 			}
 		}})
 		_this.temporary=temporary
+		_this.dialogCon=dialogCon
 	}
 	this.open=function($opt){
-		var opt=$opt||{},bgColor=opt.bgColor||0,bgClose=opt.bgClose||0,dialogClose=opt.dialogClose||0,html=opt.html||"",contentBox,bgCss='',name=opt.name||'dialog-grt',ele=confirmBox,selfbg=opt.selfbg||false,fun=opt.fun,animate=opt.animate||'dialog-in-1',openFunTime=opt.openFunTime||300,closeAnimate=opt.closeAnimate||""
+		var opt=$opt||{},bgColor=opt.bgColor||0,bgClose=opt.bgClose||0,dialogClose=opt.dialogClose||0,html=opt.html||"",contentBox,bgCss='',name=opt.name||'dialog-grt',ele=confirmBox,selfbg=opt.selfbg||false,fun=opt.fun,animate=opt.animate||'dialog-in-1',openFunTime=opt.openFunTime||300,closeAnimate=opt.closeAnimate||"",opacityLeve=opt.opacity||"0.7"
 		ele.style.display='block';
 		bgBox=createNode(ele,'div',{className:'confirm_Dialog_Box',action:(bgClose?'close-dialog.,'+name+'.,'+closeAnimate:'')},'p3')
 		contentBox=createNode(bgBox,'div',{className:'content_Dialog_Box '+animate,html:html},'p3')
-		if(!dialogCon[name]){
-			dialogCon[name]=[contentBox]
+		if(!_this.dialogCon[name]){
+			_this.dialogCon[name]=[contentBox]
 		}else{
-			dialogCon[name].unshift(contentBox)
+			_this.dialogCon[name].unshift(contentBox)
 		}
 		if(!_this.temporary["options"][name]){
 			_this.temporary["options"][name]=[opt]
@@ -847,8 +842,8 @@ function confirmAlert(){
 			_this.temporary["options"][name].unshift(opt)
 		}
 		if(!isFirstDom){isFirstDom=bgBox}
-		if(bgColor&&!isColor){confirmBox.style.backgroundColor='rgba(0,0,0,.7)';isColor=true;}
-		if(selfbg&&!isColor){bgBox.style.backgroundColor='rgba(0,0,0,.7)'}
+		if(bgColor&&!isColor){confirmBox.style.backgroundColor='rgba(0,0,0,'+opacityLeve+')';isColor=true;}
+		if(selfbg&&!isColor){bgBox.style.backgroundColor='rgba(0,0,0,'+opacityLeve+')'}
 		if(dialogClose){
 			contentBox.children[0].setAttribute('action','close-dialog.,'+name+'.,'+closeAnimate);
 		}else{
@@ -862,14 +857,14 @@ function confirmAlert(){
 		if(!closeFlag){closeFlag=true;return;}closeFlag=false;
 		var opt=$opt||{},ele=opt.t,name=opt.name,c,openOption,thisCloseOpt,finalAnimate=opt.animate,finalFunction=opt.fun,finalDelTime=opt.delTime,finalFunctionTime=opt.closeTime
 		if(name){
-			openOption=temporary["options"][name]||[];
+			openOption=_this.temporary["options"][name]||[];
 			thisCloseOpt=openOption[0]?openOption.shift():{}
 			finalAnimate=finalAnimate?finalAnimate:(thisCloseOpt['closeAnimate']||'dialog-out-1');
 			finalFunction=finalFunction?finalFunction:(thisCloseOpt['closeFun']||function(){});
 			finalFunctionTime=finalFunctionTime?finalFunctionTime:(thisCloseOpt['closeFunTime']||300);
 			finalDelTime=finalDelTime?finalDelTime:(thisCloseOpt['deldialogTime']||400);
-			if(dialogCon[name]){
-				c=dialogCon[name].shift();
+			if(_this.dialogCon[name]){
+				c=_this.dialogCon[name].shift();
 				if(c)c.className='content_Dialog_Box '+finalAnimate
 				setTimeout(function(){
 					closeFlag=true
@@ -949,8 +944,6 @@ function confirmAlert(){
 	}
 	this.init();
 }
-
-
 
 });
 
