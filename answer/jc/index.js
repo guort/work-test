@@ -33,7 +33,21 @@ mainVar.sunmitFlag=true;
 mainVar.slidFlag=true;
 mainVar.bgFlag=true;
 
-
+var bgMusic = document.getElementById("buy_music");
+bgMusic.volume=0.6
+var sys=getOS();
+if(sys!='android'){
+	document.addEventListener("WeixinJSBridgeReady", function () {
+		WeixinJSBridge.invoke('getNetworkType', {}, function (e) {
+				// alert('ios系统音频加载准备')
+				bgMusic.play();
+				score_music.play();
+				setTimeout(function(){
+					score_music.pause();
+				},100)
+			});
+	}, false);
+}
 
 loadImg();
 mainVar.dialog=new confirmAlert()
@@ -73,13 +87,8 @@ function stopWXPageMove(){
 		}
 	});
 }
-var bgMusic = document.getElementById("buy_music");
-	document.addEventListener("WeixinJSBridgeReady", function () {
-		WeixinJSBridge.invoke('getNetworkType', {}, function (e) {
-			bgMusic.play();
-		});
-}, false);
-	bgMusic.volume=0.6
+	// bg_music_play();
+	
 //背景音
 $("#sound_control").bind('touchstart', function() {
 	if($(this).hasClass("clockwise-rotate")) {
@@ -127,6 +136,10 @@ function btn_music_play(){
 	btn_music.src='media/btn.mp3'
 	btn_music.volume=0.9
 	btn_music.play();
+}
+function score_music_play(){
+    score_music.volume=1;
+    score_music.play();
 }
 //背景音从头播放
 function bg_music_play(){
@@ -220,26 +233,12 @@ function slideFun(){
     });
 }
 
-
-// var nonce = getNonceStr();
-// var timeStamp = new Date().getTime();
-// var jsapi_ticket = getTicket();
-// var signStr = hex_sha1("jsapi_ticket=" + jsapi_ticket + "&noncestr=" + nonce + "&timestamp=" + timeStamp + "&url=" + window.location.href);
-// wx.config({
-//     debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-//     appId: appid, // 必填，公众号的唯一标识
-//     timestamp: timeStamp, // 必填，生成签名的时间戳
-//     nonceStr: nonce, // 必填，生成签名的随机串
-//     signature: signStr,// 必填，签名，见附录1
-//     jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQZone','onMenuShareWeibo','onMenuShareQQ'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-// });
-
 var shareInfo={
-	title:'中企动力移动门户',
-	icon:'http://qa-h5.mtq.tvm.cn/yao/guort/answer/img/share_logo.png',
+	title:'敲黑板，考60分儿才算入门互联网',
+	icon:'http://qa-h5.mtq.tvm.cn/yao/guort/web/answer/img/share_logo.jpg',
 	resources:location.href,
 	link:location.href.replace(/\?.*/,''),
-	desc:'划重点，考到60分儿，算你入门儿互联网'
+	desc:'网站运营进阶之路 你与王者只差一套题'
 }
 wxShare(shareInfo)
 
@@ -384,12 +383,12 @@ mainVar.dialog.extend('selText',function($num){
 	//题目数量
 	var num=mainVar.qusNumber||20,number,randomNum,length,endFl=false;
 	if(!mainVar.initSelNum){
-		for(var i=0;i<33;i++){
+		for(var i=0;i<20;i++){
 			mainVar.selList[i+1]=true;
 		}
 		mainVar.initSelNum=true;
 	}
-	randomNum=Math.floor(Math.random()*33+1)
+	randomNum=Math.floor(Math.random()*20+1)
 	if(totalNumber==0||totalNumber==1||totalNumber==2){
 			randomNum=totalNumber+1
 		}
@@ -475,15 +474,14 @@ mainVar.dialog.extend('page1',function($num){
     	iconHtml='<img src="img/clock_fly.png" class="icon page_fly twinkling3">\
     			<img src="img/clock_star.png" class="icon page_star twotwinklingtwo">\
     			<img src="img/clock_star2.png" class="icon page_fly_star flytoleft">'
-		h='<div class="qus_data">\
-	    	<div class="li" action="select.,1"><div class="check_box"></div><div class="li_right"><p><b>'+ansList[num]['ans'][0]+'</b></p></div></div>\
-	    	<div class="li" action="select.,2"><div class="check_box"></div><div class="li_right"><p><b>'+ansList[num]['ans'][1]+'</b></p></div></div>\
-	    	<div class="li" action="select.,3"><div class="check_box"></div><div class="li_right"><p><b>'+ansList[num]['ans'][2]+'</b></p></div></div>\
-	    	<div class="li" action="select.,4"><div class="check_box"></div><div class="li_right"><p><b>'+ansList[num]['ans'][3]+'</b></p></div></div>\
-		</div>'
+		h='<div class="qus_data">'
+		for(var k=0;k<ansList[num]['ans'].length;k++){
+			h+='<div class="li" action="select.,'+(k+1)+'"><div class="check_box"></div><div class="li_right"><p><b>'+ansList[num]['ans'][k]+'</b></p></div></div>'
+		}
+		h+='</div>'
 
     	switch(num){
-    		case 5:case 10:case 11:case 26:case 26:
+    		case 1:case 3:case 8:
     			iconHtml+=''
     		break;
     		default:
@@ -521,6 +519,7 @@ mainVar.dialog.extend('page1',function($num){
 mainVar.dialog.extend('share',function($num){
     var CSS='\
         .share_dialog{width:100%;height:100%;background-size:100% 100%;background-image:url(img/share_bg.png);}\
+        .share_dialog p b{font-family:myfont;}\
         .part1{margin-top:1em;padding-left:0.58em;text-align:left;}\
         .part1 p{height:0.5em;line-height:0.5em;}\
         .part1 p b{font-size:0.34em;}\
@@ -562,16 +561,16 @@ mainVar.dialog.extend('share',function($num){
     };
     $('.clock_tit').hide();
     $('.page_num').hide();
-    bgMusicPause()
-    score_music.play();
+    bgMusicPause();
+
     mainVar.dialog.sendDate()
     var html="",num=$num,descHTML="",t1="",t2="",t3="",t4=""
-    	console.log(rightNumber)
-    	if(rightNumber<10){
+    	// console.log(rightNumber)
+    	if(rightNumber<=3){
     		num=4
-    	}else if(rightNumber<20){
+    	}else if(rightNumber<=5){
     		num=3
-    	}else if(rightNumber<25){
+    	}else if(rightNumber<=7){
     		num=2
     	}else{
     		num=1
@@ -638,7 +637,7 @@ mainVar.dialog.extend('share',function($num){
 		html='<div class="share_dialog page">\
 				<div class="part1">\
 					<p class="l1"><b>共答对了</b><b class="red">&nbsp;'+rightNumber+'&nbsp;</b><b>题</b></p>\
-					<p class="l2"><b>您的排名&nbsp;&nbsp;</b><b class="red" id="user_rank">1508</b><b>&nbsp;&nbsp;名</b></p>\
+					<p class="l2"><b>您的排名&nbsp;&nbsp;</b><b class="red" id="user_rank"></b><b>&nbsp;&nbsp;名</b></p>\
 					<p class="l3" style="'+(num==4?'display:none;':'')+'"><b>'+t1+'</b></p>\
 					<p class="l4"><b>“'+t2+'”</b></p>\
 				</div>'+descHTML+'\
@@ -647,7 +646,9 @@ mainVar.dialog.extend('share',function($num){
     this.open({
          name:'share'
         ,html:html
-        ,fun:function(){}
+        ,fun:function(){
+        	score_music_play();
+        }
         ,animate:'moveFromBottom'
         ,closeAnimate:'movetobottom'
     })
@@ -797,19 +798,30 @@ function confirmAlert(){
 	                	},1500)
                 	}
                 break;
-                case 'select':
+                // case 'select'://多选
+                // 	btn_music_play();
+                // 	var s=arguments[1];
+                // 	var dom=$t.querySelector('.check_box')
+                // 	if(!$($t).hasClass('hasSelect')){
+                // 		mainVar.userSelect+=s
+                // 		$($t).addClass('hasSelect')
+                // 		$(dom).html('<img src="img/sel_w.png" class="lrbottomswing">')
+                // 	}else{
+                // 		$($t).removeClass('hasSelect')
+                // 		mainVar.userSelect=mainVar.userSelect.replace(s,'')
+                // 		$(dom).html('')
+                // 	}
+                // break;
+                case 'select'://单选
                 	btn_music_play();
                 	var s=arguments[1];
                 	var dom=$t.querySelector('.check_box')
-                	if(!$($t).hasClass('hasSelect')){
-                		mainVar.userSelect+=s
-                		$($t).addClass('hasSelect')
-                		$(dom).html('<img src="img/sel_w.png" class="lrbottomswing">')
-                	}else{
-                		$($t).removeClass('hasSelect')
-                		mainVar.userSelect=mainVar.userSelect.replace(s,'')
-                		$(dom).html('')
+                	var faDom=$t.parentNode.querySelectorAll('.check_box')
+                	for(var t=0;t<faDom.length;t++){
+                		$(faDom[t]).html('')
                 	}
+                	$(dom).html('<img src="img/sel_w.png" class="lrbottomswing">')
+                	mainVar.userSelect=s
                 break;
                 case 'again':
                 	btn_music_play()
