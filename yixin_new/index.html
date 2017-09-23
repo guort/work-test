@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	    <meta name="format-detection" content="telephone=no" />
+	    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	    <meta name="apple-mobile-web-app-capable" content="yes" />
+		<title>脱单修炼手“测”</title>
+		<link type="text/css" rel="stylesheet" href="jc/common.css">
+		<link type="text/css" rel="stylesheet" href="jc/animate.css">
+		<link type="text/css" rel="stylesheet" href="jc/slide.css" />
+		<link type="text/css" rel="stylesheet" href="jc/shake.css" />
+		<link type="text/css" rel="stylesheet" href="jc/index.css" />
+		<script type="text/javascript" src="jc/jquery/jquery-2.1.0.min.js" ></script>
+		<script type="text/javascript" src="jc/zepto.js" ></script>
+		<script type="text/javascript" src="jc/touch/touch-0.2.14.min.js" ></script>
+		<script type="text/javascript" src="jc/load/jquery.imagesloaded.js" ></script>
+		<script type="text/javascript" src="jc/xdTools.js" ></script>
+		<script type="text/javascript" src="jc/index.js" ></script>
+	</head>
+	<body>
+		<div class="mainbox" id="mainBox">
+			<div class="loading_div" id="loading">
+				<div class="load load1 clockwise-rotate">
+					<img src="img/loading_1.png" class="img"/>
+				</div>
+				<div class="load load3">
+					<span>0%</span>
+				</div>
+			</div>
+			<div class="slide_div" style="display: none;">
+				<div class="slide_page slide_page_1 current">
+					<img src="img/page_1.jpg" class="page_1_bg">
+					<img src="img/page_1_car.png" class="page_1_car toBig">
+					<img src="img/page_1_hand.png" class="page_1_hand animate-bounce-up">
+					<div class="page_1_btn next_page"></div>
+				</div>
+				<!-- <div class="slide_page slide_page_2 hide">
+					<img src="img/page_2.jpg" class="page_2_bg">
+					<img src="img/icon_clock.png" class="icon_clock shakeslow">
+					<div class="cut_num"><b id="cutNum"></b></div>
+				</div> -->
+			</div>
+			<!-- 答题页 -->
+			<div class="ans_page" style="display:none;">
+				<div class="p1">
+					<img src="img/icon_page_t.png" class="t1">
+					<img src="img/icon_hand.png" class="t2 writeAnimate">
+					<img src="img/icon_slide.png" class="slide_1">
+					<img src="img/icon_tx.png" class="t3">
+				</div>
+				<div style="width:100%;position:relative;">
+					<div class="p2">
+						<p><b>一 、 单选题</b></p>
+					</div>
+					<div class="ans_part">
+						<div class="tit"><p><b style="font-size:0.4em;">1</b><b>、周末约喜欢的TA看电影，你会选哪个时段？</b></p></div>
+						<div class="answer" action="select.,1.,1"><span class=""></span><p><b>&nbsp;&nbsp;&nbsp;&nbsp;A. 上午9:00左右，人少啊~</b></p></div>
+						<div class="answer" action="select.,1.,5"><span class=""></span><p><b>&nbsp;&nbsp;&nbsp;&nbsp;B. 中午11:00左右，或者下午1:00左右，看前/看后可以约个饭</b></p></div>
+						<div class="answer" action="select.,1.,10"><span class=""></span><p><b>&nbsp;&nbsp;&nbsp;&nbsp;C. 下午6:00以后，看完电影之后…你懂的!</b></p></div>
+					</div>
+					<div class="p3">
+						<img src="img/icon_page.png" class="ab p3_1">
+						<img src="img/icon_bird_3.png" class="ab p3_2 flyToRight">
+						<img src="img/icon_cloud.png" class="ab p3_3">
+					</div>
+					<div class="ans_part">
+						<div class="tit"><p><b style="font-size:0.4em;">2</b><b>、下班送TA回家，到TA家门口对你说“阴天了，你现在回去会淋雨的…” 你会 ?</b></p></div>
+						<div class="answer" action="select.,2.,10"><span class=""></span><p><b>&nbsp;&nbsp;&nbsp;&nbsp;A. “我可以先去你家避避雨吗？”</b></p></div>
+						<div class="answer" action="select.,2.,1"><span class=""></span><p><b>&nbsp;&nbsp;&nbsp;&nbsp;B. 转身就跑，争分夺秒，才不要淋雨</b></p></div>
+						<div class="answer" action="select.,2.,5"><span class=""></span><p><b>&nbsp;&nbsp;&nbsp;&nbsp;C. “把你的伞借给我吧，下次见还给你。”</b></p></div>
+					</div>
+					<div class="p4 re">
+						<img src="img/icon_umb.png" class="ab p4_1">
+					</div>
+					<div class="ans_part">
+						<div class="tit"><p><b style="font-size:0.4em;">3</b><b>、正在打王者荣耀，TA突然来电，你会？</b></p></div>
+						<div class="answer" action="select.,3.,10"><span class=""></span><p><b>&nbsp;&nbsp;&nbsp;&nbsp;A．放弃游戏，TA最重要</b></p></div>
+						<div class="answer" action="select.,3.,5"><span class=""></span><p><b>&nbsp;&nbsp;&nbsp;&nbsp;B．秒接，敷衍两句，继续游戏</b></p></div>
+						<div class="answer" action="select.,3.,1"><span class=""></span><p><b>&nbsp;&nbsp;&nbsp;&nbsp;C．果断挂断，TA能等，队友不能坑</b></p></div>
+					</div>
+					<div class="p5 re">
+						<img src="img/icon_kid.png" class="ab p5_1 shakeslow">
+						<img src="img/icon_car.png" class="ab p5_2">
+					</div>
+					<div class="ans_part">
+						<div class="tit"><p><b style="font-size:0.4em;">4</b><b>、TA深情而羞涩的对你说：“人家都说我们是那种关系……”你会有什么反应？</b></p></div>
+						<div class="answer" action="select.,4.,1"><span class=""></span><p><b>&nbsp;&nbsp;&nbsp;&nbsp;A. 别介意，他们胡说八道呢！</b></p></div>
+						<div class="answer" action="select.,4.,10"><span class=""></span><p><b>&nbsp;&nbsp;&nbsp;&nbsp;B. 霸气回复：“我们什么时候不是那种关系？！”</b></p></div>
+						<div class="answer" action="select.,4.,5"><span class=""></span><p><b>&nbsp;&nbsp;&nbsp;&nbsp;C. 或者……我们可以尝试一下</b></p></div>
+					</div>
+					<div class="p6 re">
+						<img src="img/icon_love.png" class="ab p6_1">
+						<img src="img/icon_heart.png" class="ab p6_2 twinkling">
+					</div>
+					<div class="ans_part">
+						<div class="tit"><p><b style="font-size:0.4em;">5</b><b>、TA经常在朋友圈晒自己的照片，你认为TA的目的是？</b></p></div>
+						<div class="answer" action="select.,5.,5"><span class=""></span><p><b>&nbsp;&nbsp;&nbsp;&nbsp;A. 难道是想引起我的注意？</b></p></div>
+						<div class="answer" action="select.,5.,1"><span class=""></span><p><b>&nbsp;&nbsp;&nbsp;&nbsp;B. 就是单纯喜欢拍照摄影而已</b></p></div>
+						<div class="answer" action="select.,5.,10"><span class=""></span><p><b>&nbsp;&nbsp;&nbsp;&nbsp;C. 嘿嘿嘿……你懂的！</b></p></div>
+					</div>
+					<div class="p7 re">
+						<img src="img/icon_phone.png" class="ab p7_1">
+					</div>
+					<div class="ans_part" style="position:relative;">
+						<div class="tit"><p><b style="font-size:0.4em;">6</b><b>、你喜欢下列哪种类型？</b></p></div>
+						<div action="sel.,6.,20">
+							<img src="img/icon_t_1.png" class="n_img">
+							<div class="answer"><span class=""></span><p><b>&nbsp;&nbsp;&nbsp;&nbsp;A. 独孤九“贱”型</b></p></div>
+						</div>
+						<div action="sel.,6.,20">
+							<img src="img/icon_t_2.png" class="n_img">
+							<div class="answer"><span class=""></span><p><b>&nbsp;&nbsp;&nbsp;&nbsp;B. “秋水誓”怂帅型</b></p></div>
+						</div>
+						<div action="sel.,6.,20">
+							<img src="img/icon_t_3.png" class="n_img">
+							<div class="answer"><span class=""></span><p><b>&nbsp;&nbsp;&nbsp;&nbsp;C. 高富帅型</b></p></div>
+						</div>
+						<img src="img/icon_car_2.png" class="icon_car_2 flyToRight_2">
+					</div>
+					<div class="ans_part">
+						<div class="tit"><p><b style="font-size:0.4em;">7</b><b>、TA跟你说：“哇，听说《碰呗》这本书不错，好想看看哦！”你会怎么办？</b></p></div>
+						<div class="answer" action="select.,7.,5"><span class=""></span><p><b>&nbsp;&nbsp;&nbsp;&nbsp;A. 买来书，送给TA</b></p></div>
+						<div class="answer" action="select.,7.,1"><span class=""></span><p><b>&nbsp;&nbsp;&nbsp;&nbsp;B. “啊，是挺不错的，你去买吧！”</b></p></div>
+						<div class="answer" action="select.,7.,10"><span class=""></span><p><b>&nbsp;&nbsp;&nbsp;&nbsp;C. 买下此书借给TA看~若无相欠，怎能相见…</b></p></div>
+					</div>
+					<div class="p8 re">
+						<img src="img/icon_book.png" class="ab p8_1">
+					</div>
+					<div class="ans_part" style="position:relative;">
+						<div class="tit"><p><b style="font-size:0.4em;">8</b><b>、你认为下面哪个物品是男女通用的？</b></p></div>
+						<div action="sel.,8.,5">
+							<img src="img/icon_t_4.png" class="n_img mb">
+							<div class="answer"><span class=""></span><p><b>&nbsp;&nbsp;&nbsp;&nbsp;A. </b></p></div>
+						</div>
+						<div action="sel.,8.,10">
+							<img src="img/icon_t_5.png" class="n_img mb">
+							<div class="answer"><span class=""></span><p><b>&nbsp;&nbsp;&nbsp;&nbsp;B. </b></p></div>
+						</div>
+						<div action="sel.,8.,20">
+							<img src="img/icon_t_6.png" class="n_img mb">
+							<div class="answer"><span class=""></span><p><b>&nbsp;&nbsp;&nbsp;&nbsp;C. </b></p></div>
+						</div>
+						<img src="img/icon_car_3.png" class="icon_car_3 flyToLeft">
+					</div>
+					<div class="p9 re">
+						<img src="img/icon_commit.png" class="ab p9_1" action="commit">
+					</div>
+					<img src="img/icon_slide_t.jpg" class="icon_slide_t">
+				</div>
+			</div>
+			<div class="sound clockwise-rotate" id="sound_control" style="display: none;">
+				<img src="img/sounds_01.png" class="img" id="sound_img"/>
+			</div>
+			<img src="img/next.png" class="toBottom animate-bounce-up" style="display:none;">
+			<div class="share_yd_bg">
+				<img src="img/share_yd.png">
+			</div>
+			<img src="img/share_1.png" class="hi" style="display:none;">
+			<img src="img/share_2.png" class="hi" style="display:none;">
+			<img src="img/share_3.png" class="hi" style="display:none;">
+			<img src="img/share_4.png" class="hi" style="display:none;">
+			<audio src="media/bg.mp3" preload loop id="buy_music"></audio>
+			<audio src="media/clock.mp3" preload loop id="clock_music"></audio>
+		</div>
+		<script src="https://s13.cnzz.com/z_stat.php?id=1263795645&web_id=1263795645" language="JavaScript"></script>
+		<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1263795645'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1263795645' type='text/javascript'%3E%3C/script%3E"));</script>
+	</body>
+</html>

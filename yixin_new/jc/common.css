@@ -1,0 +1,65 @@
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, p, blockquote, th, td { margin:0; margin:0; }
+body {color:#585858; background:#fff;font-family: "黑体";}
+fieldset, img { border:0;display:block;}
+ol, ul { list-style:none; }
+h1, h2, h3, h4, h5, h6{ font-size:100%; }
+
+.bg {
+	width: 100%;
+	height: 100%;
+}
+
+.img {
+	width: 100%;;
+}
+
+.loading_div {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+}
+
+.load {
+	position: absolute;
+}
+
+.load1 {
+	width: 37.5%;
+	margin-left: 33.5%;
+	margin-top: 50%;
+}
+.load2 {
+	width: 100%;
+	margin-top: 62%;
+}
+
+.subload {
+	padding-left: 46%;
+	width: 11%;
+	position: absolute;
+}
+
+.load3 {
+	width: 10%;
+	text-align: center;
+	margin-left: 48%;
+	margin-top: 61%;
+}
+
+.slide_div {
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	z-index: 1;
+	overflow: hidden;
+}
+
+.slide_page {
+	background-color: #FFFFFF;
+}
+.sound {
+	width: 7%;
+	margin-top: 4%;
+}
